@@ -19,3 +19,10 @@ Skill Issue is a powerful desktop-based application that allows individuals to a
 
 #### b1.0.5: Tokenization Algorithm (planned)
 - Develop algorithm to break down skills scores, use a combination of prewritten knowledge and online resources to compile tips for the user.
+
+---
+
+### A Brief Breakdown of how the Tokenization Algorithm May Work (AutoGrant)
+In order to effectively analyze how a skills score is achieved, we can ask players upon entering their skills score online a few questions regarding what the primary goal of their skills run was, which elements they had in their skills run, and so on. By doing this, we begin to associate certain attributes of skills runs with certain ranges of scores. We can break this distribution into `x` different segments. When trying to analyze ways to improve an individual's skills score, we first find which segment of the distribution their score is in. We find common attributes of skills runs within this segment and use the difference between these attributes and the attributes of skills runs one segment above to generate a response. Each difference in attributes is mapped to a sentence "token", with removal of a feature or practice receiving a token of value `1`, changing a feature a value of `2`, and adding a feature value `3`. Assembling these sentence tokens may produce a response akin to the one below:
+
+`Your unofficial Programming Skills Average was 115, which places you in the 75th percentile of World Skills scores. Many players with similar skills scores have a match load routine to launch the 44 triballs across the field, and a method of pushing triballs under the goal. In order to improve your skills score, you could try the following: Transitioning from launching triballs at a slow rate to launching triballs at a faster rate, removing potential wait times in the code, and adding multiple angles to pushing triballs under the goal.`
