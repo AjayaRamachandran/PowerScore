@@ -18,16 +18,7 @@ screenHeight = screenInfo.current_h
 
 ###### FUNCTIONS ######
 
-def createSamplePixelArray(height, width): # test function
-    array = []
-    for h in range(height):
-        row = []
-        for w in range(width):
-            row.append([random.randint(0,255), random.randint(0,255), random.randint(0,255), 255])
-        array.append(row)
-    return array
-
-def createButton(width, height, color, x, y, scale, type, cr): # runs function to generate a button image based on some basic rules
+def spawnBorderedElement(width, height, color, x, y, scale, type, cr): # runs function to generate a button image based on some basic rules
     cornerRadius = cr
     array = []
     for w in range(width):
@@ -50,7 +41,7 @@ def createButton(width, height, color, x, y, scale, type, cr): # runs function t
                 elif w > width - cornerRadius - 1 and h < cornerRadius: # top right corner
                     outOfRadius = (width - w - cornerRadius - 1)**2 + (cornerRadius - h)**2 > outerRadius
                     antiAliased = innerRadius < (width - w - cornerRadius - 1)**2 + (cornerRadius - h)**2 < outerRadius
-                elif w < cornerRadius and h > height - cornerRadius - 1: # bottom right corner
+                elif w < cornerRadius and h > height - cornerRadius - 1: # bottom left corner
                     outOfRadius = (cornerRadius - w)**2 + (height - h - cornerRadius - 1)**2 > outerRadius
                     antiAliased = innerRadius < (cornerRadius - w)**2 + (height - h - cornerRadius - 1)**2 < outerRadius
                 elif w > width - cornerRadius - 1 and h > height - cornerRadius - 1: # bottom right corner
@@ -64,19 +55,17 @@ def createButton(width, height, color, x, y, scale, type, cr): # runs function t
                 else:
                     row.append([int(color[0]*dimFactor),int(color[1]*dimFactor),int(color[2]*dimFactor),255])
 
-                
-            
         array.append(row)
     return array
 
-def spawnButton(width, height, color, x, y, scale, names, cr):
-    for type in range(4): # generates images of all the different states the button could be in
+def initializeBorderedElement(width, height, color, x, y, scale, names, cr):
+    for type in names: # generates images of all the different states the button could be in
         image = Image.new("RGBA", (width, height))
-        for x, row in enumerate(createButton(width, height, color, x, y, scale, type, cr)):
+        for x, row in enumerate(spawnBorderedElement(width, height, color, x, y, scale, type[1], cr)):
             for y, pixel in enumerate(row):
                 image.putpixel((x, y), tuple(pixel))
 
-        image.save(names[type])
+        image.save(type[0])
 
 ###### CLASSES ######
 
@@ -113,6 +102,35 @@ class Title(GUI):
 
         screen.blit(textSurface, textRect) # draws text to screen
 
+class Window(GUI):
+    def __init__(self, name, x, y, width, height, cornerRadius, color, scale):
+        super().__init__(x, y)
+
+        #---SELF PROPERTIES---#
+        ## Essential/Very Important ##
+        self.name = name
+        self.rect = pygame.Rect(x-width*scale/2, y-height*scale/2, width*scale, height*scale)
+
+        ## Visual Info (Cosmetic) ##
+        self.color = color
+
+        ## Visual Info (Spatial) ##
+        self.width = width
+        self.height = height
+        self.scale = scale
+        self.cornerRadius = cornerRadius
+
+        ## File Saving ##
+        self.fileNames = [("images/base_" + str(name) + ".png", 0)]
+
+        #---INITIAL FUNCTIONS/SCRIPTS---#
+        initializeBorderedElement(width=width, height=height, color=self.color, x=x, y=y, scale=scale, names=self.fileNames, cr=cornerRadius)
+
+    def draw(self, screen):
+        window = pygame.image.load(self.fileNames[0][0]) # loads images of all the different states the window could be in
+        window = pygame.transform.scale(window, (self.width * self.scale, self.height * self.scale)) # scales the images by a scale factor
+
+        screen.blit(window, (self.x - self.width*self.scale/2, self.y - self.height*self.scale/2))
 
 class Button(GUI):
     def __init__(self, name, x, y, width, height, cornerRadius, color, text, scale, fontSize=20):
@@ -139,29 +157,20 @@ class Button(GUI):
         self.fontSize = fontSize
 
         ## File Saving ##
-        self.fileNames = ["images/base_" + str(name) + ".png",
-                          "images/dimmed_" + str(name) + ".png",
-                          "images/black_" + str(name) + ".png",
-                          "images/white_" + str(name) + ".png"]
+        self.fileNames = [("images/base_" + str(name) + ".png", 0),
+                          ("images/dimmed_" + str(name) + ".png", 1)]
 
         #---INITIAL FUNCTIONS/SCRIPTS---#
-        spawnButton(width=width, height=height, color=self.color, x=x, y=y, scale=scale, names=self.fileNames, cr=cornerRadius)
+        initializeBorderedElement(width=width, height=height, color=self.color, x=x, y=y, scale=scale, names=self.fileNames, cr=cornerRadius)
 
-    def draw(self, screen, borderSize=3):
-        button = pygame.image.load(self.fileNames[0]) # loads images of all the different states the button could be in
-        dimmedButton = pygame.image.load(self.fileNames[1])
-        blackButton = pygame.image.load(self.fileNames[2])
-        whiteButton = pygame.image.load(self.fileNames[3])
+    def draw(self, screen):
+        button = pygame.image.load(self.fileNames[0][0]) # loads images of all the different states the button could be in
+        dimmedButton = pygame.image.load(self.fileNames[1][0])
+
 
         button = pygame.transform.scale(button, (self.width * self.scale, self.height * self.scale)) # scales the images by a scale factor (for the "pixelated" look)
         dimmedButton = pygame.transform.scale(dimmedButton, (self.width * self.scale, self.height * self.scale))
-        blackButton = pygame.transform.scale(blackButton, (self.width * self.scale, self.height * self.scale))
-        whiteButton = pygame.transform.scale(whiteButton, (self.width * self.scale, self.height * self.scale))
 
-        screen.blit(blackButton, (self.x - self.width*self.scale/2 - borderSize, self.y - self.height*self.scale/2 - borderSize)) # draws a black border around the button of a specific thickness
-        screen.blit(blackButton, (self.x - self.width*self.scale/2 + borderSize, self.y - self.height*self.scale/2 - borderSize))
-        screen.blit(blackButton, (self.x - self.width*self.scale/2 - borderSize, self.y - self.height*self.scale/2 + borderSize))
-        screen.blit(blackButton, (self.x - self.width*self.scale/2 + borderSize, self.y - self.height*self.scale/2 + borderSize))
 
         if self.rect.collidepoint(pygame.mouse.get_pos()): # blits to screen the dimmed version of the button if the mouse is hovering over it
             screen.blit(dimmedButton, (self.x - self.width*self.scale/2, self.y - self.height*self.scale/2))
@@ -178,3 +187,9 @@ class Button(GUI):
 
         screen.blit(shadowSurface, shadowRect) # draws a shadow of the text to screen
         screen.blit(textSurface, textRect) # draws text to screen
+
+    def isClicked(self):
+        if self.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0] == 1:
+            return True
+        else:
+            return False

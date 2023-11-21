@@ -38,6 +38,17 @@ clock = pygame.time.Clock()
 
 ###### OBJECTS ######
 
+starterWindow = gui.Window(
+    name="opening_window",
+    width=500,
+    height=230,
+    cornerRadius = 30,
+    color=[150, 150, 150],
+    x=screenWidth/2,
+    y=screenHeight/2 + 50,
+    scale=1,
+    )
+
 enterSkills = gui.Button(
     name="enter_skills",
     width=450,
@@ -98,8 +109,9 @@ while running:
     # update the screen
     screen.blit(bg, bg_rect)
 
-    enterSkills.draw(screen, borderSize=3)
-    analyzeSkills.draw(screen, borderSize=3)
+    starterWindow.draw(screen)
+    enterSkills.draw(screen)
+    analyzeSkills.draw(screen)
     mainTitle.draw(screen)
     mainSubtitle.draw(screen)
 
