@@ -11,6 +11,7 @@ import numpy as np
 import time
 
 import gui
+from objects import mainStruct
 
 ###### SETUP ######
 
@@ -38,60 +39,6 @@ clock = pygame.time.Clock()
 
 ###### OBJECTS ######
 
-starterWindow = gui.Window(
-    name="opening_window",
-    width=500,
-    height=230,
-    cornerRadius = 30,
-    color=[150, 150, 150],
-    x=screenWidth/2,
-    y=screenHeight/2 + 50,
-    scale=1,
-    )
-
-enterSkills = gui.Button(
-    name="enter_skills",
-    width=450,
-    height=75,
-    cornerRadius = 15,
-    color=[180, 180, 180],
-    text="ENTER SKILLS SCORE",
-    x=screenWidth/2,
-    y=screenHeight/2,
-    scale=1,
-    fontSize=25
-    )
-
-analyzeSkills = gui.Button(
-    name="analyze_skills",
-    width=450,
-    height=75,
-    cornerRadius=15,
-    color=[200, 30, 30],
-    text="ANALYZE SCORES",
-    x=screenWidth/2,
-    y=screenHeight/2 + 100,
-    scale=1,
-    fontSize=25
-    )
-
-mainTitle = gui.Title(
-    type="title",
-    x=screenWidth/2,
-    y=screenHeight/2 - 300,
-    text="Skill Issue",
-    textColor=(30,30,30),
-    fontSize=100
-    )
-
-mainSubtitle = gui.Title(
-    type="title",
-    x=screenWidth/2,
-    y=screenHeight/2 - 220,
-    text="The VRC Skills Copilot",
-    textColor=(30,30,30),
-    fontSize=50
-    )
 
 ###### MAINLOOP ######
 
@@ -109,14 +56,13 @@ while running:
     # update the screen
     screen.blit(bg, bg_rect)
 
-    starterWindow.draw(screen)
-    enterSkills.draw(screen)
-    analyzeSkills.draw(screen)
-    mainTitle.draw(screen)
-    mainSubtitle.draw(screen)
-
-    #mainTitle.moveTo(random.randint(-100, 100), random.randint(-100, 100))
-    
+    mainStruct.starterWindow.draw(screen)
+    mainStruct.feedTab.draw(screen)
+    mainStruct.inputSkillsTab.draw(screen)
+    mainStruct.analyzeSkillsTab.draw(screen)
+    mainStruct.autoGrantTab.draw(screen)
+    mainStruct.mainTitle.draw(screen)
+    mainStruct.mainSubtitle.draw(screen)
 
     pygame.display.update()
 

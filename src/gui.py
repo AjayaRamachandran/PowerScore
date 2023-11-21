@@ -24,6 +24,11 @@ def spawnBorderedElement(width, height, color, x, y, scale, type, cr): # runs fu
     for w in range(width):
         row = []
         for h in range(height):
+            if len(color) == 4:
+                opacity = color[3]
+            else:
+                opacity = 255
+
             if type == 0 or type == 1:
                 dimFactor = 1 - (type == 1)*0.2
 
@@ -51,9 +56,9 @@ def spawnBorderedElement(width, height, color, x, y, scale, type, cr): # runs fu
                 if outOfRadius:
                     row.append([0,0,0,0])
                 elif antiAliased:
-                    row.append([int(color[0]*dimFactor),int(color[1]*dimFactor),int(color[2]*dimFactor),127])
+                    row.append([int(color[0]*dimFactor),int(color[1]*dimFactor),int(color[2]*dimFactor),round(opacity/2)])
                 else:
-                    row.append([int(color[0]*dimFactor),int(color[1]*dimFactor),int(color[2]*dimFactor),255])
+                    row.append([int(color[0]*dimFactor),int(color[1]*dimFactor),int(color[2]*dimFactor),opacity])
 
         array.append(row)
     return array
