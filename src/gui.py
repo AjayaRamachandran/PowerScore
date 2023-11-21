@@ -27,8 +27,8 @@ def createSamplePixelArray(height, width): # test function
         array.append(row)
     return array
 
-def createButton(width, height, color, x, y, scale, type): # runs function to generate a button image based on some basic rules
-    cornerRadius = 10
+def createButton(width, height, color, x, y, scale, type, cr): # runs function to generate a button image based on some basic rules
+    cornerRadius = cr
     array = []
     for w in range(width):
         row = []
@@ -36,49 +36,92 @@ def createButton(width, height, color, x, y, scale, type): # runs function to ge
             if type == 0 or type == 1:
                 dimFactor = 1 - (type == 1)*0.2
 
-                outerRadius = cornerRadius**2 + 5
-                innerRadius = cornerRadius**2 - 5
+                AAEdge = 5
+
+                outerRadius = (cornerRadius)**2 + AAEdge
+                innerRadius = (cornerRadius)**2 - AAEdge
 
                 outOfRadius = False
                 antiAliased = False
 
-                if w < cornerRadius and h < cornerRadius:
-                    outOfRadius = (cornerRadius - w)**2 + (cornerRadius - h)**2 > cornerRadius**2 + 1
+                if w < cornerRadius and h < cornerRadius: # top left corner
+                    outOfRadius = (cornerRadius - w)**2 + (cornerRadius - h)**2 > outerRadius
                     antiAliased = innerRadius < (cornerRadius - w)**2 + (cornerRadius - h)**2 < outerRadius
-                elif w > width - cornerRadius and h > height - cornerRadius:
-                    outOfRadius = (width - w - cornerRadius)**2 + (height - w - cornerRadius)**2 > cornerRadius**2 + 1
-                    antiAliased = innerRadius < (cornerRadius - w)**2 + (cornerRadius - h)**2 < outerRadius
+                elif w > width - cornerRadius - 1 and h < cornerRadius: # top right corner
+                    outOfRadius = (width - w - cornerRadius - 1)**2 + (cornerRadius - h)**2 > outerRadius
+                    antiAliased = innerRadius < (width - w - cornerRadius - 1)**2 + (cornerRadius - h)**2 < outerRadius
+                elif w < cornerRadius and h > height - cornerRadius - 1: # bottom right corner
+                    outOfRadius = (cornerRadius - w)**2 + (height - h - cornerRadius - 1)**2 > outerRadius
+                    antiAliased = innerRadius < (cornerRadius - w)**2 + (height - h - cornerRadius - 1)**2 < outerRadius
+                elif w > width - cornerRadius - 1 and h > height - cornerRadius - 1: # bottom right corner
+                    outOfRadius = (width - w - cornerRadius - 1)**2 + (height - h - cornerRadius - 1)**2 > outerRadius
+                    antiAliased = innerRadius < (width - w - cornerRadius - 1)**2 + (height - h - cornerRadius - 1)**2 < outerRadius
 
                 if outOfRadius:
                     row.append([0,0,0,0])
                 elif antiAliased:
-                    row.append([int(color[0]/dimFactor),int(color[1]/dimFactor),int(color[2]/dimFactor),125])
+                    row.append([int(color[0]*dimFactor),int(color[1]*dimFactor),int(color[2]*dimFactor),127])
                 else:
-                    row.append([int(color[0]/dimFactor),int(color[1]/dimFactor),int(color[2]/dimFactor),255])
+                    row.append([int(color[0]*dimFactor),int(color[1]*dimFactor),int(color[2]*dimFactor),255])
 
                 
             
         array.append(row)
     return array
 
-def spawnButton(width, height, color, x, y, scale, names):
+def spawnButton(width, height, color, x, y, scale, names, cr):
     for type in range(4): # generates images of all the different states the button could be in
         image = Image.new("RGBA", (width, height))
-        for x, row in enumerate(createButton(width, height, color, x, y, scale, type)):
+        for x, row in enumerate(createButton(width, height, color, x, y, scale, type, cr)):
             for y, pixel in enumerate(row):
                 image.putpixel((x, y), tuple(pixel))
 
         image.save(names[type])
 
 ###### CLASSES ######
-class Button:
+
+class GUI:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def moveTo(self, x, y):
+        self.x = x
+        self.y = y
+
+class Title(GUI):
+    def __init__(self, type, x, y, text, textColor, fontSize=20):
+        super().__init__(x, y)
+        #---SELF PROPERTIES---#
+        ## Visual Info ##
+        self.text = text
+
+        ## Text Attributes ##
+        if type == "title":
+            self.font = pygame.font.Font("fonts/Inter-ExtraBold.ttf", fontSize)
+        if type == "body":
+            self.font = pygame.font.Font("fonts/Inter-Regular.ttf", fontSize)
+        self.textColor = textColor
+        self.fontSize = fontSize
+    
+    def setTitle(self, newTitle):
+        self.text = newTitle
+    
+    def draw(self, screen):
+        textSurface = self.font.render(self.text, True, self.textColor)
+        textRect = textSurface.get_rect(center=(self.x, self.y))
+
+        screen.blit(textSurface, textRect) # draws text to screen
+
+
+class Button(GUI):
     def __init__(self, name, x, y, width, height, cornerRadius, color, text, scale, fontSize=20):
+        super().__init__(x, y)
+
         #---SELF PROPERTIES---#
         ## Essential/Very Important ##
         self.name = name
         self.rect = pygame.Rect(x-width*scale/2, y-height*scale/2, width*scale, height*scale)
-        self.x = x
-        self.y = y
 
         ## Visual Info (Cosmetic) ##
         self.color = color
@@ -88,6 +131,7 @@ class Button:
         self.width = width
         self.height = height
         self.scale = scale
+        self.cornerRadius = cornerRadius
 
         ## Text Attributes ##
         self.font = pygame.font.Font("fonts/Inter-Regular.ttf", fontSize)
@@ -101,7 +145,7 @@ class Button:
                           "images/white_" + str(name) + ".png"]
 
         #---INITIAL FUNCTIONS/SCRIPTS---#
-        spawnButton(width=width, height=height, color=self.color, x=x, y=y, scale=scale, names=self.fileNames)
+        spawnButton(width=width, height=height, color=self.color, x=x, y=y, scale=scale, names=self.fileNames, cr=cornerRadius)
 
     def draw(self, screen, borderSize=3):
         button = pygame.image.load(self.fileNames[0]) # loads images of all the different states the button could be in

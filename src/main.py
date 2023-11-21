@@ -26,7 +26,7 @@ bgPhoto = "bg.jpg"
 bg = pygame.image.load(bgPhoto)
 bg_rect = bg.get_rect()
 
-pygame.display.set_caption("CustomCraft") # Sets title of window
+pygame.display.set_caption("Skill-Issue v1.0.1") # Sets title of window
 screen = pygame.display.set_mode(windowSize, pygame.FULLSCREEN) # Sets the dimensions of the window to the windowSize
 
 font = pygame.font.Font(None, 36)
@@ -36,37 +36,50 @@ font = pygame.font.Font(None, 36)
 fps = 60
 clock = pygame.time.Clock()
 
-#villagerProfessions = initializeVillagerProfessions()
-#villagerBiomes = initializeVillagerBiomes()
-
-namespace = "minecraft:" # if the namespace EVER needs to be changed for whatever reason (mods, resourcepacks, etc.) then this will keep that smooth
-
 ###### OBJECTS ######
 
-createVillagerButton = gui.Button(
-    name="create_villager",
+enterSkills = gui.Button(
+    name="enter_skills",
     width=450,
     height=75,
     cornerRadius = 15,
-    color=[50, 150, 50],
-    text="CREATE VILLAGER",
+    color=[180, 180, 180],
+    text="ENTER SKILLS SCORE",
     x=screenWidth/2,
     y=screenHeight/2,
     scale=1,
     fontSize=25
     )
 
-createItemButton = gui.Button(
-    name="create_item",
+analyzeSkills = gui.Button(
+    name="analyze_skills",
     width=450,
     height=75,
     cornerRadius=15,
-    color=[50, 150, 50],
-    text="CREATE ITEM",
+    color=[200, 30, 30],
+    text="ANALYZE SCORES",
     x=screenWidth/2,
     y=screenHeight/2 + 100,
     scale=1,
     fontSize=25
+    )
+
+mainTitle = gui.Title(
+    type="title",
+    x=screenWidth/2,
+    y=screenHeight/2 - 300,
+    text="Skill Issue",
+    textColor=(30,30,30),
+    fontSize=100
+    )
+
+mainSubtitle = gui.Title(
+    type="title",
+    x=screenWidth/2,
+    y=screenHeight/2 - 220,
+    text="The VRC Skills Copilot",
+    textColor=(30,30,30),
+    fontSize=50
     )
 
 ###### MAINLOOP ######
@@ -85,8 +98,12 @@ while running:
     # update the screen
     screen.blit(bg, bg_rect)
 
-    createVillagerButton.draw(screen, borderSize=3)
-    createItemButton.draw(screen, borderSize=3)
+    enterSkills.draw(screen, borderSize=3)
+    analyzeSkills.draw(screen, borderSize=3)
+    mainTitle.draw(screen)
+    mainSubtitle.draw(screen)
+
+    #mainTitle.moveTo(random.randint(-100, 100), random.randint(-100, 100))
     
 
     pygame.display.update()
