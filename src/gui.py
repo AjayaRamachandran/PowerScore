@@ -74,7 +74,6 @@ def initializeBorderedElement(width, height, color, x, y, scale, names, cr):
             for x, row in enumerate(spawnBorderedElement(width, height, color, x, y, scale, type[1], cr)):
                 for y, pixel in enumerate(row):
                     image.putpixel((x, y), tuple(pixel))
-            
             image.save(type[0])
         else:
             print(type[0] + " already exists. To regenerate, delete source image and try again.")
@@ -130,8 +129,8 @@ class Window(GUI):
         self.color = color
 
         ## Visual Info (Spatial) ##
-        self.width = width * hdRatio
-        self.height = height * hdRatio
+        self.width = int(width * hdRatio)
+        self.height = int(height * hdRatio)
         self.scale = scale
         self.cornerRadius = cornerRadius
 
@@ -161,8 +160,8 @@ class Button(GUI):
         self.text = text
 
         ## Visual Info (Spatial) ##
-        self.width = width * hdRatio
-        self.height = height * hdRatio
+        self.width = int(width * hdRatio)
+        self.height = int(height * hdRatio)
         self.scale = scale
         self.cornerRadius = cornerRadius
 
@@ -181,7 +180,6 @@ class Button(GUI):
     def draw(self, screen, mode=0):
         button = pygame.image.load(self.fileNames[0][0]) # loads images of all the different states the button could be in
         dimmedButton = pygame.image.load(self.fileNames[1][0])
-
 
         button = pygame.transform.scale(button, (self.width * self.scale, self.height * self.scale)) # scales the images by a scale factor (for the "pixelated" look)
         dimmedButton = pygame.transform.scale(dimmedButton, (self.width * self.scale, self.height * self.scale))
@@ -210,7 +208,7 @@ class Button(GUI):
             return False
         
 class Textbox(GUI):
-    def __init__(self, name, x, y, width, height, exampleText, scale, color=(255, 255, 255),fontSize=20):
+    def __init__(self, name, x, y, width, height, exampleText, scale, color=(255, 255, 255), fontSize=20, textColor=(0, 0, 0)):
         super().__init__(x, y)
 
         #---SELF PROPERTIES---#
@@ -225,36 +223,30 @@ class Textbox(GUI):
         self.text = ""
 
         ## Visual Info (Spatial) ##
-        self.width = width * hdRatio
-        self.height = height * hdRatio
+        self.width = int(width * hdRatio)
+        self.height = int(height * hdRatio)
         self.scale = scale
 
         ## Text Attributes ##
-        self.textColor = (0, 0, 0)  # Default text color
+        self.textColor = textColor  # Default text color
         self.fontSize = int(fontSize * hdRatio)
         self.font = pygame.font.Font("fonts/Inter-Regular.ttf", self.fontSize)
 
     def draw(self, screen):
         pygame.draw.rect(screen, self.color, self.rect, width=0) # draws a (default: white) background for the textbox
-
         if self.selected:
-            pygame.draw.rect(screen, (0, 0, 0), self.rect, width=4) # draws a thick border if the textbox is selected
-            
+            pygame.draw.rect(screen, self.textColor, self.rect, width=4) # draws a thick border if the textbox is selected   
             textSurface = self.font.render(self.text, True, self.textColor) # this weird workaround (rendering without the pole then adding the pole) prevents the up-down jitter seen when using the pole as the cursor
             textRect = textSurface.get_rect(center=self.rect.center)
-
             if int(time.time()) % 2 == 0:
                 textSurface = self.font.render(self.text + "|", True, self.textColor)
-
         else:
-            pygame.draw.rect(screen, (0, 0, 0), self.rect, width=2)  # draws a thin border if the textbox is not selected
-            fadedTextColor = [value * 0.8 for value in self.color] # generates a faded text color based on a darker version of the textbox's bg color
-
+            pygame.draw.rect(screen, self.textColor, self.rect, width=2)  # draws a thin border if the textbox is not selected
+            fadedTextColor = [int((self.color[value] * 2 + self.textColor[value] * 1) / 3) for value in range(len(self.color))] # generates a faded text color based on a darker version of the textbox's bg color
             if self.text == "":  # if the textbox is empty and unselected, write a faded default text in it
                 textSurface = self.font.render(self.exampleText, True, fadedTextColor)
             else:
                 textSurface = self.font.render(self.text, True, self.textColor)
-
             textRect = textSurface.get_rect(center=self.rect.center)
         screen.blit(textSurface, textRect) # draws text to screen
 
@@ -272,11 +264,9 @@ class Textbox(GUI):
         
     def dynamicInteraction(self, pressedKey):
         if self.isClicked():
-            self.selected = True
-            
+            self.selected = True    
         if self.isUnclicked():
             self.selected = False
-
         if self.selected:
             if pressedKey == "keyBKSPC":
                 self.text = self.text[:-1]

@@ -21,7 +21,7 @@ starterWindow = gui.Window(
     width=1800,
     height=850,
     cornerRadius = 15,
-    color=[180, 180, 180],
+    color=[220, 220, 220],
     x=1920/2,
     y=1080/2 + 50,
     scale=1,
@@ -78,34 +78,5 @@ autoGrantTab = gui.Button(
     scale=1,
     fontSize=20
     )
-
-mainTitle = gui.Title(
-    type="title",
-    x=1920/2,
-    y=1080/2 - 300,
-    text="Skill Issue",
-    textColor=(30,30,30),
-    fontSize=100
-    )
-
-mainSubtitle = gui.Title(
-    type="title",
-    x=1920/2,
-    y=1080/2 - 220,
-    text="The VRC Skills Copilot",
-    textColor=(30,30,30),
-    fontSize=50
-    )
-
-enterSkills = gui.Textbox(
-    name="enter_skills",
-    x=1920/2,
-    y=1080/2 + 200,
-    width=400,
-    height=100,
-    exampleText="Enter Skills Score",
-    scale=1,
-    fontSize=30
-)
 
 print("mainStruct files generated")

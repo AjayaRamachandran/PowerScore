@@ -10,6 +10,8 @@ import time
 
 import gui
 from objects import mainStruct
+from objects import worldSkillsFeed
+from objects import inputSkills
 
 ###### SETUP ######
 
@@ -31,9 +33,6 @@ screen = pygame.display.set_mode(windowSize, pygame.FULLSCREEN) # Sets the dimen
 font = pygame.font.Font(None, 36)
 
 hdRatio = screenWidth / 1920
-
-print(screenHeight)
-print(screenWidth)
 
 ###### INITIALIZE ######
 
@@ -80,8 +79,10 @@ while running:
     mainStruct.analyzeSkillsTab.draw(screen, mode=int(page=="analyze"))
     mainStruct.autoGrantTab.draw(screen, mode=int(page=="autoGrant"))
 
-    mainStruct.mainTitle.draw(screen)
-    mainStruct.mainSubtitle.draw(screen)
+    worldSkillsFeed.scrollWindow.draw(screen)
+
+    worldSkillsFeed.mainTitle.draw(screen)
+    worldSkillsFeed.mainSubtitle.draw(screen)
 
     if mainStruct.feedTab.isClicked():
         page = "feed"
@@ -95,8 +96,8 @@ while running:
     debug.setTitle("Page: " + page)
     debug.draw(screen)
 
-    mainStruct.enterSkills.dynamicInteraction(pressedKey)
-    mainStruct.enterSkills.draw(screen)
+    inputSkills.enterSkills.dynamicInteraction(pressedKey)
+    inputSkills.enterSkills.draw(screen)
 
     pygame.display.update()
 
