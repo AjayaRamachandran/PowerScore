@@ -30,6 +30,11 @@ screen = pygame.display.set_mode(windowSize, pygame.FULLSCREEN) # Sets the dimen
 
 font = pygame.font.Font(None, 36)
 
+hdRatio = screenWidth / 1920
+
+print(screenHeight)
+print(screenWidth)
+
 ###### INITIALIZE ######
 
 fps = 60
@@ -40,7 +45,7 @@ page = "feed"
 
 debug = gui.Title(
     type="body",
-    x=screenWidth/2,
+    x=1920/2,
     y=20,
     text="Page: " + page,
     textColor=(30,30,30),

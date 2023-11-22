@@ -18,6 +18,8 @@ screenInfo = pygame.display.Info()
 screenWidth = screenInfo.current_w
 screenHeight = screenInfo.current_h
 
+hdRatio = screenWidth / 1920
+
 ###### FUNCTIONS ######
 
 def spawnBorderedElement(width, height, color, x, y, scale, type, cr): # runs function to generate a button image based on some basic rules
@@ -83,12 +85,12 @@ def initializeBorderedElement(width, height, color, x, y, scale, names, cr):
 
 class GUI:
     def __init__(self, x, y):
-        self.x = x
-        self.y = y
+        self.x = x * hdRatio
+        self.y = y * hdRatio
 
     def moveTo(self, x, y):
-        self.x = x
-        self.y = y
+        self.x = x * hdRatio
+        self.y = y * hdRatio
 
 class Title(GUI):
     def __init__(self, type, x, y, text, textColor, fontSize=20):
@@ -98,12 +100,13 @@ class Title(GUI):
         self.text = text
 
         ## Text Attributes ##
-        if type == "title":
-            self.font = pygame.font.Font("fonts/Inter-ExtraBold.ttf", fontSize)
-        if type == "body":
-            self.font = pygame.font.Font("fonts/Inter-Regular.ttf", fontSize)
         self.textColor = textColor
-        self.fontSize = fontSize
+        self.fontSize = int(fontSize * hdRatio)
+
+        if type == "title":
+            self.font = pygame.font.Font("fonts/Inter-ExtraBold.ttf", self.fontSize)
+        if type == "body":
+            self.font = pygame.font.Font("fonts/Inter-Regular.ttf", self.fontSize)
     
     def setTitle(self, newTitle):
         self.text = newTitle
@@ -127,8 +130,8 @@ class Window(GUI):
         self.color = color
 
         ## Visual Info (Spatial) ##
-        self.width = width
-        self.height = height
+        self.width = width * hdRatio
+        self.height = height * hdRatio
         self.scale = scale
         self.cornerRadius = cornerRadius
 
@@ -136,7 +139,7 @@ class Window(GUI):
         self.fileNames = [("images/base_" + str(name) + ".png", 0)]
 
         #---INITIAL FUNCTIONS/SCRIPTS---#
-        initializeBorderedElement(width=width, height=height, color=self.color, x=x, y=y, scale=scale, names=self.fileNames, cr=cornerRadius)
+        initializeBorderedElement(width=self.width, height=self.height, color=self.color, x=self.x, y=self.y, scale=self.scale, names=self.fileNames, cr=self.cornerRadius)
 
     def draw(self, screen):
         window = pygame.image.load(self.fileNames[0][0]) # loads images of all the different states the window could be in
@@ -151,29 +154,29 @@ class Button(GUI):
         #---SELF PROPERTIES---#
         ## Essential/Very Important ##
         self.name = name
-        self.rect = pygame.Rect(x-width*scale/2, y-height*scale/2, width*scale, height*scale)
+        self.rect = pygame.Rect((x-width*scale/2)*hdRatio, (y-height*scale/2)*hdRatio, width*scale*hdRatio, height*scale*hdRatio)
 
         ## Visual Info (Cosmetic) ##
         self.color = color
         self.text = text
 
         ## Visual Info (Spatial) ##
-        self.width = width
-        self.height = height
+        self.width = width * hdRatio
+        self.height = height * hdRatio
         self.scale = scale
         self.cornerRadius = cornerRadius
 
         ## Text Attributes ##
-        self.font = pygame.font.Font("fonts/Inter-Regular.ttf", fontSize)
         self.textColor = (255, 255, 255)  # Default text color
-        self.fontSize = fontSize
+        self.fontSize = int(fontSize * hdRatio)
+        self.font = pygame.font.Font("fonts/Inter-Regular.ttf", self.fontSize)
 
         ## File Saving ##
         self.fileNames = [("images/base_" + str(name) + ".png", 0),
                           ("images/dimmed_" + str(name) + ".png", 1)]
 
         #---INITIAL FUNCTIONS/SCRIPTS---#
-        initializeBorderedElement(width=width, height=height, color=self.color, x=x, y=y, scale=scale, names=self.fileNames, cr=cornerRadius)
+        initializeBorderedElement(width=self.width, height=self.height, color=self.color, x=self.x, y=self.y, scale=self.scale, names=self.fileNames, cr=self.cornerRadius)
 
     def draw(self, screen, mode=0):
         button = pygame.image.load(self.fileNames[0][0]) # loads images of all the different states the button could be in
@@ -213,7 +216,7 @@ class Textbox(GUI):
         #---SELF PROPERTIES---#
         ## Essential/Very Important ##
         self.name = name
-        self.rect = pygame.Rect(x-width*scale/2, y-height*scale/2, width*scale, height*scale)
+        self.rect = pygame.Rect((x-width*scale/2)*hdRatio, (y-height*scale/2)*hdRatio, width*scale*hdRatio, height*scale*hdRatio)
         self.selected = False
 
         ## Visual Info (Cosmetic) ##
@@ -222,14 +225,14 @@ class Textbox(GUI):
         self.text = ""
 
         ## Visual Info (Spatial) ##
-        self.width = width
-        self.height = height
+        self.width = width * hdRatio
+        self.height = height * hdRatio
         self.scale = scale
 
         ## Text Attributes ##
-        self.font = pygame.font.Font("fonts/Inter-Regular.ttf", fontSize)
         self.textColor = (0, 0, 0)  # Default text color
-        self.fontSize = fontSize
+        self.fontSize = int(fontSize * hdRatio)
+        self.font = pygame.font.Font("fonts/Inter-Regular.ttf", self.fontSize)
 
     def draw(self, screen):
         pygame.draw.rect(screen, self.color, self.rect, width=0) # draws a (default: white) background for the textbox

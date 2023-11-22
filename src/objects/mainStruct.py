@@ -22,8 +22,8 @@ starterWindow = gui.Window(
     height=850,
     cornerRadius = 15,
     color=[180, 180, 180],
-    x=screenWidth/2,
-    y=screenHeight/2 + 50,
+    x=1920/2,
+    y=1080/2 + 50,
     scale=1,
     )
 
@@ -81,8 +81,8 @@ autoGrantTab = gui.Button(
 
 mainTitle = gui.Title(
     type="title",
-    x=screenWidth/2,
-    y=screenHeight/2 - 300,
+    x=1920/2,
+    y=1080/2 - 300,
     text="Skill Issue",
     textColor=(30,30,30),
     fontSize=100
@@ -90,8 +90,8 @@ mainTitle = gui.Title(
 
 mainSubtitle = gui.Title(
     type="title",
-    x=screenWidth/2,
-    y=screenHeight/2 - 220,
+    x=1920/2,
+    y=1080/2 - 220,
     text="The VRC Skills Copilot",
     textColor=(30,30,30),
     fontSize=50
@@ -99,8 +99,8 @@ mainSubtitle = gui.Title(
 
 enterSkills = gui.Textbox(
     name="enter_skills",
-    x=screenWidth/2,
-    y=screenHeight/2 + 200,
+    x=1920/2,
+    y=1080/2 + 200,
     width=400,
     height=100,
     exampleText="Enter Skills Score",
