@@ -97,4 +97,15 @@ mainSubtitle = gui.Title(
     fontSize=50
     )
 
+enterSkills = gui.Textbox(
+    name="enter_skills",
+    x=screenWidth/2,
+    y=screenHeight/2 + 200,
+    width=400,
+    height=100,
+    exampleText="Enter Skills Score",
+    scale=1,
+    fontSize=30
+)
+
 print("mainStruct files generated")

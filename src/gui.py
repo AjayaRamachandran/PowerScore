@@ -7,6 +7,7 @@ import os
 
 import random
 from math import *
+import time
 
 from tkinter.filedialog import asksaveasfile
 
@@ -204,3 +205,79 @@ class Button(GUI):
             return True
         else:
             return False
+        
+class Textbox(GUI):
+    def __init__(self, name, x, y, width, height, exampleText, scale, color=(255, 255, 255),fontSize=20):
+        super().__init__(x, y)
+
+        #---SELF PROPERTIES---#
+        ## Essential/Very Important ##
+        self.name = name
+        self.rect = pygame.Rect(x-width*scale/2, y-height*scale/2, width*scale, height*scale)
+        self.selected = False
+
+        ## Visual Info (Cosmetic) ##
+        self.color = color
+        self.exampleText = exampleText
+        self.text = ""
+
+        ## Visual Info (Spatial) ##
+        self.width = width
+        self.height = height
+        self.scale = scale
+
+        ## Text Attributes ##
+        self.font = pygame.font.Font("fonts/Inter-Regular.ttf", fontSize)
+        self.textColor = (0, 0, 0)  # Default text color
+        self.fontSize = fontSize
+
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.color, self.rect, width=0) # draws a (default: white) background for the textbox
+
+        if self.selected:
+            pygame.draw.rect(screen, (0, 0, 0), self.rect, width=4) # draws a thick border if the textbox is selected
+            
+            textSurface = self.font.render(self.text, True, self.textColor) # this weird workaround (rendering without the pole then adding the pole) prevents the up-down jitter seen when using the pole as the cursor
+            textRect = textSurface.get_rect(center=self.rect.center)
+
+            if int(time.time()) % 2 == 0:
+                textSurface = self.font.render(self.text + "|", True, self.textColor)
+
+        else:
+            pygame.draw.rect(screen, (0, 0, 0), self.rect, width=2)  # draws a thin border if the textbox is not selected
+            fadedTextColor = [value * 0.8 for value in self.color] # generates a faded text color based on a darker version of the textbox's bg color
+
+            if self.text == "":  # if the textbox is empty and unselected, write a faded default text in it
+                textSurface = self.font.render(self.exampleText, True, fadedTextColor)
+            else:
+                textSurface = self.font.render(self.text, True, self.textColor)
+
+            textRect = textSurface.get_rect(center=self.rect.center)
+        screen.blit(textSurface, textRect) # draws text to screen
+
+    def isClicked(self):
+        if self.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0] == 1:
+            return True
+        else:
+            return False
+        
+    def isUnclicked(self):
+        if not self.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0] == 1:
+            return True
+        else:
+            return False
+        
+    def dynamicInteraction(self, pressedKey):
+        if self.isClicked():
+            self.selected = True
+            
+        if self.isUnclicked():
+            self.selected = False
+
+        if self.selected:
+            if pressedKey == "keyBKSPC":
+                self.text = self.text[:-1]
+            else:
+                self.text = self.text + pressedKey
+
+

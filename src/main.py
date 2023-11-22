@@ -52,12 +52,18 @@ debug = gui.Title(
 running = True # Runs the game loop
 while running:
     screen.fill((30, 30, 37))
+    pressedKey = ""
 
     for event in pygame.event.get(): # checks if program is quit, if so stops the code
         if event.type == pygame.QUIT:
             running = False
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                running = False
+            elif event.key == pygame.K_BACKSPACE:
+                pressedKey = "keyBKSPC"
+            else:
+                pressedKey = event.unicode
     # runs framerate wait time
     clock.tick(fps)
     # update the screen
@@ -83,6 +89,9 @@ while running:
 
     debug.setTitle("Page: " + page)
     debug.draw(screen)
+
+    mainStruct.enterSkills.draw(screen)
+    mainStruct.enterSkills.dynamicInteraction(pressedKey)
 
     pygame.display.update()
 
