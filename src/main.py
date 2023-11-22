@@ -1,8 +1,6 @@
 ###### IMPORT ######
 
 import pygame
-from PIL import Image
-import io
 
 import random
 from math import *
@@ -36,9 +34,18 @@ font = pygame.font.Font(None, 36)
 
 fps = 60
 clock = pygame.time.Clock()
+page = "feed"
 
 ###### OBJECTS ######
 
+debug = gui.Title(
+    type="body",
+    x=screenWidth/2,
+    y=20,
+    text="Page: " + page,
+    textColor=(30,30,30),
+    fontSize=15
+    )
 
 ###### MAINLOOP ######
 
@@ -57,12 +64,25 @@ while running:
     screen.blit(bg, bg_rect)
 
     mainStruct.starterWindow.draw(screen)
-    mainStruct.feedTab.draw(screen)
-    mainStruct.inputSkillsTab.draw(screen)
-    mainStruct.analyzeSkillsTab.draw(screen)
-    mainStruct.autoGrantTab.draw(screen)
+    mainStruct.feedTab.draw(screen, mode=int(page=="feed"))
+    mainStruct.inputSkillsTab.draw(screen, mode=int(page=="input"))
+    mainStruct.analyzeSkillsTab.draw(screen, mode=int(page=="analyze"))
+    mainStruct.autoGrantTab.draw(screen, mode=int(page=="autoGrant"))
+
     mainStruct.mainTitle.draw(screen)
     mainStruct.mainSubtitle.draw(screen)
+
+    if mainStruct.feedTab.isClicked():
+        page = "feed"
+    if mainStruct.inputSkillsTab.isClicked():
+        page = "input"
+    if mainStruct.analyzeSkillsTab.isClicked():
+        page = "analyze"
+    if mainStruct.autoGrantTab.isClicked():
+        page = "autoGrant"
+
+    debug.setTitle("Page: " + page)
+    debug.draw(screen)
 
     pygame.display.update()
 

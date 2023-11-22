@@ -1,6 +1,7 @@
 ###### IMPORT ######
 
 import pygame
+import sys
 
 import gui
 
@@ -13,13 +14,14 @@ screenWidth = screenInfo.current_w
 screenHeight = screenInfo.current_h
 
 ###### OBJECTS ######
+print("Generating mainStruct files...")
 
 starterWindow = gui.Window(
     name="opening_window",
     width=1800,
     height=850,
     cornerRadius = 15,
-    color=[180, 180, 180, 200],
+    color=[180, 180, 180],
     x=screenWidth/2,
     y=screenHeight/2 + 50,
     scale=1,
@@ -30,7 +32,7 @@ feedTab = gui.Button(
     width=426,
     height=75,
     cornerRadius = 15,
-    color=[100, 100, 100],
+    color=[80, 120, 120],
     text="World Skills Feed",
     x=273,
     y=100,
@@ -43,7 +45,7 @@ inputSkillsTab = gui.Button(
     width=426,
     height=75,
     cornerRadius = 15,
-    color=[100, 100, 100],
+    color=[80, 120, 120],
     text="Input Skills Score",
     x=731,
     y=100,
@@ -56,7 +58,7 @@ analyzeSkillsTab = gui.Button(
     width=426,
     height=75,
     cornerRadius = 15,
-    color=[100, 100, 100],
+    color=[80, 120, 120],
     text="Analyze Skills",
     x=1189,
     y=100,
@@ -69,7 +71,7 @@ autoGrantTab = gui.Button(
     width=426,
     height=75,
     cornerRadius = 15,
-    color=[100, 100, 100],
+    color=[80, 120, 120],
     text="AutoGrant",
     x=1647,
     y=100,
@@ -94,3 +96,5 @@ mainSubtitle = gui.Title(
     textColor=(30,30,30),
     fontSize=50
     )
+
+print("mainStruct files generated")

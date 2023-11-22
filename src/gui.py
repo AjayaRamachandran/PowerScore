@@ -3,6 +3,7 @@
 from PIL import Image
 import io
 import pygame
+import os
 
 import random
 from math import *
@@ -65,12 +66,17 @@ def spawnBorderedElement(width, height, color, x, y, scale, type, cr): # runs fu
 
 def initializeBorderedElement(width, height, color, x, y, scale, names, cr):
     for type in names: # generates images of all the different states the button could be in
-        image = Image.new("RGBA", (width, height))
-        for x, row in enumerate(spawnBorderedElement(width, height, color, x, y, scale, type[1], cr)):
-            for y, pixel in enumerate(row):
-                image.putpixel((x, y), tuple(pixel))
+        if not os.path.exists(type[0]):
+            image = Image.new("RGBA", (width, height))
+            for x, row in enumerate(spawnBorderedElement(width, height, color, x, y, scale, type[1], cr)):
+                for y, pixel in enumerate(row):
+                    image.putpixel((x, y), tuple(pixel))
+            
+            image.save(type[0])
+        else:
+            print(type[0] + " already exists. To regenerate, delete source image and try again.")
 
-        image.save(type[0])
+        
 
 ###### CLASSES ######
 
@@ -168,7 +174,7 @@ class Button(GUI):
         #---INITIAL FUNCTIONS/SCRIPTS---#
         initializeBorderedElement(width=width, height=height, color=self.color, x=x, y=y, scale=scale, names=self.fileNames, cr=cornerRadius)
 
-    def draw(self, screen):
+    def draw(self, screen, mode=0):
         button = pygame.image.load(self.fileNames[0][0]) # loads images of all the different states the button could be in
         dimmedButton = pygame.image.load(self.fileNames[1][0])
 
@@ -177,7 +183,7 @@ class Button(GUI):
         dimmedButton = pygame.transform.scale(dimmedButton, (self.width * self.scale, self.height * self.scale))
 
 
-        if self.rect.collidepoint(pygame.mouse.get_pos()): # blits to screen the dimmed version of the button if the mouse is hovering over it
+        if self.rect.collidepoint(pygame.mouse.get_pos()) or mode==1: # blits to screen the dimmed version of the button if the mouse is hovering over it
             screen.blit(dimmedButton, (self.x - self.width*self.scale/2, self.y - self.height*self.scale/2))
         else:
             screen.blit(button, (self.x - self.width*self.scale/2, self.y - self.height*self.scale/2))
