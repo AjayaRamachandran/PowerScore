@@ -90,8 +90,8 @@ while running:
     debug.setTitle("Page: " + page)
     debug.draw(screen)
 
-    mainStruct.enterSkills.draw(screen)
     mainStruct.enterSkills.dynamicInteraction(pressedKey)
+    mainStruct.enterSkills.draw(screen)
 
     pygame.display.update()
 
