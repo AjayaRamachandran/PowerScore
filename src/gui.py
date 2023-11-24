@@ -34,7 +34,8 @@ def spawnBorderedElement(width, height, color, x, y, scale, type, cr): # runs fu
                 opacity = 255
 
             if type == 0 or type == 1:
-                dimFactor = 1 - (type == 1)*0.2
+                buttonIsDark = color[0]<=60 or color[1]<=60 or color[2]<=60
+                dimFactor = (type == 1 and buttonIsDark)*20 + (type == 1 and not buttonIsDark)*-15
 
                 AAEdge = 5
 
@@ -60,9 +61,9 @@ def spawnBorderedElement(width, height, color, x, y, scale, type, cr): # runs fu
                 if outOfRadius:
                     row.append([0,0,0,0])
                 elif antiAliased:
-                    row.append([int(color[0]*dimFactor),int(color[1]*dimFactor),int(color[2]*dimFactor),round(opacity/2)])
+                    row.append([int(color[0]+dimFactor),int(color[1]+dimFactor),int(color[2]+dimFactor),round(opacity/2)])
                 else:
-                    row.append([int(color[0]*dimFactor),int(color[1]*dimFactor),int(color[2]*dimFactor),opacity])
+                    row.append([int(color[0]+dimFactor),int(color[1]+dimFactor),int(color[2]+dimFactor),opacity])
 
         array.append(row)
     return array
@@ -208,7 +209,7 @@ class Button(GUI):
             return False
         
 class Textbox(GUI):
-    def __init__(self, name, x, y, width, height, exampleText, scale, color=(255, 255, 255), fontSize=20, textColor=(0, 0, 0)):
+    def __init__(self, name, x, y, width, height, exampleText, scale, color=(255, 255, 255), fontSize=20, textColor=(0, 0, 0), characterLimit=None):
         super().__init__(x, y)
 
         #---SELF PROPERTIES---#
@@ -231,6 +232,7 @@ class Textbox(GUI):
         self.textColor = textColor  # Default text color
         self.fontSize = int(fontSize * hdRatio)
         self.font = pygame.font.Font("fonts/Inter-Regular.ttf", self.fontSize)
+        self.characterlimit = characterLimit
 
     def draw(self, screen):
         pygame.draw.rect(screen, self.color, self.rect, width=0) # draws a (default: white) background for the textbox
@@ -271,6 +273,8 @@ class Textbox(GUI):
             if pressedKey == "keyBKSPC":
                 self.text = self.text[:-1]
             else:
-                self.text = self.text + pressedKey
-
-
+                if self.characterlimit != None:
+                    if len(self.text) < self.characterlimit:
+                        self.text = self.text + pressedKey
+                else:
+                    self.text = self.text + pressedKey

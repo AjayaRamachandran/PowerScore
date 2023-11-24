@@ -16,7 +16,7 @@ screenHeight = screenInfo.current_h
 ###### OBJECTS ######
 print("Generating worldSkillsFeed files...")
 
-mainTitle = gui.Title(
+worldSkillsTitle = gui.Title(
     type="title",
     x=360,
     y=1080/2 - 300,
@@ -25,7 +25,7 @@ mainTitle = gui.Title(
     fontSize=60
     )
 
-mainSubtitle = gui.Title(
+dateUpdated = gui.Title(
     type="title",
     x=300,
     y=1080/2 - 230,

@@ -79,11 +79,6 @@ while running:
     mainStruct.analyzeSkillsTab.draw(screen, mode=int(page=="analyze"))
     mainStruct.autoGrantTab.draw(screen, mode=int(page=="autoGrant"))
 
-    worldSkillsFeed.scrollWindow.draw(screen)
-
-    worldSkillsFeed.mainTitle.draw(screen)
-    worldSkillsFeed.mainSubtitle.draw(screen)
-
     if mainStruct.feedTab.isClicked():
         page = "feed"
     if mainStruct.inputSkillsTab.isClicked():
@@ -96,8 +91,19 @@ while running:
     debug.setTitle("Page: " + page)
     debug.draw(screen)
 
-    inputSkills.enterSkills.dynamicInteraction(pressedKey)
-    inputSkills.enterSkills.draw(screen)
+    if page == "feed":
+        worldSkillsFeed.scrollWindow.draw(screen)
+        worldSkillsFeed.worldSkillsTitle.draw(screen)
+        worldSkillsFeed.dateUpdated.draw(screen)
+    elif page == "input":
+        inputSkills.inputWindow.draw(screen)
+
+        inputSkills.enterSkills.dynamicInteraction(pressedKey)
+        inputSkills.enterSkills.draw(screen)
+        inputSkills.inputSkillsTitle.draw(screen)
+
+        inputSkills.progSkillsOption.draw(screen)
+        inputSkills.driverSkillsOption.draw(screen)
 
     pygame.display.update()
 

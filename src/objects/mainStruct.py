@@ -37,7 +37,7 @@ feedTab = gui.Button(
     x=273,
     y=100,
     scale=1,
-    fontSize=20
+    fontSize=26
     )
 
 inputSkillsTab = gui.Button(
@@ -50,7 +50,7 @@ inputSkillsTab = gui.Button(
     x=731,
     y=100,
     scale=1,
-    fontSize=20
+    fontSize=26
     )
 
 analyzeSkillsTab = gui.Button(
@@ -63,7 +63,7 @@ analyzeSkillsTab = gui.Button(
     x=1189,
     y=100,
     scale=1,
-    fontSize=20
+    fontSize=26
     )
 
 autoGrantTab = gui.Button(
@@ -76,7 +76,7 @@ autoGrantTab = gui.Button(
     x=1647,
     y=100,
     scale=1,
-    fontSize=20
+    fontSize=26
     )
 
 print("mainStruct files generated")
