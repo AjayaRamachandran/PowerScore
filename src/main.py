@@ -27,6 +27,13 @@ bgPhoto = "bg.jpg"
 bg = pygame.image.load(bgPhoto)
 bg_rect = bg.get_rect()
 
+iconImports = ["src/imagefiles/world_skills_feed.png", "src/imagefiles/input_skills_score.png", "src/imagefiles/analyze_skills.png", "src/imagefiles/autoGrant.png"]
+worldSkillsIcon = pygame.image.load(iconImports[0])
+inputSkillsIcon = pygame.image.load(iconImports[1])
+analyzeSkillsIcon = pygame.image.load(iconImports[2])
+autoGrantIcon = pygame.image.load(iconImports[3])
+iconSize = 400
+
 pygame.display.set_caption("Skill-Issue v1.0.1") # Sets title of window
 screen = pygame.display.set_mode(windowSize, pygame.FULLSCREEN) # Sets the dimensions of the window to the windowSize
 
@@ -39,6 +46,7 @@ hdRatio = screenWidth / 1920
 fps = 60
 clock = pygame.time.Clock()
 page = "feed"
+mode = "driver"
 
 ###### OBJECTS ######
 
@@ -95,6 +103,11 @@ while running:
         worldSkillsFeed.scrollWindow.draw(screen)
         worldSkillsFeed.worldSkillsTitle.draw(screen)
         worldSkillsFeed.dateUpdated.draw(screen)
+
+        thisIconSize = iconSize * 0.4
+        worldSkillsIcon = pygame.transform.scale(worldSkillsIcon, (thisIconSize, thisIconSize)) # scales the images by a scale factor
+        screen.blit(worldSkillsIcon, (180 - thisIconSize/2, 280 - thisIconSize/2))
+
     elif page == "input":
         inputSkills.inputWindow.draw(screen)
 
@@ -102,8 +115,19 @@ while running:
         inputSkills.enterSkills.draw(screen)
         inputSkills.inputSkillsTitle.draw(screen)
 
-        inputSkills.progSkillsOption.draw(screen)
-        inputSkills.driverSkillsOption.draw(screen)
+        thisIconSize = iconSize * 0.25
+        inputSkillsIcon = pygame.transform.scale(inputSkillsIcon, (thisIconSize, thisIconSize)) # scales the images by a scale factor
+        screen.blit(inputSkillsIcon, (390 - thisIconSize/2, 335 - thisIconSize/2))
+
+        inputSkills.progSkillsOption.draw(screen, mode=int(mode=="programming"))
+        inputSkills.driverSkillsOption.draw(screen, mode=int(mode=="driver"))
+
+        if inputSkills.progSkillsOption.isClicked():
+            mode = "programming"
+        elif inputSkills.driverSkillsOption.isClicked():
+            mode = "driver"
+            
+
 
     pygame.display.update()
 

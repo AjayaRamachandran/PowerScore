@@ -18,8 +18,8 @@ print("Generating worldSkillsFeed files...")
 
 worldSkillsTitle = gui.Title(
     type="title",
-    x=360,
-    y=1080/2 - 300,
+    x=540,
+    y=1080/2 - 290,
     text="World Skills Feed",
     textColor=(30,30,30),
     fontSize=60
@@ -27,7 +27,7 @@ worldSkillsTitle = gui.Title(
 
 dateUpdated = gui.Title(
     type="title",
-    x=300,
+    x=480,
     y=1080/2 - 230,
     text="Last Updated: 11/22/2023",
     textColor=(30,30,30),
