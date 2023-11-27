@@ -45,4 +45,30 @@ scrollWindow = gui.Window(
     scale=1,
     )
 
+refreshFeed = gui.Button(
+    name="refresh_feed",
+    width=720,
+    height=65,
+    cornerRadius = 15,
+    color=[50, 50, 50],
+    text="Refresh Feed",
+    x=450,
+    y=520,
+    scale=1,
+    fontSize=25
+    )
+
+exportList = gui.Button(
+    name="export_list",
+    width=720,
+    height=65,
+    cornerRadius = 15,
+    color=[50, 50, 50],
+    text="Export List",
+    x=450,
+    y=600,
+    scale=1,
+    fontSize=25
+    )
+
 print("worldSkillsFeed files generated")

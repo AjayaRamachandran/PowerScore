@@ -34,6 +34,12 @@ analyzeSkillsIcon = pygame.image.load(iconImports[2])
 autoGrantIcon = pygame.image.load(iconImports[3])
 iconSize = 400
 
+wsIconSize = iconSize * 0.4
+worldSkillsIcon = pygame.transform.scale(worldSkillsIcon, (wsIconSize, wsIconSize)) # scales the images by a scale factor
+
+isIconSize = iconSize * 0.25
+inputSkillsIcon = pygame.transform.scale(inputSkillsIcon, (isIconSize, isIconSize)) # scales the images by a scale factor
+
 pygame.display.set_caption("Skill-Issue v1.0.1") # Sets title of window
 screen = pygame.display.set_mode(windowSize, pygame.FULLSCREEN) # Sets the dimensions of the window to the windowSize
 
@@ -44,6 +50,8 @@ hdRatio = screenWidth / 1920
 ###### INITIALIZE ######
 
 fps = 60
+currentTime = 0
+framerate = fps
 clock = pygame.time.Clock()
 page = "feed"
 mode = "driver"
@@ -54,7 +62,7 @@ debug = gui.Title(
     type="body",
     x=1920/2,
     y=20,
-    text="Page: " + page,
+    text="FPS: " + str(framerate),
     textColor=(30,30,30),
     fontSize=15
     )
@@ -63,6 +71,9 @@ debug = gui.Title(
 
 running = True # Runs the game loop
 while running:
+    framerate = round(1 / (time.time() - currentTime))
+    currentTime = time.time()
+
     screen.fill((30, 30, 37))
     pressedKey = ""
 
@@ -87,6 +98,8 @@ while running:
     mainStruct.analyzeSkillsTab.draw(screen, mode=int(page=="analyze"))
     mainStruct.autoGrantTab.draw(screen, mode=int(page=="autoGrant"))
 
+    mainStruct.feedTab.moveTo(mainStruct.feedTab.x, mainStruct.feedTab.y)
+
     if mainStruct.feedTab.isClicked():
         page = "feed"
     if mainStruct.inputSkillsTab.isClicked():
@@ -96,7 +109,7 @@ while running:
     if mainStruct.autoGrantTab.isClicked():
         page = "autoGrant"
 
-    debug.setTitle("Page: " + page)
+    debug.setTitle("FPS: " + str(framerate))
     debug.draw(screen)
 
     if page == "feed":
@@ -104,9 +117,10 @@ while running:
         worldSkillsFeed.worldSkillsTitle.draw(screen)
         worldSkillsFeed.dateUpdated.draw(screen)
 
-        thisIconSize = iconSize * 0.4
-        worldSkillsIcon = pygame.transform.scale(worldSkillsIcon, (thisIconSize, thisIconSize)) # scales the images by a scale factor
-        screen.blit(worldSkillsIcon, (180 - thisIconSize/2, 280 - thisIconSize/2))
+        worldSkillsFeed.refreshFeed.draw(screen)
+        worldSkillsFeed.exportList.draw(screen)
+
+        screen.blit(worldSkillsIcon, (180 - wsIconSize/2, 280 - wsIconSize/2))
 
     elif page == "input":
         inputSkills.inputWindow.draw(screen)
@@ -115,9 +129,7 @@ while running:
         inputSkills.enterSkills.draw(screen)
         inputSkills.inputSkillsTitle.draw(screen)
 
-        thisIconSize = iconSize * 0.25
-        inputSkillsIcon = pygame.transform.scale(inputSkillsIcon, (thisIconSize, thisIconSize)) # scales the images by a scale factor
-        screen.blit(inputSkillsIcon, (390 - thisIconSize/2, 335 - thisIconSize/2))
+        screen.blit(inputSkillsIcon, (390 - isIconSize/2, 335 - isIconSize/2))
 
         inputSkills.progSkillsOption.draw(screen, mode=int(mode=="programming"))
         inputSkills.driverSkillsOption.draw(screen, mode=int(mode=="driver"))
@@ -127,8 +139,6 @@ while running:
         elif inputSkills.driverSkillsOption.isClicked():
             mode = "driver"
             
-
-
     pygame.display.update()
 
 # quit Pygame

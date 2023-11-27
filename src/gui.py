@@ -278,3 +278,34 @@ class Textbox(GUI):
                         self.text = self.text + pressedKey
                 else:
                     self.text = self.text + pressedKey
+
+class Scrollable(GUI):
+    def __init__(self, data, name, x, y, width, height, subHeight, cornerRadius, color, text, scale, fontSize=20):
+        super().__init__(x, y)
+        
+        #---SELF PROPERTIES---#
+        ## Essential/Very Important ##
+        self.name = name
+        self.rect = pygame.Rect((x-width*scale/2)*hdRatio, (y-height*scale/2)*hdRatio, width*scale*hdRatio, height*scale*hdRatio)
+
+        ## Visual Info (Cosmetic) ##
+        self.color = color
+        self.text = text
+
+        ## Visual Info (Spatial) ##
+        self.width = int(width * hdRatio)
+        self.height = int(height * hdRatio)
+        self.scale = scale
+        self.cornerRadius = cornerRadius
+
+        ## Text Attributes ##
+        self.textColor = (255, 255, 255)  # Default text color
+        self.fontSize = int(fontSize * hdRatio)
+        self.font = pygame.font.Font("fonts/Inter-Regular.ttf", self.fontSize)
+
+        ## File Saving ##
+        self.fileNames = [("images/base_" + str(name) + ".png", 0),
+                          ("images/sub_" + str(name) + ".png", 0)]
+
+        #---INITIAL FUNCTIONS/SCRIPTS---#
+        initializeBorderedElement(width=self.width, height=self.height, color=self.color, x=self.x, y=self.y, scale=self.scale, names=self.fileNames, cr=self.cornerRadius)
