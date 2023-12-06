@@ -2,8 +2,6 @@ import time
 import numpy as np
 from math import *
 
-hdRatio = screenWidth / 1920
-
 ###### INITIALIZE ######
 matches = open("matches2.txt") # Imports the .txt file
 teams = open("teams2.txt") # Imports the .txt file
