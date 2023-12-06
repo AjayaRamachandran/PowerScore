@@ -1,99 +1,110 @@
-###### IMPORT ######
-
-import pygame
-
-import random
-from math import *
-import numpy as np
-
 import time
-
-import gui
-from objects import mainStruct
-
-###### SETUP ######
-
-pygame.init()
-
-screenInfo = pygame.display.Info()
-screenWidth = screenInfo.current_w
-screenHeight = screenInfo.current_h
-
-windowSize = (screenWidth, screenHeight)
-
-bgPhoto = "bg.jpg"
-bg = pygame.image.load(bgPhoto)
-bg_rect = bg.get_rect()
-
-pygame.display.set_caption("Skill-Issue v1.0.1") # Sets title of window
-screen = pygame.display.set_mode(windowSize, pygame.FULLSCREEN) # Sets the dimensions of the window to the windowSize
-
-font = pygame.font.Font(None, 36)
+import numpy as np
+from math import *
 
 ###### INITIALIZE ######
+matches = open("matches2.txt") # Imports the .txt file
+teams = open("teams2.txt") # Imports the .txt file
 
-fps = 60
-clock = pygame.time.Clock()
-page = "feed"
+# Imports the .txt file and converts it to a list, from which it can pull values.
 
-###### OBJECTS ######
+def listify(file):
+    fileList = []
+    for line in file:
+        individualWord = line.strip()
+        fileList.append(individualWord)
+    return fileList
 
-debug = gui.Title(
-    type="body",
-    x=screenWidth/2,
-    y=20,
-    text="Page: " + page,
-    textColor=(30,30,30),
-    fontSize=15
-    )
+wordList = listify(matches)
+teamList = listify(teams)
 
-###### MAINLOOP ######
+chart = []
+for string in wordList:
+    runningWord = ""
+    lineList = []
+    for letterIndex, letter in enumerate(string):
+        if letter != "\t":
+            runningWord = runningWord + letter
+        elif letter == "\t" and string[letterIndex + 1] != "\t":
+            lineList.append(runningWord)
+            runningWord = ""
+    lineList.append(runningWord) # appends whatever is left from the line to the list of words, which includes the final element (team)
+    chart.append(lineList)
 
-running = True # Runs the game loop
-while running:
-    screen.fill((30, 30, 37))
-    pressedKey = ""
+###### FUNCTIONS ######
+def retrieve(round=None, player=None): # retrieves a player's matches from the dataset, or optionally the data of a specific match (although the powerscore algorithm never uses this 2nd option)
+    if round != None:
+        specifiedValue = "N/A"
+        for row in chart:
+            if row[0] == round:
+                specifiedValue = row
+        return specifiedValue
+    elif player != None:
+        foundMatches = []
+        for row in chart:
+            if player in row:
+                foundMatches.append(row)
+        return foundMatches
 
-    for event in pygame.event.get(): # checks if program is quit, if so stops the code
-        if event.type == pygame.QUIT:
-            running = False
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                running = False
-            elif event.key == pygame.K_BACKSPACE:
-                pressedKey = "keyBKSPC"
-            else:
-                pressedKey = event.unicode
-    # runs framerate wait time
-    clock.tick(fps)
-    # update the screen
-    screen.blit(bg, bg_rect)
+def getListOfDiffs(player): # returns a list of all the score differentials in matches that a specific player had (score differential is the difference in score between alliance and opponent)
+    matchList = retrieve(player=player)
 
-    mainStruct.starterWindow.draw(screen)
-    mainStruct.feedTab.draw(screen, mode=int(page=="feed"))
-    mainStruct.inputSkillsTab.draw(screen, mode=int(page=="input"))
-    mainStruct.analyzeSkillsTab.draw(screen, mode=int(page=="analyze"))
-    mainStruct.autoGrantTab.draw(screen, mode=int(page=="autoGrant"))
+    scoreDiffs = []
+    for match in matchList:
+        onRed = False
+        if match.index(player) in [1,2]:
+            onRed = True
+        
+        if onRed:
+            scoreDiff = int(match[5]) - int(match[6])
+        else:
+            scoreDiff = int(match[6]) - int(match[5])
+        scoreDiffs.append(scoreDiff)
+    
+    return scoreDiffs
+    
+def getAverageDiff(player): # returns the average value of a list of score differentials. this is separated from the above function because we sometimes want the list, other times want the avg
+    scoreDiffs = getListOfDiffs(player=player)
+    avgDiff = np.average(scoreDiffs)
+    return round(avgDiff*1000)/1000
 
-    mainStruct.mainTitle.draw(screen)
-    mainStruct.mainSubtitle.draw(screen)
+def getAllianceAverageDiffs(player): # gets a list of the average score differentials amongst all the alliance partners a team has had. used to compare against the player's own score diffs
+    matchList = retrieve(player=player)
+    listOfAllianceAvgDiffs = []
 
-    if mainStruct.feedTab.isClicked():
-        page = "feed"
-    if mainStruct.inputSkillsTab.isClicked():
-        page = "input"
-    if mainStruct.analyzeSkillsTab.isClicked():
-        page = "analyze"
-    if mainStruct.autoGrantTab.isClicked():
-        page = "autoGrant"
+    for match in matchList:
+        if match.index(player) in [1,2]:
+            alliancePartner = match[(match.index(player) == 1) + 1]
+        elif match.index(player) in [3,4]:
+            alliancePartner = match[(match.index(player) == 3) + 3]
+        listOfAllianceAvgDiffs.append(getAverageDiff(alliancePartner))
 
-    debug.setTitle("Page: " + page)
-    debug.draw(screen)
+    return listOfAllianceAvgDiffs
 
-    mainStruct.enterSkills.dynamicInteraction(pressedKey)
-    mainStruct.enterSkills.draw(screen)
+def getPowerScore(player): # master function, combines all the above functions to generate a powerScore value that reflects how "powerful" a team was in the competition
+    matchDiffs = getListOfDiffs(player=player)
+    allianceDiffs = getAllianceAverageDiffs(player=player)
+    matchPowers = []
 
-    pygame.display.update()
+    for index, matchDiff in enumerate(matchDiffs):
+        matchPower = (2/(1 + exp(-0.05 * (matchDiff - allianceDiffs[index])))) - 1
+        matchPowers.append(matchPower)
+    
+    powerScore = np.average(matchPowers) / 2 + 0.5
+    return round(powerScore * 1000) / 10
+        
+###### MAIN ######
 
-# quit Pygame
-pygame.quit()
+for team in teamList:
+    if team[0] == "#":
+        teamList.remove(team)
+
+for team in teamList:
+    teamList[teamList.index(team)] = [team, getPowerScore(team)]
+
+print(teamList)
+
+teamList.sort(key=lambda x: x[1], reverse=True)
+for team in teamList:
+    if team[0][0] != "#":
+        print(team[0] + "'s PowerScore was " + str(team[1]))
