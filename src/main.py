@@ -3,8 +3,8 @@ import numpy as np
 from math import *
 
 ###### INITIALIZE ######
-matches = open("matches2.txt") # Imports the .txt file
-teams = open("teams2.txt") # Imports the .txt file
+matches = open("src/matches1.txt") # Imports the .txt file
+teams = open("src/teams1.txt") # Imports the .txt file
 
 # Imports the .txt file and converts it to a list, from which it can pull values.
 
@@ -81,13 +81,32 @@ def getAllianceAverageDiffs(player): # gets a list of the average score differen
 
     return listOfAllianceAvgDiffs
 
+def getOpponentAverageDiffs(player): # gets a list of the average score differentials amongst all the alliance partners a team has had. used to compare against the player's own score diffs
+    matchList = retrieve(player=player)
+    listOfOpponentAvgDiffs = []
+
+    for match in matchList:
+        if match.index(player) in [1,2]:
+            opponent1 = match[3]
+            opponent2 = match[4]
+        elif match.index(player) in [3,4]:
+            opponent1 = match[1]
+            opponent2 = match[2]
+        avgDiff1 = getAverageDiff(opponent1)
+        avgDiff2 = getAverageDiff(opponent2)
+        
+        listOfOpponentAvgDiffs.append((avgDiff1 + avgDiff2) / 2)
+
+    return listOfOpponentAvgDiffs
+
 def getPowerScore(player): # master function, combines all the above functions to generate a powerScore value that reflects how "powerful" a team was in the competition
     matchDiffs = getListOfDiffs(player=player)
     allianceDiffs = getAllianceAverageDiffs(player=player)
+    opponentDiffs = getOpponentAverageDiffs(player=player)
     matchPowers = []
 
     for index, matchDiff in enumerate(matchDiffs):
-        matchPower = (2/(1 + exp(-0.05 * (matchDiff - allianceDiffs[index])))) - 1
+        matchPower = (2/(1 + exp(-0.05 * (matchDiff - allianceDiffs[index] + opponentDiffs[index])))) - 1
         matchPowers.append(matchPower)
     
     powerScore = np.average(matchPowers) / 2 + 0.5
@@ -107,4 +126,9 @@ print(teamList)
 teamList.sort(key=lambda x: x[1], reverse=True)
 for team in teamList:
     if team[0][0] != "#":
-        print(team[0] + "'s PowerScore was " + str(team[1]))
+        #print(team[0] + "'s PowerScore was " + str(team[1]))
+        print(team[0])
+
+for team in teamList:
+    if team[0][0] != "#":
+        print(str(team[1]))
