@@ -1,22 +1,40 @@
 import time
 import numpy as np
 from math import *
+import openpyxl as xl
+from openpyxl import load_workbook
+
+# https://openpyxl.readthedocs.io/en/stable/tutorial.html
+
+### Requirements ###
+# pip install openpyxl
 
 ###### INITIALIZE ######
+
+
 matches = open("src/matches1.txt") # Imports the .txt file
 teams = open("src/teams1.txt") # Imports the .txt file
+comp = open("comp2.xls")
+
+wb = load_workbook(filename = "comp2.xls")
 
 # Imports the .txt file and converts it to a list, from which it can pull values.
-
-def listify(file):
+def listifySheet(file):
     fileList = []
     for line in file:
         individualWord = line.strip()
         fileList.append(individualWord)
     return fileList
 
-wordList = listify(matches)
-teamList = listify(teams)
+def listifyText(file):
+    fileList = []
+    for line in file:
+        individualWord = line.strip()
+        fileList.append(individualWord)
+    return fileList
+
+wordList = listifyText(matches)
+teamList = listifyText(teams)
 
 chart = []
 for string in wordList:
