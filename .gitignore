@@ -1,3 +1,4 @@
 .idea/
 .gitpod.yml
 __pycache__/
+output.txt
