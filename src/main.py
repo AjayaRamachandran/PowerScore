@@ -1,31 +1,53 @@
 import time
 import numpy as np
 from math import *
-import openpyxl as xl
-from openpyxl import load_workbook
+import xlrd
 
 # https://openpyxl.readthedocs.io/en/stable/tutorial.html
 
 ### Requirements ###
-# pip install openpyxl
+# pip install xlrd
 
 ###### INITIALIZE ######
 
+#matches = open("src/matches2.txt") # Imports the .txt file
+#teams = open("src/teams2.txt") # Imports the .txt file
+compxls = xlrd.open_workbook(filename = "src/comp2.xls")
+comp = compxls.sheet_by_index(0)
 
-matches = open("src/matches1.txt") # Imports the .txt file
-teams = open("src/teams1.txt") # Imports the .txt file
-comp = open("comp2.xls")
-
-wb = load_workbook(filename = "comp2.xls")
-
-# Imports the .txt file and converts it to a list, from which it can pull values.
+# Imports the .xls file and converts it to a list, from which it can pull values.
 def listifySheet(file):
     fileList = []
-    for line in file:
-        individualWord = line.strip()
-        fileList.append(individualWord)
+
+    column = 1
+    row = 0
+    for row in range(1, file.nrows):
+        if "Qualifier" in file.cell_value(row, 1):
+            slicedRow = [
+                file.cell_value(row, 1),
+                file.cell_value(row, 2),
+                file.cell_value(row, 3),
+                file.cell_value(row, 4),
+                file.cell_value(row, 5),
+                file.cell_value(row, 6),
+                file.cell_value(row, 7),
+                file.cell_value(row, 8)
+                ]
+            fileList.append(slicedRow)
+
     return fileList
 
+def generateTeamsListFromComp(fileList):
+    uniqueTeams = []
+    for row in fileList:
+        teamsInRow = row[1:5]
+        for team in teamsInRow:
+            if not team in uniqueTeams:
+                uniqueTeams.append(team)
+
+    return uniqueTeams
+
+# Imports the .txt file and converts it to a list, from which it can pull values.
 def listifyText(file):
     fileList = []
     for line in file:
@@ -33,21 +55,13 @@ def listifyText(file):
         fileList.append(individualWord)
     return fileList
 
-wordList = listifyText(matches)
-teamList = listifyText(teams)
-
-chart = []
-for string in wordList:
-    runningWord = ""
-    lineList = []
-    for letterIndex, letter in enumerate(string):
-        if letter != "\t":
-            runningWord = runningWord + letter
-        elif letter == "\t" and string[letterIndex + 1] != "\t":
-            lineList.append(runningWord)
-            runningWord = ""
-    lineList.append(runningWord) # appends whatever is left from the line to the list of words, which includes the final element (team)
-    chart.append(lineList)
+#wordList = listifyText(matches)
+chart = listifySheet(comp)
+#for x in range(len(chart)):
+    #print(chart[x])
+teamList = generateTeamsListFromComp(chart)
+#for x in range(len(teamList)):
+    #print(teamList[x])
 
 ###### FUNCTIONS ######
 def retrieve(round=None, player=None): # retrieves a player's matches from the dataset, or optionally the data of a specific match (although the powerscore algorithm never uses this 2nd option)
