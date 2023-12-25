@@ -8,8 +8,9 @@ The PowerScore algorithm is an advanced team evaluation algorithm that takes int
 #### b1.0.1: ALGORITHM (complete)
 - A base version of the algorithm that can take a spreadsheet of match results and generate a .txt document of results that can be pasted into a sheet of its own for analysis.
 
-#### b1.0.1: AUTOMATION (in progress) <<<
+#### b1.0.1: AUTOMATION (modified)
 - A simple tool to either scrape RobotEvents or use the RobotEvents API to grab match results directly as opposed to having to download them manually.
+##### This step was modified to no longer involve RobotEvents, but rather simply run off of imported spreadsheets.
 
-#### b1.0.1: GUI (not yet started)
+#### b1.0.1: GUI (not yet started) <<<
 - A bare bones UI to give users the abilty to input a match they want to analyze and a way to display the algorithm's output.
