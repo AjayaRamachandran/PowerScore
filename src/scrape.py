@@ -15,7 +15,6 @@ driver = webdriver.Chrome(options=options)
 # Navigate to Google
 driver.get("https://www.google.com")
 
-
 # Find the search box and enter the search term
 search_box = driver.find_element("name", "q")  # The name attribute of the Google search box is "q"
 search_term = "north andover" + " robotevents over under 2023-24"
@@ -37,24 +36,23 @@ driver.implicitly_wait(5)
 
 if "/es/" in current_url:
     resultsUrl = current_url[:28] + current_url[31:]
-resultsUrl = resultsUrl + "#" + division_name
+divUrl = resultsUrl + "#" + division_name
+resultsUrl = resultsUrl + "#results-"
 
 print(resultsUrl)
 time.sleep(2)
 driver.get(resultsUrl)
 driver.implicitly_wait(5)
+time.sleep(1.5)
+driver.get(divUrl)
+time.sleep(2)
+
+spread = driver.find_element(By.XPATH, '//div[@class="pull-right"]/a[@class="btn btn-default btn-xs"]')
+driver.execute_script("arguments[0].scrollIntoView();", spread)
+spread.click()
+
 time.sleep(3)
 
-'''
-try:
-    skills_button = driver.find_element(By.CSS_SELECTOR, "active nav-link")
-    next_button = skills_button.find_element(By.XPATH, 'following-sibling::button')
-    next_button.click()
-except Exception as e:
-    print(f"Buttons not found: {e}")
-'''
-
-time.sleep(5)
 #result.click()
 
 # Close the browser
