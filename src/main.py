@@ -22,7 +22,7 @@ def listifySheet(file):
     column = 1
     row = 0
     for row in range(1, file.nrows):
-        if "Qualifier" in file.cell_value(row, 1):
+        if "Qualifier" in file.cell_value(row, 1) and not file.cell_value(row, 6) == "":
             slicedRow = [
                 file.cell_value(row, 1),
                 file.cell_value(row, 2),
