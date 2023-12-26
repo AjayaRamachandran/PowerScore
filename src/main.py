@@ -72,7 +72,7 @@ if importing == True:
         column = 1
         row = 0
         for row in range(1, file.nrows):
-            if "Qualifier" in file.cell_value(row, 1) and not file.cell_value(row, 6) == "":
+            if "Qualifier" in file.cell_value(row, 1) and not (file.cell_value(row, 6) == "" and file.cell_value(row, 7) == ""):
                 slicedRow = [
                     file.cell_value(row, 1),
                     file.cell_value(row, 2),
@@ -131,6 +131,12 @@ if importing == True:
             onRed = False
             if match.index(player) in [1,2]:
                 onRed = True
+
+            if match[5] == "":
+                match[5] = 0
+            if match[6] == "":
+                match[6] = 0
+                
             if onRed:
                 scoreDiff = int(match[5]) - int(match[6])
             else:
