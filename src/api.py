@@ -19,7 +19,7 @@ def makeRequest(endpoint, params=None):
 
 ###### SUBFUNCTIONS ######
 
-def getTeamID(name, params):
+def getTeamOrg(name, params):
     endpoint = f'teams?'
     return makeRequest(endpoint, params=params)['data'][0]['organization']
 
@@ -28,4 +28,4 @@ params = {
     "grade": "High School"
     }
 
-print(getTeamID("8568A", params))
+print("Team Organization: " + getTeamOrg("8568A", params))
