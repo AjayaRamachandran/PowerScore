@@ -78,36 +78,66 @@ def getEventList(params=None): # gets a list of all vrc over under comps that ha
                 #print(f"Comp {comp + 1} of page {page + 1} requested")
     return compsIndex
 
-if datetime.now().day > monthsLimits[datetime.now().month]:
-    currentDay = 1
-    currentMonth = datetime.now().month + 1
-else:
-    currentDay = datetime.now().day + 1
-    currentMonth = datetime.now().month
-
-params = {
-    "season": "181",
-    "start": "2023-08-03",
-    "end": f"{datetime.now().year}-{currentMonth}-{currentDay}",
-    "event_types": "tournament",
+def getCompInfo(ID, division):
+    params = {
+    "division": division,
+    "round": "2",
     "per_page": "250"
-}
+    }
 
-compsIndex = getEventList(params=params)
-#print(compsIndex)
+    endpoint = f'events/{ID}/divisions/{division}/matches?round%5B%5D=2'
 
-competition = input("What competition do you want to analyze? ")
+    return makeRequest(endpoint=endpoint, params=params)['data']
 
-for comp in range(len(compsIndex)): # gets the score of all the comps based on how close they are to the inputted prompt
-    score = getDistance(competition, compsIndex[comp][0])
-    #print(score)
-    compsIndex[comp] = [compsIndex[comp][0], compsIndex[comp][1], score]
-#print(compsIndex)
-compsIndex.sort(key=lambda x: x[2], reverse=True) # sorts the list based on pseudo-levenshtein distance (better versionn for this purpose), smallest first
+def getMatchList():
+    if datetime.now().day > monthsLimits[datetime.now().month]:
+        currentDay = 1
+        currentMonth = datetime.now().month + 1
+    else:
+        currentDay = datetime.now().day + 1
+        currentMonth = datetime.now().month
 
-confirm = "n"
-listItem = 0
-while confirm == "n": # repeatedly goes down the list until the user claims their search is satisfied
-    confirm = input(f"Did you mean {compsIndex[listItem][0]}? (y/n) ")
-    if confirm == "n":
-        listItem += 1
+    params = {
+        "season": "181",
+        "start": "2023-08-03",
+        "end": f"{datetime.now().year}-{currentMonth}-{currentDay}",
+        "event_types": "tournament",
+        "per_page": "250"
+    }
+
+    compsIndex = getEventList(params=params)
+    #print(compsIndex)
+
+    competition = input("What competition do you want to analyze? ")
+
+    for comp in range(len(compsIndex)): # gets the score of all the comps based on how close they are to the inputted prompt
+        score = getDistance(competition, compsIndex[comp][0])
+        #print(score)
+        compsIndex[comp] = [compsIndex[comp][0], compsIndex[comp][1], score]
+    #print(compsIndex)
+    compsIndex.sort(key=lambda x: x[2], reverse=True) # sorts the list based on pseudo-levenshtein distance (better versionn for this purpose), smallest first
+
+    confirm = "n"
+    listItem = 0
+    while confirm == "n": # repeatedly goes down the list until the user claims their search is satisfied
+        confirm = input(f"Did you mean {compsIndex[listItem][0]}? (y/n) ")
+        if confirm == "n":
+            listItem += 1
+
+    matchData = getCompInfo(compsIndex[listItem][1], "1")
+    matchList = []
+
+    for matchNum in range(len(matchData)):
+        alliances = matchData[matchNum]['alliances']
+        blueScore = alliances[0]['score']
+        redScore = alliances[1]['score']
+
+        blueTeam1 = alliances[0]['teams'][0]['team']['name']
+        blueTeam2 = alliances[0]['teams'][1]['team']['name']
+        redTeam1 = alliances[1]['teams'][0]['team']['name']
+        redTeam2 = alliances[1]['teams'][1]['team']['name']
+
+        matchList.append([blueTeam1, blueTeam2, redTeam1, redTeam2, blueScore, redScore])
+    
+    return matchList
+
