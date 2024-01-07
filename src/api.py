@@ -1,4 +1,9 @@
 import requests
+import time
+from datetime import datetime
+
+monthsLimits = [31,28,31,30,31,30,31,31,30,31,30,31]
+#compsList = open("compsList.txt", "w")
 
 API_KEY = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiMGQ0MWE0MWY2NTU0ZGViODM0MmUwOTdiOWM4MmYxYWIwZDFjNGFiNDAyOWMzNjcyMjA3NzVkOGI3MTFlYzZlZWYxMzcyYmQ0NWIzMjc5MWUiLCJpYXQiOjE3MDEzMDk0NjYuMzc3NDM1LCJuYmYiOjE3MDEzMDk0NjYuMzc3NDM4MSwiZXhwIjoyNjQ4MDgwNjY2LjM3MjA2ODksInN1YiI6IjEyNDE3MSIsInNjb3BlcyI6W119.DdBUax84hs2vZFKbXCexUiT-7J2BfTKjaVWwMIHOG_h5ph2A45aim7djnPhOBlPdUaUNxZF-s31de3IhlRMugXKaAADYjCojfrRDflLZfc3xJKDfsUJVSnU0gH-PdlRFrVhKrWtF4CYGW0EsLOsWCC_Klnf9RFv2kS50x0Ung0TqHCXyk7b5ejfGsHpRqJrilapAdN9P7nOV5JbN9b42LNTcJA8T-UlrrGiyb0nUGT9_WBL-WKyZQvdhrTU7iv1xXtivr-PaTjnEI_CpF-b8qqvvM4azIpaGNdxVfsNTF0-VH_6O3JKK-k9chcXgfw-INefHnRFsPlgJNgal6XvPweSipfJKK0WgC8VMX6Gnt3S7tCuJyYW5-EHNhPOjE6ANcsxaPd4ajQKjL60vxJixjsS502pbr8VOhIR_cVa_CtYZfK5T-TolGxnMSAlKV_4EJyr76wTZQN1MAiwZ03i3jWrFw--FDH5wk6wi2ttpit1o8Tp6H_3kd_2bakcdmezFE4Hv8gYG8jjIf6KYO5XiwPqYHHw3mmkyNTwitQpcErM_tzXCI_CELtO4Ztd60HZ-hAxWzn4POfxFWFUua_BU5-bi-fiWp5KzrpL0Je5oVFycFrGpO8L0Jb_6jgRZcFFc05WcJ4jlGn0-O6J1u2tosba_z3f3bfPMHD8RE8XnWow'
 BASE_URL = 'https://www.robotevents.com/api/v2/'
@@ -19,13 +24,90 @@ def makeRequest(endpoint, params=None):
 
 ###### SUBFUNCTIONS ######
 
-def getTeamOrg(name, params):
+def getDistance(string1, string2): # function to return the score of how close two strings are, used to rank results of search
+    if len(string1) < len(string2):
+        string2 = string2[:len(string1)]
+    elif len(string1) > len(string2):
+        string1 = string1[:len(string2)]
+
+    score = 0
+    for letter in range(len(string1)):
+        if string2[letter] in string1:
+            score += 1
+            if string2[letter] == string1[letter]:
+                score += 3
+
+    return score
+
+def getTeamInfo(params, info): # gets info of a team (test)
     endpoint = f'teams?'
-    return makeRequest(endpoint, params=params)['data'][0]['organization']
+    return makeRequest(endpoint, params=params)['data'][0][info]
+
+def getEventList(params=None): # gets a list of all vrc over under comps that have happened so far
+    endpoint = f'events?season%5B%5D=181&start=2023-08-03&end=2024-01-06&myEvents=false&eventTypes%5B%5D=tournament&per_page=250'
+    pageMeta = makeRequest(endpoint, params=params)['meta']
+    maxPages = pageMeta['last_page']
+    compsPerPage = pageMeta['per_page']
+    totalComps = pageMeta['total']
+
+    compsIndex = []
+
+    for page in range(maxPages):
+        time.sleep(1)
+        pageTag = f"&page={page+1}"
+
+        pageData = makeRequest(endpoint=endpoint+pageTag, params=params)['data']
+
+        for comp in range(compsPerPage):
+            if page + 1 == maxPages:
+                if comp < totalComps % compsPerPage - 1:
+                    compsIndex.append(
+                        [
+                            pageData[comp]["name"],
+                            pageData[comp]["id"]
+                        ]
+                    )
+                    #print(f"Comp {comp + 1} of page {page + 1} requested")
+            else:
+                compsIndex.append(
+                    [
+                        pageData[comp]["name"],
+                        pageData[comp]["id"]
+                    ]
+                )
+                #print(f"Comp {comp + 1} of page {page + 1} requested")
+    return compsIndex
+
+if datetime.now().day > monthsLimits[datetime.now().month]:
+    currentDay = 1
+    currentMonth = datetime.now().month + 1
+else:
+    currentDay = datetime.now().day + 1
+    currentMonth = datetime.now().month
 
 params = {
-    "number": "8568A",
-    "grade": "High School"
-    }
+    "season": "181",
+    "start": "2023-08-03",
+    "end": f"{datetime.now().year}-{currentMonth}-{currentDay}",
+    "event_types": "tournament",
+    "per_page": "250"
+}
 
-print("Team Organization: " + getTeamOrg("8568A", params))
+compsIndex = getEventList(params=params)
+#print(compsIndex)
+
+competition = input("What competition do you want to analyze? ")
+
+for comp in range(len(compsIndex)): # gets the score of all the comps based on how close they are to the inputted prompt
+    score = getDistance(competition, compsIndex[comp][0])
+    #print(score)
+    compsIndex[comp] = [compsIndex[comp][0], compsIndex[comp][1], score]
+#print(compsIndex)
+compsIndex.sort(key=lambda x: x[2], reverse=True) # sorts the list based on pseudo-levenshtein distance (better versionn for this purpose), smallest first
+
+confirm = "n"
+listItem = 0
+while confirm == "n": # repeatedly goes down the list until the user claims their search is satisfied
+    confirm = input(f"Did you mean {compsIndex[listItem][0]}? (y/n) ")
+    if confirm == "n":
+        listItem += 1
