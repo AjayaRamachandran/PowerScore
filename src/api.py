@@ -135,9 +135,5 @@ def getMatchList():
         redTeam2 = alliances[1]['teams'][1]['team']['name']
 
         matchList.append([redTeam1, redTeam2, blueTeam1, blueTeam2, redScore, blueScore])
-    
-    for i in matchList:
-        print(i)
 
     return compsIndex[listItem][0], matchList
-
