@@ -88,7 +88,26 @@ def getCompInfo(ID, division):
 
     return makeRequest(endpoint=endpoint, params=params)['data']
 
-def getMatchList():
+def getMatchList(compName, matchData):
+
+    matchList = []
+
+    for matchNum in range(len(matchData)):
+        alliances = matchData[matchNum]['alliances']
+        blueScore = alliances[0]['score']
+        redScore = alliances[1]['score']
+
+        blueTeam1 = alliances[0]['teams'][0]['team']['name']
+        blueTeam2 = alliances[0]['teams'][1]['team']['name']
+        redTeam1 = alliances[1]['teams'][0]['team']['name']
+        redTeam2 = alliances[1]['teams'][1]['team']['name']
+
+        matchList.append([redTeam1, redTeam2, blueTeam1, blueTeam2, redScore, blueScore])
+
+    #return compName[0], matchList
+    return matchList
+
+def askUserForComp():
     if datetime.now().day > monthsLimits[datetime.now().month]:
         currentDay = 1
         currentMonth = datetime.now().month + 1
@@ -120,20 +139,18 @@ def getMatchList():
         confirm = input(f"Did you mean {compsIndex[listItem][0]}? (y/n) ")
         if confirm == "n":
             listItem += 1
-
+    
+    compName = compsIndex[listItem]
     matchData = getCompInfo(compsIndex[listItem][1], "1")
-    matchList = []
+    getMatchList(compName, matchData)
 
-    for matchNum in range(len(matchData)):
-        alliances = matchData[matchNum]['alliances']
-        blueScore = alliances[0]['score']
-        redScore = alliances[1]['score']
 
-        blueTeam1 = alliances[0]['teams'][0]['team']['name']
-        blueTeam2 = alliances[0]['teams'][1]['team']['name']
-        redTeam1 = alliances[1]['teams'][0]['team']['name']
-        redTeam2 = alliances[1]['teams'][1]['team']['name']
+def getCompList(team):
+    teamID = makeRequest(endpoint=f"teams?number%5B%5D={team}&grade%5B%5D=High%20School&myTeams=false",params={})["data"][0]["id"]
 
-        matchList.append([redTeam1, redTeam2, blueTeam1, blueTeam2, redScore, blueScore])
-
-    return compsIndex[listItem][0], matchList
+    params = {
+    "team": teamID,
+    "per_page": "250"
+    }
+    endpoint = f'events?season%5B%5D=181'
+    return makeRequest(endpoint=endpoint, params=params)

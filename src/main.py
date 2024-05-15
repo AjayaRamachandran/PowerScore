@@ -3,9 +3,43 @@ from math import *
 import inout as io
 import api
 
+###### RANKING ######
+
+def giveRanking(value):
+    ranking = [
+        ["Bronze I", 0],
+        ["Bronze II", 11],
+        ["Bronze III", 21],
+
+        ["Silver I", 31],
+        ["Silver II", 38],
+        ["Silver III", 44],
+
+        ["Gold I", 51],
+        ["Gold II", 58],
+        ["Gold III", 64],
+
+        ["Diamond I", 71],
+        ["Diamond II", 74],
+        ["Diamond III", 78],
+
+        ["Royal I", 81],
+        ["Royal II", 84],
+        ["Royal III", 88],
+
+        ["Ethereal I", 91],
+        ["Ethereal II", 94],
+        ["Ethereal III", 98],
+    ]
+    index = 0
+    while ranking[index][1] < value:
+        index += 1
+    index -= 1
+    return ranking[index][0]
+
 ###### ALGORITHM ######
 
-def runPowerScore():
+def runPowerScore(compName, compID):
     output = open("output.txt", "w")
 
     def generateTeamsListFromComp(fileList): # uses the match list to generate a list of teams that attended a comp, so that a second teamList is unnecessary
@@ -18,7 +52,8 @@ def runPowerScore():
 
         return uniqueTeams
 
-    compName, chart = api.getMatchList()
+    
+    chart = api.getMatchList(compName, api.getCompInfo(compID, "1"))
     teamList = generateTeamsListFromComp(chart)
 
     ###### FUNCTIONS ######
@@ -101,26 +136,60 @@ def runPowerScore():
         matchPowers = []
 
         for index, matchDiff in enumerate(matchDiffs):
-            matchPower = (2/(1 + exp(-0.05 * (matchDiff - allianceDiffs[index] + opponentDiffs[index])))) - 1 # performs sigmoid calculation based on the 3 factors
+            matchPower = matchDiff - allianceDiffs[index] + opponentDiffs[index] # performs sigmoid calculation based on the 3 factors
             matchPowers.append(matchPower)
         
-        powerScore = np.average(matchPowers) / 2 + 0.5
-        return round(powerScore * 1000) / 10
+        powerScore = np.average(matchPowers)# / 2 + 0.5
+        return round(powerScore * 1000) / 1000 # change to 10 outside the parentheses if need to revert
             
     ###### MAIN ######
-
+    #print(teamList)
     for team in teamList: # changes each item in the team list to be a tuple of the team name and its powerScore as opposed to just the team name
         teamList[teamList.index(team)] = [team, getPowerScore(team)]
 
-    
-    output.write(compName + " PowerScore\n")
+    #output.write(compName + " PowerScore\n")
     
     teamList.sort(key=lambda x: x[1], reverse=True) # sorts the list based on powerScore from largest to smallest
+    teamLibrary = {}
     for team in teamList:
         if team[0][0] != "#":
-            output.write(f"{team[0]} \t {str(team[1])} \n") # writes output to a .txt file
-
+            #output.write(f"{team[0]} \t {str(team[1])} \n") # writes output to a .txt file
+            teamLibrary[team[0]] = team[1]
+    #print(teamLibrary)
+    return teamLibrary, teamList
     #print("Output has been saved to output.txt")
-    io.showOutput("output.txt")
+    #io.showOutput("output.txt")
 
-runPowerScore()
+#runPowerScore()
+
+team = "229V"
+comps = api.getCompList(team)
+#print(comps["meta"])
+psList = []
+#print(comps["data"])
+for comp in range(comps["meta"]["total"]):
+    #print(comps["data"][comp]["name"])
+    #print(compPS)
+
+    if len(comps["data"][comp]["divisions"]) == 1:
+        try:
+            fullPSLib, fullPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"])
+            #print(fullPS)
+            compPS = fullPSLib[team]
+            #compSum = sum(ps[1] for ps in fullPSList)
+            #compWeight = log(0.51 * (compSum ** 0.225)) ** 2
+            compWeight = 1.0 + 1 * ("Signature Event" in comps["data"][comp]["name"])
+            psList.append([compPS, compWeight])
+            #print([compPS, compSum, log(0.51 * (compSum ** 0.225)) ** 2])
+        except:
+            #print("This team deregistered from a comp")
+            None
+
+#matchPower = (2/(1 + exp(-0.05 * (matchDiff - allianceDiffs[index] + opponentDiffs[index])))) - 1 # performs sigmoid calculation based on the 3 factors
+summation = 0
+for x in psList:
+    summation += x[0] * x[1]
+print(team)# + " - " + str(round((((2/(1 + exp(-0.045 * (summation / len(psList))))) - 1) / 2 + 0.5) * 1000) / 10))
+print(giveRanking(round((((2/(1 + exp(-0.045 * (summation / len(psList))))) - 1) / 2 + 0.5) * 1000) / 10))
+
+    #print(comps["data"][comp]["id"])
