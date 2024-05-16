@@ -2,6 +2,59 @@ import numpy as np
 from math import *
 import inout as io
 import api
+import matplotlib as mpl
+import pygame
+
+###### OPERATOR FUNCTIONS ######
+def getDays(date):
+    monthLengths = [31,28,31,30,31,30,31,31,30,31,30,31]
+    return int(date[:4]) * 365 + sum(monthLengths[:int(date[5:7]) - 1]) + int(date[8:])
+
+def createPlot(data):
+    pygame.init()
+    windowSize = [1281, 501]
+    screen = pygame.display.set_mode(windowSize)
+
+    ranks = pygame.image.load("ranks.png")
+    point = pygame.image.load("point.png")
+
+    screen.fill((10,40,40))
+    chartDimensions = [windowSize[0] - 100, windowSize[1] - 100]
+    vertTicks, horizTicks = [5, 6]
+
+    leftBound = (windowSize[0] - chartDimensions[0]) / 2
+    rightBound = (windowSize[0] + chartDimensions[0]) / 2
+    topBound = (windowSize[1] - chartDimensions[1]) / 2
+    bottomBound = (windowSize[1] + chartDimensions[1]) / 2
+
+    ranks = pygame.transform.scale(ranks, (chartDimensions[0], chartDimensions[1]))
+    ranksRect = ((leftBound, topBound), (ranks.get_rect()[2], ranks.get_rect()[3]))
+    screen.blit(ranks, ranksRect)
+    #for vertLine in range(vertTicks):
+        #pygame.draw.aaline(screen, (20,80,80), (leftBound + vertLine * (chartDimensions[0] / (vertTicks - 1)), bottomBound), (leftBound + vertLine * (chartDimensions[0] / (vertTicks - 1)), topBound))
+
+    for horizLine in range(horizTicks):
+        pygame.draw.aaline(screen, (20,80,80), (leftBound, topBound + horizLine * (chartDimensions[1] / (horizTicks - 1))), (rightBound, topBound + horizLine * (chartDimensions[1] / (horizTicks - 1))))
+
+    xValues = [item[0] for item in data]
+    yValues = [item[1] for item in data]
+    for index in range(len(data) - 1):
+        xPos = (xValues[index] - min(xValues)) / (max(xValues) - min(xValues) + 25) * chartDimensions[0] + leftBound
+        yPos = (1 - yValues[index] / 100) * (chartDimensions[1]) + topBound
+        nextXPos = (xValues[min(index + 1, len(xValues) - 1)] - min(xValues)) / (max(xValues) - min(xValues) + 25) * chartDimensions[0] + leftBound
+        nextYPos = (1 - yValues[min(index + 1, len(yValues) - 1)] / 100) * (chartDimensions[1]) + topBound
+
+        #pygame.draw.aaline(screen, (127,160,160), (xPos, yPos), (nextXPos - 3, yPos), 6)
+        pygame.draw.aaline(screen, (255,255,255), (xPos, yPos), (nextXPos - 3, yPos), 4)
+        #pygame.draw.aaline(screen, (127,160,160), (nextXPos - 3, yPos), (nextXPos, nextYPos), 6)
+        pygame.draw.aaline(screen, (255,255,255), (nextXPos - 3, yPos), (nextXPos, nextYPos),4)
+    pygame.draw.aaline(screen, (255,255,255), (nextXPos, nextYPos), (rightBound, nextYPos),4)
+
+    screen.blit(point, (rightBound - 8, nextYPos - 8))
+    #pygame.draw.circle(screen, (255, 255, 255), (rightBound, yPos), 2)
+
+    pygame.image.save(screen, "plot.png")
+
 
 ###### RANKING ######
 
@@ -39,7 +92,7 @@ def giveRanking(value):
 
 ###### ALGORITHM ######
 
-def runPowerScore(compName, compID):
+def runPowerScore(compName, compID, div):
     output = open("output.txt", "w")
 
     def generateTeamsListFromComp(fileList): # uses the match list to generate a list of teams that attended a comp, so that a second teamList is unnecessary
@@ -52,8 +105,7 @@ def runPowerScore(compName, compID):
 
         return uniqueTeams
 
-    
-    chart = api.getMatchList(compName, api.getCompInfo(compID, "1"))
+    chart = api.getMatchList(compName, api.getCompInfo(compID, str(div)))
     teamList = generateTeamsListFromComp(chart)
 
     ###### FUNCTIONS ######
@@ -160,9 +212,24 @@ def runPowerScore(compName, compID):
     #print("Output has been saved to output.txt")
     #io.showOutput("output.txt")
 
+def findDivision(name, comp):
+    numDivs = len(comp["divisions"])
+    for div in range(1, numDivs):
+        endpoint = "events/" + str(comp["id"]) + f"/divisions/{div}/rankings"
+        params = {"per_page": "250"}
+        data = api.makeRequest(endpoint=endpoint, params=params)["data"]
+        print("Checking division " + data[0]["division"]["name"] + " at the " + data[0]["event"]["name"])
+        roster = []
+        for team in data:
+            roster.append(team["team"]["name"])
+        if name in roster:
+            return div
+    return 1
+
+
 #runPowerScore()
 
-team = "229V"
+team = str(input("Enter a Team Number: "))
 comps = api.getCompList(team)
 #print(comps["meta"])
 psList = []
@@ -172,23 +239,32 @@ for comp in range(comps["meta"]["total"]):
     #print(compPS)
 
     if len(comps["data"][comp]["divisions"]) == 1:
-        try:
-            fullPSLib, fullPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"])
-            #print(fullPS)
-            compPS = fullPSLib[team]
-            #compSum = sum(ps[1] for ps in fullPSList)
-            #compWeight = log(0.51 * (compSum ** 0.225)) ** 2
-            compWeight = 1.0 + 1 * ("Signature Event" in comps["data"][comp]["name"])
-            psList.append([compPS, compWeight])
-            #print([compPS, compSum, log(0.51 * (compSum ** 0.225)) ** 2])
-        except:
-            #print("This team deregistered from a comp")
-            None
+        div = "1"
+    else:
+        #print("Competition has more than one division. Please fix this issue ASAP")
+        div = findDivision(team, comps["data"][comp])
+    try:
+        fullPSLib, fullPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div)
+        #print(fullPS)
+        compPS = fullPSLib[team]
+        #compSum = sum(ps[1] for ps in fullPSList)
+        #compWeight = log(0.51 * (compSum ** 0.225)) ** 2
+        compWeight = 1.0 + 1 * ("Signature Event" in comps["data"][comp]["name"])
+        psList.append([compPS, compWeight, getDays(comps["data"][comp]["start"][:10])])
+        #print([compPS, compSum, log(0.51 * (compSum ** 0.225)) ** 2])
+    except:
+        print("This team deregistered from a comp")
 
 #matchPower = (2/(1 + exp(-0.05 * (matchDiff - allianceDiffs[index] + opponentDiffs[index])))) - 1 # performs sigmoid calculation based on the 3 factors
 summation = 0
+index = 1
+progression = []
 for x in psList:
     summation += x[0] * x[1]
+    temporalPS = summation / index
+    progression.append([x[2], round((((2/(1 + exp(-0.045 * (temporalPS)))) - 1) / 2 + 0.5) * 1000) / 10])
+    index += 1
+createPlot(progression)
 print(team)# + " - " + str(round((((2/(1 + exp(-0.045 * (summation / len(psList))))) - 1) / 2 + 0.5) * 1000) / 10))
 print(giveRanking(round((((2/(1 + exp(-0.045 * (summation / len(psList))))) - 1) / 2 + 0.5) * 1000) / 10))
 
