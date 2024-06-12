@@ -4,6 +4,7 @@ import inout as io
 import api
 import matplotlib as mpl
 import pygame
+import base64
 
 ###### OPERATOR FUNCTIONS ######
 def getDays(date):
@@ -92,7 +93,7 @@ def giveRanking(value):
 
 ###### ALGORITHM ######
 
-def runPowerScore(compName, compID, div):
+def runPowerScore(compName, compID, div, typeOfPowerscore):
     output = open("output.txt", "w")
 
     def generateTeamsListFromComp(fileList): # uses the match list to generate a list of teams that attended a comp, so that a second teamList is unnecessary
@@ -181,14 +182,19 @@ def runPowerScore(compName, compID, div):
 
         return listOfOpponentAvgDiffs
 
-    def getPowerScore(player): # master function, combines all the above functions to generate a powerScore value that reflects how "powerful" a team was in the competition
+    def getPowerScore(player, typeOfPowerscore): # master function, combines all the above functions to generate a powerScore value that reflects how "powerful" a team was in the competition
         matchDiffs = getListOfDiffs(player=player) # factor 1 (positive)
         allianceDiffs = getAllianceAverageDiffs(player=player) # factor 2 (negative)
         opponentDiffs = getOpponentAverageDiffs(player=player) # factor 3 (positive)
         matchPowers = []
 
         for index, matchDiff in enumerate(matchDiffs):
-            matchPower = matchDiff - allianceDiffs[index] + opponentDiffs[index] # performs sigmoid calculation based on the 3 factors
+            if typeOfPowerscore == "offensive":
+                matchPower = matchDiff + opponentDiffs[index] # performs summation of 3 factors
+            if typeOfPowerscore == "defensive":
+                matchPower = matchDiff - allianceDiffs[index] # performs summation of 3 factors
+            if typeOfPowerscore == "general":
+                matchPower = matchDiff - allianceDiffs[index] + opponentDiffs[index] # performs summation of 3 factors
             matchPowers.append(matchPower)
         
         powerScore = np.average(matchPowers)# / 2 + 0.5
@@ -197,7 +203,7 @@ def runPowerScore(compName, compID, div):
     ###### MAIN ######
     #print(teamList)
     for team in teamList: # changes each item in the team list to be a tuple of the team name and its powerScore as opposed to just the team name
-        teamList[teamList.index(team)] = [team, getPowerScore(team)]
+        teamList[teamList.index(team)] = [team, getPowerScore(team, typeOfPowerscore)]
 
     #output.write(compName + " PowerScore\n")
     
@@ -228,44 +234,103 @@ def findDivision(name, comp):
 
 
 #runPowerScore()
+def runAlgorithm(team):
+    #team = str(input("Enter a Team Number: "))
+    comps = api.getCompList(team)
+    #print(comps["meta"])
+    psList = []
+    opsList = []
+    dpsList = []
+    #print(comps["data"])
+    for comp in range(comps["meta"]["total"]):
+        #print(comps["data"][comp]["name"])
+        #print(compPS)
 
-team = str(input("Enter a Team Number: "))
-comps = api.getCompList(team)
-#print(comps["meta"])
-psList = []
-#print(comps["data"])
-for comp in range(comps["meta"]["total"]):
-    #print(comps["data"][comp]["name"])
-    #print(compPS)
+        if len(comps["data"][comp]["divisions"]) == 1:
+            div = "1"
+        else:
+            #print("Competition has more than one division. Please fix this issue ASAP")
+            div = findDivision(team, comps["data"][comp])
+        try:
+            fullPSLib, fullPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="general")
+            fullOPSLib, fullOPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="offensive")
+            fullDPSLib, fullDPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="defensive")
+            #print(fullPS)
+            compPS = fullPSLib[team]
+            compOPS = fullOPSLib[team]
+            compDPS = fullDPSLib[team]
+            #compSum = sum(ps[1] for ps in fullPSList)
+            #compWeight = log(0.51 * (compSum ** 0.225)) ** 2
+            compWeight = 1.0 + 1 * ("Signature Event" in comps["data"][comp]["name"])
+            psList.append([compPS, compWeight, getDays(comps["data"][comp]["start"][:10])])
+            opsList.append([compOPS, compWeight, getDays(comps["data"][comp]["start"][:10])])
+            dpsList.append([compDPS, compWeight, getDays(comps["data"][comp]["start"][:10])])
+            #print([compPS, compSum, log(0.51 * (compSum ** 0.225)) ** 2])
+        except:
+            print("This team deregistered from a comp")
 
-    if len(comps["data"][comp]["divisions"]) == 1:
-        div = "1"
+    #matchPower = (2/(1 + exp(-0.05 * (matchDiff - allianceDiffs[index] + opponentDiffs[index])))) - 1 # performs sigmoid calculation based on the 3 factors
+    
+    ### GENERAL POWERSCORE ###
+    summation = 0
+    index = 1
+    progression = []
+    oldTemporalPS = 0
+    temporalPS = 0
+    for x in psList:
+        summation += x[0] * x[1]
+        oldTemporalPS = temporalPS
+        temporalPS = summation / index
+        progression.append([x[2], round((((2/(1 + exp(-0.045 * (temporalPS)))) - 1) / 2 + 0.5) * 1000) / 10])
+        index += 1
+    createPlot(progression)
+    careerPS = round((((2/(1 + exp(-0.045 * temporalPS))) - 1) / 2 + 0.5) * 100)
+    oldCareerPS = round((((2/(1 + exp(-0.045 * oldTemporalPS))) - 1) / 2 + 0.5) * 100)
+
+    ### OFFENSIVE POWERSCORE ###
+    summation = 0
+    index = 1
+    progression = []
+    temporalOPS = 0
+    for x in opsList:
+        summation += x[0] * x[1]
+        temporalOPS = summation / index
+        progression.append([x[2], round((((2/(1 + exp(-0.045 * (temporalOPS)))) - 1) / 2 + 0.5) * 1000) / 10])
+        index += 1
+    careerOPS = round((((2/(1 + exp(-0.045 * temporalOPS))) - 1) / 2 + 0.5) * 100)
+
+    ### DEFENSIVE POWERSCORE ###
+    summation = 0
+    index = 1
+    progression = []
+    temporalDPS = 0
+    for x in dpsList:
+        summation += x[0] * x[1]
+        temporalDPS = summation / index
+        progression.append([x[2], round((((2/(1 + exp(-0.045 * (temporalDPS)))) - 1) / 2 + 0.5) * 1000) / 10])
+        index += 1
+    careerDPS = round((((2/(1 + exp(-0.045 * temporalDPS))) - 1) / 2 + 0.5) * 100)
+
+    if careerOPS - careerDPS > 20:
+        title = "Sentinel"
+    elif careerOPS - careerDPS < -20:
+        title = "Aggressor"
     else:
-        #print("Competition has more than one division. Please fix this issue ASAP")
-        div = findDivision(team, comps["data"][comp])
-    try:
-        fullPSLib, fullPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div)
-        #print(fullPS)
-        compPS = fullPSLib[team]
-        #compSum = sum(ps[1] for ps in fullPSList)
-        #compWeight = log(0.51 * (compSum ** 0.225)) ** 2
-        compWeight = 1.0 + 1 * ("Signature Event" in comps["data"][comp]["name"])
-        psList.append([compPS, compWeight, getDays(comps["data"][comp]["start"][:10])])
-        #print([compPS, compSum, log(0.51 * (compSum ** 0.225)) ** 2])
-    except:
-        print("This team deregistered from a comp")
+        title = "Neutral"
 
-#matchPower = (2/(1 + exp(-0.05 * (matchDiff - allianceDiffs[index] + opponentDiffs[index])))) - 1 # performs sigmoid calculation based on the 3 factors
-summation = 0
-index = 1
-progression = []
-for x in psList:
-    summation += x[0] * x[1]
-    temporalPS = summation / index
-    progression.append([x[2], round((((2/(1 + exp(-0.045 * (temporalPS)))) - 1) / 2 + 0.5) * 1000) / 10])
-    index += 1
-createPlot(progression)
-print(team)# + " - " + str(round((((2/(1 + exp(-0.045 * (summation / len(psList))))) - 1) / 2 + 0.5) * 1000) / 10))
-print(giveRanking(round((((2/(1 + exp(-0.045 * (summation / len(psList))))) - 1) / 2 + 0.5) * 1000) / 10))
+    accolade1 = ["Top Fragger", "Attain the Highest Powerscore at a competition"]
+    accolade2 = ["Started From the Bottom", "Climb from below Gold to above Platinum in a season"]
+
+    rank = giveRanking(careerPS)
+    rankCopy = rank.replace(" ", "")
+    badgeFileDir = "newbadges/" + rankCopy + ".png"
+    # Read the image file
+    image_data = open(badgeFileDir, 'rb').read()
+    # Encode as base64
+    data_uri = base64.b64encode(image_data).decode('utf-8')
+    # Create an <img> tag with the base64-encoded image
+    badge_tag = data_uri
+
+    return [team, careerPS, oldCareerPS, rank, careerOPS, careerDPS, title, accolade1, accolade2, badge_tag]
 
     #print(comps["data"][comp]["id"])
