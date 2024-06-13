@@ -288,6 +288,17 @@
             border: 1px solid #ffffff;
             border-radius: 5px;
         }
+        .imageOverlay {
+            position: fixed;
+            margin-top: 100px;
+            align-items: center;
+            width: 1010px;
+            height: 720px;
+            background-position: center;
+            background-color: #084d5a;
+            background-image: none;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -295,6 +306,8 @@
     <div class="total-parent-container">
         <div class="gap">
             <div class="gap"></div>
+        </div>
+        <div class="imageOverlay">
         </div>
         <div class="gap">
             <div class="gap"></div>
@@ -306,8 +319,17 @@
             <div class="input-container">
                 <form action="/search" method="GET" class="input-container">
                     <input type="text" name="query" placeholder="Search a Team Number">
-                    <button type="submit">
-                        <i class="fas fa-search"></i>
+                    <button type="submit" id="overlayButton">
+                        <i id="overlayButton" class="fas fa-search"></i>
+                        <script>
+                            const overlayButton = document.getElementById('overlayButton');
+                            const imageOverlay = document.querySelector('.imageOverlay');
+                        
+                            overlayButton.addEventListener("click", function() {
+                                imageOverlay.style.backgroundImage = 'url("https://www.dropbox.com/scl/fi/gv0549s6zm6vij93ggf9p/Skeleton.gif?rlkey=dyv46jhjc5bkqseumcsvcw2eo&st=5ikvb3uo&raw=1")';
+                                imageOverlay.style.display = 'block';
+                            });
+                        </script>
                     </button>
                 </form>
             </div>

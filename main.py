@@ -12,7 +12,7 @@ def getDays(date):
     monthLengths = [31,28,31,30,31,30,31,31,30,31,30,31]
     return int(date[:4]) * 365 + sum(monthLengths[:int(date[5:7]) - 1]) + int(date[8:])
 
-def createPlot(data):
+def createPlot(data, teamname):
     pygame.init()
     windowSize = [630, 250]
     screen = pygame.display.set_mode(windowSize)
@@ -20,14 +20,18 @@ def createPlot(data):
     ranks = pygame.image.load("ranks.png")
     point = pygame.image.load("point.png")
 
+    font = pygame.font.Font("Teko-Regular.ttf", 22)
+
     screen.fill((14, 97, 114))
-    chartDimensions = [windowSize[0] - 50, windowSize[1] - 50]
+    topMargin = 25
+    bottomMargin = 50
+    chartDimensions = [windowSize[0] - 50, windowSize[1] - (topMargin + bottomMargin)]
     vertTicks, horizTicks = [5, 6]
 
     leftBound = (windowSize[0] - chartDimensions[0]) / 2
     rightBound = (windowSize[0] + chartDimensions[0]) / 2
-    topBound = (windowSize[1] - chartDimensions[1]) / 2
-    bottomBound = (windowSize[1] + chartDimensions[1]) / 2
+    topBound = topMargin
+    bottomBound = windowSize[1] - bottomMargin
 
     ranks = pygame.transform.scale(ranks, (chartDimensions[0], chartDimensions[1]))
     ranksRect = ((leftBound, topBound), (ranks.get_rect()[2], ranks.get_rect()[3]))
@@ -53,6 +57,9 @@ def createPlot(data):
     pygame.draw.aaline(screen, (255,255,255), (nextXPos, nextYPos), (rightBound, nextYPos),4)
 
     screen.blit(point, (rightBound - 8, nextYPos - 8))
+    bottomText = font.render(f"{teamname} Powerscore Over Time", True, (255,255,255))
+    bottomRect = [windowSize[0]/2 - bottomText.get_rect()[2]/2, windowSize[1] - 40, bottomText.get_rect()[2], bottomText.get_rect()[3]]
+    screen.blit(bottomText, bottomRect)
     #pygame.draw.circle(screen, (255, 255, 255), (rightBound, yPos), 2)
 
     pygame.image.save(screen, "plot.png")
@@ -96,7 +103,7 @@ def giveRanking(value):
 
 ###### ALGORITHM ######
 
-def runPowerScore(compName, compID, div, typeOfPowerscore):
+def runPowerScore(compName, compID, div, typeOfPowerscore, compInfo):
     output = open("output.txt", "w")
 
     def generateTeamsListFromComp(fileList): # uses the match list to generate a list of teams that attended a comp, so that a second teamList is unnecessary
@@ -109,7 +116,7 @@ def runPowerScore(compName, compID, div, typeOfPowerscore):
 
         return uniqueTeams
 
-    chart = api.getMatchList(compName, api.getCompInfo(compID, str(div)))
+    chart = api.getMatchList(compName, compInfo)
     teamList = generateTeamsListFromComp(chart)
 
     ###### FUNCTIONS ######
@@ -259,9 +266,10 @@ def runAlgorithm(team):
             #print("Competition has more than one division. Please fix this issue ASAP")
             div = findDivision(team, comps["data"][comp])
         try:
-            fullPSLib, fullPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="general")
-            fullOPSLib, fullOPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="offensive")
-            fullDPSLib, fullDPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="defensive")
+            compInfo = api.getCompInfo(comps["data"][comp]["id"], str(div))
+            fullPSLib, fullPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="general", compInfo=compInfo)
+            fullOPSLib, fullOPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="offensive", compInfo=compInfo)
+            fullDPSLib, fullDPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="defensive", compInfo=compInfo)
             #print(fullPS)
             compPS = fullPSLib[team]
             compOPS = fullOPSLib[team]
@@ -297,7 +305,7 @@ def runAlgorithm(team):
         temporalPS = summation / index
         progression.append([x[2], round((((2/(1 + exp(-0.045 * (temporalPS)))) - 1) / 2 + 0.5) * 1000) / 10])
         index += 1
-    createPlot(progression)
+    createPlot(progression, teamname)
     if progression[0][1] < 51 and progression[len(progression) - 1][1] > 70:
         accolades.append("Glow Up")
     sortedProgression = sorted(progression, key=lambda x: x[1], reverse=True) # sorts the list based on powerScore from largest to smallest
