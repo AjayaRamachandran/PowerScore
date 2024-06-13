@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oops!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        title {
+            font-family: 'Inter', sans-serif;
+            background-color: #084d5a;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 108px;
+            font-size: 60px;
+            font-weight: 900;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #084d5a;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 108px;
+            font-size: 20px;
+            letter-spacing: -0.4px;
+        }
+        .body2 {
+            font-family: 'Inter', sans-serif;
+            background-color: #084d5a;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            text-align: center;
+            height: 108px;
+            width: 500px;
+            font-size: 16px;
+            letter-spacing: -0.2px;
+        }
+        img {
+            width: 100%;
+            height: 100%;
+        }
+        a {
+            text-decoration: none;
+            color: white;
+        }
+        .banner {
+            background-color: black;
+            width: 100%;
+            position: fixed; /* Keeps it at the top even when scrolling */
+            top: 0;
+            left: 0;
+            font-weight: 500;
+            letter-spacing: -1px;
+            font-size: 30px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .total-parent-container {
+            display: flex;
+            flex-direction: column;
+            height: 108px;
+        }
+        .input-parent-container {
+            text-align: center;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .input-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .input-container input {
+            width: 500px;
+            height: 20px;
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 5px 0 0 5px;
+            border: 1px solid #ffffff;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: -0.3px;
+            text-align: center;
+            background-color: #084d5a;
+            color: #ffffff;
+        }
+        .input-container button {
+            width: 42px;
+            height: 42px;
+            border: 1px solid #ffffff;
+            border-left: none;
+            background-color: #084d5a;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .input-container button i {
+            color: #ffffff;
+            font-size: 15px;
+        }
+        .gap {
+            width: 500px;
+            height: 30px;
+            display: block;
+        }
+        .top-bar-parent-container {
+            width: 1000px;
+            height: 100px;
+            display: block;
+        }
+        .top-bar-container {
+            font-size: 70px;
+            text-align: right;
+            font-family: 'Teko', sans-serif;
+            color: #ffffff;
+            background-color: #0e6172;
+            display: flex;
+            padding-top: 10px;
+            padding-right: 20px;
+            padding-bottom: -10px;
+            border-radius: 5px;
+            border: 1px solid #ffffff;
+            justify-content: right;
+        }
+        .body-parent-container {
+            display: block;
+            width: 1000px;
+            height: 150px;
+            border: 1px transparent;
+        }
+        .body-container {
+            display: flex;
+            width: 1000px;
+            height: 150px;
+            border: 1px transparent;
+            flex-direction: row;
+        }
+        .item1 {
+            flex: 0 0 15%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 15% */
+            background-color: transparent;
+            font-family: "Teko";
+            font-size: 200px;
+            text-align: center;
+            font-weight: 700;
+            color:#ffffff;
+            line-height: 90%;
+            padding-top: 0;
+        }
+        .item2 {
+            flex: 0 0 10%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 10% */
+            background-color: transparent;
+            font-family: "Teko";
+            font-size: 50px;
+            text-align: center;
+            font-weight: 700;
+            color:#1b778a;
+            line-height: 80%;
+            padding-top: 27px;
+        }
+        .item3 {
+            flex: 0 0 15%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 50% */
+            border-radius: 10px;
+            background-color: #0e6172;
+            padding: 0%;
+            border-radius: 20px 0 0 20px;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: "Teko";
+            font-size: 40px;
+        }
+        .item4 {
+            flex: 0 0 30%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 25% */
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            border-radius: 0 20px 20px 0;
+            align-items: center;
+            justify-content: center;
+            background-color: #0e6172;
+        }
+        .item4-top {
+            height: 73px;
+            width: 300px;
+            background-color: #0e6172;
+            text-align: center;
+            font-family: "Teko";
+            font-size: 40px;
+            align-items: center;
+        }
+        .item4-middle {
+            flex: 0 0 4%;
+            height: 15px;
+            width: 300px;
+            background-color: #0e6172;
+            text-align: center;
+            font-family: "Teko";
+            font-size: 20px;
+            align-items: center;
+        }
+        .item4-bmiddle {
+            height: 15px;
+            width: 300px;
+            background-color: #0e6172;
+            text-align: center;
+            font-family: "Teko";
+            font-size: 20px;
+            align-items: center;
+        }
+        .item4-bottom {
+            flex: 0 0 25%;
+            height: 30px;
+            width: 300px;
+            background-color: #0e6172;
+            text-align: center;
+            font-family: "Teko";
+            font-size: 20px;
+            align-items: center;
+        }
+        .item5 {
+            flex: 0 0 20%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 25% */
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            align-items: center;
+            justify-content: center;
+        }
+        .item5-top {
+            background-color: transparent;
+            font-size: 32px;
+            text-align: center;
+            font-family: 'Teko', sans-serif;
+            color: #ffffff;
+            border-radius: 0;
+            line-height: 100%;
+        }
+        .item5-bottom {
+            background-color: transparent;
+            font-size: 32px;
+            text-align: center;
+            font-family: 'Teko', sans-serif;
+            color: #ffffff;
+            border-radius: 0;
+            line-height: 100%;
+        }
+        .body2-parent-container {
+            display: block;
+            width: 1000px;
+            height: 250px;
+            border-radius: 5;
+        }
+        .body2-container {
+            display: flex;
+            width: 1000px;
+            height: 250px;
+            flex-direction: row;
+            border-radius: 5;
+        }
+        .item21 {
+            flex: 0 0 35%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 15% */
+            display: flex;
+            flex-direction: column;
+            background-color: #0e6172;
+            border: 1px solid #ffffff;
+            border-radius: 5px;
+            padding-top: 15px;
+        }
+        .item21-high {
+            font-family: "Teko";
+            font-size: 35px;
+            line-height: 84%;
+            text-align: center;
+            color:#ffffff;
+        }
+        .item21-low {
+            font-family: "Teko";
+            font-size: 21px;
+            line-height: 120%;
+            text-align: left;
+            color:#ffffff;
+            padding-top: 2px;
+            padding-left: 15px;
+        }
+        .item22 {
+            flex: 0 0 2%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 15% */
+            background-color: transparent;
+            font-family: "Teko";
+            font-size: 20px;
+            text-align: center;
+            color:#ffffff;
+            border: transparent;
+            border-radius: 5px;
+        }
+        .item23 {
+            flex: 0 0 63%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 15% */
+            background-color: #0e6172;
+            font-family: "Teko";
+            font-size: 20px;
+            text-align: center;
+            color:#ffffff;
+            border: 1px solid #ffffff;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner"><a href="http://localhost:5000">VRC-Tracker</a></div>
+    <div class="total-parent-container">
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="input-parent-container">
+            <div class="input-container">
+                <form action="/search" method="GET" class="input-container">
+                    <input type="text" name="query" placeholder="Search a Team Number">
+                    <button type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <title>Oops!</title>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <body>We couldn't find a team with the number "{{ query }}".</body>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="body2">The issue could be:</div>
+        <div class="body2">1. This team does not exist</div>
+        <div class="body2">2. This team exists but has not competed yet this season</div>
+        <div class="body2">3. RobotEvents API requests have timed out</div>
+    </div>
+</body>
+</html>

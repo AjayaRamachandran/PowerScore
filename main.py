@@ -5,6 +5,7 @@ import api
 import matplotlib as mpl
 import pygame
 import base64
+from PIL import Image
 
 ###### OPERATOR FUNCTIONS ######
 def getDays(date):
@@ -13,14 +14,14 @@ def getDays(date):
 
 def createPlot(data):
     pygame.init()
-    windowSize = [1281, 501]
+    windowSize = [630, 250]
     screen = pygame.display.set_mode(windowSize)
 
     ranks = pygame.image.load("ranks.png")
     point = pygame.image.load("point.png")
 
-    screen.fill((10,40,40))
-    chartDimensions = [windowSize[0] - 100, windowSize[1] - 100]
+    screen.fill((14, 97, 114))
+    chartDimensions = [windowSize[0] - 50, windowSize[1] - 50]
     vertTicks, horizTicks = [5, 6]
 
     leftBound = (windowSize[0] - chartDimensions[0]) / 2
@@ -35,7 +36,7 @@ def createPlot(data):
         #pygame.draw.aaline(screen, (20,80,80), (leftBound + vertLine * (chartDimensions[0] / (vertTicks - 1)), bottomBound), (leftBound + vertLine * (chartDimensions[0] / (vertTicks - 1)), topBound))
 
     for horizLine in range(horizTicks):
-        pygame.draw.aaline(screen, (20,80,80), (leftBound, topBound + horizLine * (chartDimensions[1] / (horizTicks - 1))), (rightBound, topBound + horizLine * (chartDimensions[1] / (horizTicks - 1))))
+        pygame.draw.aaline(screen, (44, 127, 144), (leftBound, topBound + horizLine * (chartDimensions[1] / (horizTicks - 1))), (rightBound, topBound + horizLine * (chartDimensions[1] / (horizTicks - 1))))
 
     xValues = [item[0] for item in data]
     yValues = [item[1] for item in data]
@@ -59,32 +60,34 @@ def createPlot(data):
 
 ###### RANKING ######
 
+ranking = [
+    ["Bronze I", 0],
+    ["Bronze II", 11],
+    ["Bronze III", 21],
+
+    ["Silver I", 31],
+    ["Silver II", 38],
+    ["Silver III", 44],
+
+    ["Gold I", 51],
+    ["Gold II", 58],
+    ["Gold III", 64],
+
+    ["Diamond I", 71],
+    ["Diamond II", 74],
+    ["Diamond III", 78],
+
+    ["Royal I", 81],
+    ["Royal II", 84],
+    ["Royal III", 88],
+
+    ["Ethereal I", 91],
+    ["Ethereal II", 94],
+    ["Ethereal III", 98],
+]
+
 def giveRanking(value):
-    ranking = [
-        ["Bronze I", 0],
-        ["Bronze II", 11],
-        ["Bronze III", 21],
 
-        ["Silver I", 31],
-        ["Silver II", 38],
-        ["Silver III", 44],
-
-        ["Gold I", 51],
-        ["Gold II", 58],
-        ["Gold III", 64],
-
-        ["Diamond I", 71],
-        ["Diamond II", 74],
-        ["Diamond III", 78],
-
-        ["Royal I", 81],
-        ["Royal II", 84],
-        ["Royal III", 88],
-
-        ["Ethereal I", 91],
-        ["Ethereal II", 94],
-        ["Ethereal III", 98],
-    ]
     index = 0
     while ranking[index][1] < value:
         index += 1
@@ -235,6 +238,10 @@ def findDivision(name, comp):
 
 #runPowerScore()
 def runAlgorithm(team):
+    global accolades, teamname
+    accolades = []
+    teamname = team
+
     #team = str(input("Enter a Team Number: "))
     comps = api.getCompList(team)
     #print(comps["meta"])
@@ -259,6 +266,13 @@ def runAlgorithm(team):
             compPS = fullPSLib[team]
             compOPS = fullOPSLib[team]
             compDPS = fullDPSLib[team]
+            #print(compPS)
+            if round((((2/(1 + exp(-0.045 * (compPS)))) - 1) / 2 + 0.5) * 1000) / 10 >= 90 and not "First Class" in accolades:
+                accolades.append("First Class")
+            if round((((2/(1 + exp(-0.045 * (compPS)))) - 1) / 2 + 0.5) * 1000) / 10 >= 90 and ("Signature Event" in comps["data"][comp]["name"]) and not "World Class" in accolades:
+                accolades.append("World Class")
+            if fullPSList.index([team, compPS]) == 0 and not "Top Fragger" in accolades:
+                accolades.append("Top Fragger")
             #compSum = sum(ps[1] for ps in fullPSList)
             #compWeight = log(0.51 * (compSum ** 0.225)) ** 2
             compWeight = 1.0 + 1 * ("Signature Event" in comps["data"][comp]["name"])
@@ -284,8 +298,38 @@ def runAlgorithm(team):
         progression.append([x[2], round((((2/(1 + exp(-0.045 * (temporalPS)))) - 1) / 2 + 0.5) * 1000) / 10])
         index += 1
     createPlot(progression)
-    careerPS = round((((2/(1 + exp(-0.045 * temporalPS))) - 1) / 2 + 0.5) * 100)
+    if progression[0][1] < 51 and progression[len(progression) - 1][1] > 70:
+        accolades.append("Glow Up")
+    sortedProgression = sorted(progression, key=lambda x: x[1], reverse=True) # sorts the list based on powerScore from largest to smallest
+    if sortedProgression[0][1] > 80 and progression[len(progression) - 1][1] < 71:
+        accolades.append("Fall from Grace")
+    careerPS = round((((2/(1 + exp(-0.045 * temporalPS))) - 1) / 2 + 0.5) * 10000) / 100
+    print(careerPS)
     oldCareerPS = round((((2/(1 + exp(-0.045 * oldTemporalPS))) - 1) / 2 + 0.5) * 100)
+
+    nextRank = 0
+    prevRank = 0
+    for rank in reversed(ranking):
+        if careerPS < rank[1]:
+            nextRank = rank[1]
+    for rank in ranking:
+        if careerPS > rank[1]:
+            prevRank = rank[1]
+    
+    xpToNext = round(((nextRank - careerPS) * careerPS) * 0.05) * 100
+
+    percentageXP = round(((careerPS - prevRank) / (nextRank - prevRank)) * 100) / 100
+
+    image = Image.new("RGBA", (100, 10))
+    for y in range(10):
+        for x in range(100):
+            if x / 100 < percentageXP:
+                image.putpixel((x, y), (132, 238, 255, 255))
+            else:
+                image.putpixel((x, y), (27, 119, 138, 255))
+    image.save("bar.png")
+    rank = giveRanking(careerPS)
+    careerPS = round(careerPS)
 
     ### OFFENSIVE POWERSCORE ###
     summation = 0
@@ -311,17 +355,33 @@ def runAlgorithm(team):
         index += 1
     careerDPS = round((((2/(1 + exp(-0.045 * temporalDPS))) - 1) / 2 + 0.5) * 100)
 
-    if careerOPS - careerDPS > 20:
-        title = "Sentinel"
-    elif careerOPS - careerDPS < -20:
+    if careerOPS - careerDPS > 5:
         title = "Aggressor"
+    elif careerOPS - careerDPS < -5:
+        title = "Sentinel"
     else:
         title = "Neutral"
 
-    accolade1 = ["Top Fragger", "Attain the Highest Powerscore at a competition"]
-    accolade2 = ["Started From the Bottom", "Climb from below Gold to above Platinum in a season"]
+    #if "World Class" in accolades:
+        #accolades.remove("First Class")
+    possibleAccolades = [
+        ["World Class", "Attain a Powerscore above 90 at a Signature Event"],
+        ["Glow Up", "Climb from below Gold to above Gold in a season"],
+        ["Top Fragger", "Attain the highest Powerscore at a competition"],
+        ["First Class", "Attain a Powerscore above 90 at a competition"],
+        ["Fall from Grace", "Fall from above Diamond to below Diamond in a season"]
+    ]
+    num = 0
+    accolade1 = ["No Accolade", "Earn accolades by playing in tournaments!"]
+    accolade2 = ["No Accolade", "Earn accolades by playing in tournaments!"]
+    for accolade in possibleAccolades:
+        if accolade[0] in accolades:
+            if num == 0:
+                accolade1 = accolade
+            if num == 1:
+                accolade2 = accolade
+            num += 1
 
-    rank = giveRanking(careerPS)
     rankCopy = rank.replace(" ", "")
     badgeFileDir = "newbadges/" + rankCopy + ".png"
     # Read the image file
@@ -331,6 +391,18 @@ def runAlgorithm(team):
     # Create an <img> tag with the base64-encoded image
     badge_tag = data_uri
 
-    return [team, careerPS, oldCareerPS, rank, careerOPS, careerDPS, title, accolade1, accolade2, badge_tag]
+    image_data = open("plot.png", 'rb').read()
+    # Encode as base64
+    data_uri = base64.b64encode(image_data).decode('utf-8')
+    # Create an <img> tag with the base64-encoded image
+    graph_tag = data_uri
+
+    image_data = open("bar.png", 'rb').read()
+    # Encode as base64
+    data_uri = base64.b64encode(image_data).decode('utf-8')
+    # Create an <img> tag with the base64-encoded image
+    bar_tag = data_uri
+
+    return [team, careerPS, oldCareerPS, rank, careerOPS, careerDPS, title, accolade1, accolade2, badge_tag, graph_tag, xpToNext, bar_tag]
 
     #print(comps["data"][comp]["id"])
