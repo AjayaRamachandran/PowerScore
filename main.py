@@ -2,7 +2,7 @@ import numpy as np
 from math import *
 import inout as io
 import api
-import matplotlib as mpl
+#import matplotlib as mpl
 import pygame
 import base64
 from PIL import Image
