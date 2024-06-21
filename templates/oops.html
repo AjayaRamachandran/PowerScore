@@ -335,8 +335,8 @@
         </div>
         <div class="input-parent-container">
             <div class="input-container">
-                <form action="/search" method="GET" class="input-container">
-                    <input type="text" name="query" placeholder="Search a Team Number">
+                <form action="{{ destination }}" method="GET" class="input-container">
+                    <input type="text" name="query" placeholder="{{ placeholder }}">
                     <button type="submit">
                         <i class="fas fa-search"></i>
                     </button>
@@ -356,14 +356,14 @@
         <div class="gap">
             <div class="gap"></div>
         </div>
-        <body>We couldn't find a team with the number "{{ query }}".</body>
+        <body>We couldn't find a {{ type }} "{{ query }}".</body>
         <div class="gap">
             <div class="gap"></div>
         </div>
         <div class="body2">The issue could be:</div>
-        <div class="body2">1. This team does not exist</div>
-        <div class="body2">2. This team exists but has not competed yet this season</div>
-        <div class="body2">3. RobotEvents API requests have timed out</div>
+        <div class="body2">1. {{ issue1 }}</div>
+        <div class="body2">2. {{ issue2 }}</div>
+        <div class="body2">3. {{ issue3 }}</div>
     </div>
 </body>
 </html>

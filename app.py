@@ -2,6 +2,7 @@ from flask import Flask, request, render_template
 import random
 import main
 import base64
+import pageGen
 
 ###### BANNER ######
 # Read the image file
@@ -20,8 +21,8 @@ app = Flask(__name__)
 def index():
     return render_template("splash.html", banner = img_tag)
 
-@app.route("/search", methods=["GET"])
-def handle_search():
+@app.route("/teams", methods=["GET"])
+def handle_teams():
     query = request.args.get("query")
     try:
         result = main.runAlgorithm(query)
@@ -30,7 +31,14 @@ def handle_search():
         print(e)
     # Process the search query (e.g., query a database, perform a search, etc.)
     if result == None:
-        return render_template("oops.html", query = query)
+        return render_template("oops.html",
+                               query = query,
+                               destination = "/teams",
+                               placeholder = "Search a Team Number",
+                               type = "team with the number",
+                               issue1 = "This team does not exist",
+                               issue2 = "This team exists but has not competed yet this season",
+                               issue3 = "RobotEvents API requests have timed out")
     else:
         return render_template("index.html",
             name = result[0],
@@ -46,6 +54,27 @@ def handle_search():
             graphByteString = result[10],
             xpLeft = result[11],
             barByteString = result[12])
+
+@app.route("/competitions", methods=["GET"])
+def handle_competitions():
+    query = request.args.get("query")
+    try:
+        result = main.runComp(query)
+    except Exception as e:
+        result = None
+        print(e)
+    if result == None:
+        return render_template("oops.html",
+                               query = query,
+                               destination = "/competitions",
+                               placeholder = "Enter a Competition SKU (ex: RE-VRC-XX-XXXX)",
+                               type = "competition with the SKU",
+                               issue1 = "This competition does not exist",
+                               issue2 = "This competition has not happened yet",
+                               issue3 = "RobotEvents API requests have timed out")
+    else:
+        pageGen.generateFrom(result)
+        return render_template("comp.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

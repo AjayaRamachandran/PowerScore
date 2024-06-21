@@ -30,11 +30,11 @@ def makeRequest(endpoint, params=None):
     }
 
     requestNumber += 1
-    print("Sent Request")
+    print(f"Sent request for {BASE_URL}{endpoint}, params:{params}")
     response = requests.get(f'{BASE_URL}{endpoint}', headers=headers, params=params)
-    print("Received Result")
 
     if response.status_code == 200:
+        print("Received result")
         return response.json()
     else:
         print(f"Request failed with status code {response.status_code}")
@@ -108,8 +108,30 @@ def getCompInfo(ID, division):
 
     return makeRequest(endpoint=endpoint, params=params)['data']
 
-def getMatchList(compName, matchData):
+def getCompInfoBySKU(sku):
+    params = {
+        "per_page": "250"
+    }
 
+    endpoint = f"events?sku%5B%5D={sku}&myEvents=false"
+    data = makeRequest(endpoint=endpoint, params=params)['data'][0]
+    name = data['name']
+    numDivs = len(data['divisions'])
+    ID = data['id']
+
+    divisionsData = []
+    for div in range(numDivs):
+        params = {
+            "division": str(div + 1),
+            "per_page": "250",
+            "round": "2"
+        }
+        endpoint = f"events/{ID}/divisions/{div+1}/matches"
+        divisionsData.append(makeRequest(endpoint=endpoint, params=params)['data'])
+
+    return name, divisionsData
+
+def getMatchList(compName, matchData):
     matchList = []
 
     for matchNum in range(len(matchData)):
@@ -124,7 +146,6 @@ def getMatchList(compName, matchData):
 
         matchList.append([redTeam1, redTeam2, blueTeam1, blueTeam2, redScore, blueScore])
 
-    #return compName[0], matchList
     return matchList
 
 def askUserForComp():

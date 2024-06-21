@@ -103,7 +103,7 @@ def giveRanking(value):
 
 ###### ALGORITHM ######
 
-def runPowerScore(compName, compID, div, typeOfPowerscore, compInfo):
+def runPowerScore(compName, compID, div, typeOfPowerscore, compInfo, onlyForComp=False):
     output = open("output.txt", "w")
 
     def generateTeamsListFromComp(fileList): # uses the match list to generate a list of teams that attended a comp, so that a second teamList is unnecessary
@@ -200,15 +200,28 @@ def runPowerScore(compName, compID, div, typeOfPowerscore, compInfo):
 
         for index, matchDiff in enumerate(matchDiffs):
             if typeOfPowerscore == "offensive":
-                matchPower = matchDiff + opponentDiffs[index] # performs summation of 3 factors
+                if onlyForComp:
+                    matchPower = (2/(1 + exp(-0.05 * (matchDiff + opponentDiffs[index])))) - 1 # performs sigmoid calculation based on the 2 factors
+                else:
+                    matchPower = matchDiff + opponentDiffs[index] # performs summation of 2 factors
             if typeOfPowerscore == "defensive":
-                matchPower = matchDiff - allianceDiffs[index] # performs summation of 3 factors
+                if onlyForComp:
+                    matchPower = (2/(1 + exp(-0.05 * (matchDiff - allianceDiffs[index])))) - 1 # performs sigmoid calculation based on the 2 factors
+                else:
+                    matchPower = matchDiff - allianceDiffs[index] # performs summation of 2 factors
             if typeOfPowerscore == "general":
-                matchPower = matchDiff - allianceDiffs[index] + opponentDiffs[index] # performs summation of 3 factors
+                if onlyForComp:
+                    matchPower = (2/(1 + exp(-0.05 * (matchDiff - allianceDiffs[index] + opponentDiffs[index])))) - 1 # performs sigmoid calculation based on the 3 factors
+                else:
+                    matchPower = matchDiff - allianceDiffs[index] + opponentDiffs[index] # performs summation of 3 factors
             matchPowers.append(matchPower)
         
-        powerScore = np.average(matchPowers)# / 2 + 0.5
-        return round(powerScore * 1000) / 1000 # change to 10 outside the parentheses if need to revert
+        if onlyForComp:
+            powerScore = np.average(matchPowers) / 2 + 0.5
+            return round(powerScore * 1000) / 10 # change to 10 outside the parentheses if need to revert
+        else:
+            powerScore = np.average(matchPowers)# / 2 + 0.5
+            return round(powerScore * 1000) / 1000 # change to 10 outside the parentheses if need to revert
             
     ###### MAIN ######
     #print(teamList)
@@ -242,6 +255,27 @@ def findDivision(name, comp):
             return div
     return 1
 
+def runComp(sku):
+    name, compInfos = api.getCompInfoBySKU(sku)
+    for i in range(len(compInfos) -1):
+        fullPSLib, fullPSList = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=compInfos[i], onlyForComp=True)
+        fullOPSLib, fullOPSList = runPowerScore(None, None, div=None, typeOfPowerscore="offensive", compInfo=compInfos[i], onlyForComp=True)
+        fullDPSLib, fullDPSList = runPowerScore(None, None, div=None, typeOfPowerscore="defensive", compInfo=compInfos[i], onlyForComp=True)
+    
+    newOPSList = []
+    for team in fullPSList:
+        newOPSList.append([team[0], fullOPSLib[team[0]]])
+    newDPSList = []
+    for team in fullPSList:
+        newDPSList.append([team[0], fullDPSLib[team[0]]])
+    #print(fullPSList)
+    #print(newOPSList)
+    #print(newDPSList)
+    return [name, fullPSList, newOPSList, newDPSList]
+
+#runComp("RE-VRC-23-2380")
+#runComp('RE-VRC-23-2382')
+#runComp('RE-VRC-23-4706')
 
 #runPowerScore()
 def runAlgorithm(team):
@@ -312,7 +346,7 @@ def runAlgorithm(team):
     if sortedProgression[0][1] > 80 and progression[len(progression) - 1][1] < 71:
         accolades.append("Fall from Grace")
     careerPS = round((((2/(1 + exp(-0.045 * temporalPS))) - 1) / 2 + 0.5) * 10000) / 100
-    print(careerPS)
+    #print(careerPS)
     oldCareerPS = round((((2/(1 + exp(-0.045 * oldTemporalPS))) - 1) / 2 + 0.5) * 100)
 
     nextRank = 0

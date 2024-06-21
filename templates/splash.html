@@ -19,7 +19,35 @@
             align-items: center;
             text-align: center;
             height: 108px;
-            font-size: 60px;
+            font-size: 40px;
+            font-weight: 900;
+        }
+        .title2 {
+            font-family: 'Teko', sans-serif;
+            background-color: #084d5a;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 64px;
+            font-size: 38px;
+            font-weight: 900;
+        }
+        .title3 {
+            font-family: 'Inter', sans-serif;
+            background-color: #084d5a;
+            color: #7dc6d4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 78px;
+            font-size: 40px;
             font-weight: 900;
         }
         body {
@@ -38,7 +66,6 @@
         }
         .body2 {
             font-family: 'Inter', sans-serif;
-            background-color: #084d5a;
             color: #ffffff;
             margin: 0;
             padding: 0;
@@ -46,10 +73,26 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            height: 408px;
+            height: 25px;
             width: 100%;
-            font-size: 25px;
-            letter-spacing: -0.6px;
+            font-size: 20px;
+            letter-spacing: 0px;
+            font-weight: 400;
+        }
+        .body3 {
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 20px;
+            width: 100%;
+            font-size: 17px;
+            letter-spacing: 0px;
+            font-weight: 400;
         }
         img {
             width: 100%;
@@ -67,10 +110,35 @@
             padding-top: 20px;
             padding-bottom: 20px;
         }
+        .banner2 {
+            background-color: #23212b;
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 60px;
+            font-weight: 900;
+            width: 100vw;
+            height: 20vw;
+            background-size: cover;
+            background-image: url("https://www.dropbox.com/scl/fi/ow60jy47mb2pvcm2ml398/Banner.jpg?rlkey=2qbd6fvnp7l96jn95rmv4k9ru&st=yv1f4as0&raw=1");
+        }
+        .search-bars-parent-container {
+            display: flex;
+            flex-direction: row;
+            justify-items: center;
+            text-align: center;
+        }
         .total-parent-container {
             display: flex;
             flex-direction: column;
             height: 8px;
+            align-items: center;
         }
         .input-parent-container {
             text-align: center;
@@ -78,10 +146,25 @@
             display: flex;
             flex-direction: column;
         }
+        .input-parent-container2 {
+            text-align: center;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .left-content-parent-container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+        .right-content-parent-container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
         .input-container {
             display: flex;
             justify-content: center;
-            margin-top: 20px;
         }
         .input-container input {
             width: 500px;
@@ -95,6 +178,23 @@
             text-align: center;
             background-color: #ffffff;
             color: #000000;
+        }
+        .input-container2 {
+            display: flex;
+            justify-content: center;
+        }
+        .input-container2 input {
+            width: 500px;
+            height: 20px;
+            font-size: 20px;
+            padding: 10px;
+            border-radius: 5px 0 0 5px;
+            border: 1px solid #ffffff;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: -0.3px;
+            text-align: center;
+            background-color: #084d5a;
+            color: #ffffff;
         }
         .input-container button {
             width: 42px;
@@ -114,7 +214,12 @@
         }
         .gap {
             width: 500px;
-            height: 30px;
+            height: 10px;
+            display: block;
+        }
+        .v-gap {
+            width: 10px;
+            height: 10px;
             display: block;
         }
         .top-bar-parent-container {
@@ -321,7 +426,20 @@
     <div class="banner">VRC-Tracker</div>
     <div class="total-parent-container">
         <div class="input-parent-container">
-            <img src="data:plot/png;base64,{{ banner }}" alt="Banner">
+            <div class="banner2">
+                <div class="gap">
+                    <div class="gap"></div>
+                </div>
+                The One Statistic That Can't Be Fooled.
+                <div class="gap">
+                    <div class="gap"></div>
+                </div>
+                <div class="body2"><b>VRC-Tracker<sup><small>TM</small></sup></b>, is the only tracker to use the cutting-edge</div>
+                <div class="body2"><b>Powerscore Algorithm</b>, capable of seeing the bigger picture</div>
+                <div class="body2">— without random chance, region competitiveness, and other</div>
+                <div class="body2">annoying factors getting in the way.</div>
+            </div>
+            <!--<img src="data:plot/png;base64,{{ banner }}" alt="Banner">-->
         </div>
         <div class="gap">
             <div class="gap"></div>
@@ -329,25 +447,82 @@
         <div class="gap">
             <div class="gap"></div>
         </div>
-        <title>The One Statistic That Can't Be Fooled.</title>
         <div class="gap">
             <div class="gap"></div>
         </div>
-        <div class="body2"><b>VRC-Tracker<sup><small>TM</small></sup></b>, is the only tracker to use the cutting-edge</div>
-        <div class="body2"><b>Powerscore Algorithm</b>, capable of seeing the bigger picture</div>
-        <div class="body2">— without random chance, region competitiveness, and other</div>
-        <div class="body2">annoying factors getting in the way.</div>
+        <div class="title3">Choose your fighter.</div>
         <div class="gap">
             <div class="gap"></div>
         </div>
-        <div class="input-parent-container">
-            <div class="input-container">
-                <form action="/search" method="GET" class="input-container">
-                    <input type="text" name="query" placeholder="Search any Team Number">
-                    <button type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="search-bars-parent-container">
+            <div class="left-content-parent-container">
+                <div class="title2">Career Powerscore</div>
+                <div class="body3">A computationally heavy method of tracking a team's</div>
+                <div class="body3">progression over time. Less tactical, but more epic.</div>
+                <div class="body3"><small><small>We recommend starting here if you're new.</small></small></div>
+                <div class="gap">
+                    <div class="gap"></div>
+                </div>
+                <div class="gap">
+                    <div class="gap"></div>
+                </div>
+                <div class="v-gap">
+                    <div class="v-gap"></div>
+                </div>
+                <div class="input-parent-container">
+                    <div class="input-container">
+                        <form action="/teams" method="GET" class="input-container">
+                            <input type="text" name="query" placeholder="Search any Team Number">
+                            <button type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="v-gap">
+                <div class="v-gap"></div>
+            </div>
+            <div class="title3"><small><small><i>OR</i></small></small></div>
+            <div class="v-gap">
+                <div class="v-gap"></div>
+            </div>
+            <div class="right-content-parent-container">
+                <div class="title2">Competition Powerscore</div>
+                <div class="body3">A lightweight algorithm that still utilizes Powerscore</div>
+                <div class="body3">but to only analyze within a competition. Extremely useful</div>
+                <div class="body3">for alliance selection and post-match analysis.</div>
+                <div class="gap">
+                    <div class="gap"></div>
+                </div>
+                <div class="gap">
+                    <div class="gap"></div>
+                </div>
+                <div class="v-gap">
+                    <div class="v-gap"></div>
+                </div>
+                <div class="input-parent-container">
+                    <div class="input-container">
+                        <form action="/competitions" method="GET" class="input-container2">
+                            <input type="text" name="query" placeholder="Enter a Competition SKU (ex: RE-VRC-XX-XXXX)">
+                            <button type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
