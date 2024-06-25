@@ -257,7 +257,7 @@ def findDivision(name, comp):
 
 def runComp(sku):
     name, compInfos = api.getCompInfoBySKU(sku)
-    for i in range(len(compInfos) -1):
+    for i in range(len(compInfos)):
         fullPSLib, fullPSList = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=compInfos[i], onlyForComp=True)
         fullOPSLib, fullOPSList = runPowerScore(None, None, div=None, typeOfPowerscore="offensive", compInfo=compInfos[i], onlyForComp=True)
         fullDPSLib, fullDPSList = runPowerScore(None, None, div=None, typeOfPowerscore="defensive", compInfo=compInfos[i], onlyForComp=True)
