@@ -136,6 +136,18 @@ initial = '''<!DOCTYPE html>
             padding: 5px;
             align-self: center;
         }
+        .dropdown {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            color: #ffffff;
+            border: 1px solid #ffffff;
+            background-color: #084d5a;
+            border-radius: 5px;
+            padding: 5px;
+            font-size: 20px;
+            align-self: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
@@ -171,17 +183,42 @@ ending = '''
 </body>
 </html>'''
 
-def generateFrom(info):
+def generateFrom(info, sku, division = "1"):
     comp = open("templates/comp.html", "w")
     name = info[0]
     powerscores = info[1]
     offensive = info[2]
     defensive = info[3]
+    divisions = info[4]
 
-    title= f'''<title>{name}</title><title> Powerscore</title><div class="gap">
+    title = f'''<title>{name}</title><title> Powerscore</title><div class="gap">
             <div class="gap-2"></div>
         </div>
         <div class="gap-2"><div class="gap-2"></div></div>
+        '''
+
+    dropdown = f'''<form id="myForm" action="/competitions" method="GET">
+    <input type="hidden" id="sku" name="query" value="{sku}">
+    <label for="division">Division</label>
+<select name="division" id="divs" class="dropdown">'''
+    
+    for divID, divName in enumerate(divisions):
+        if int(division) - 1 == divID:
+            dropdown = dropdown + f'''<option value="{divID + 1}" selected>{divName}</option>
+            '''
+        else:
+            dropdown = dropdown + f'''<option value="{divID + 1}">{divName}</option>
+            '''
+    dropdown = dropdown + '''</select></form><script>
+        const selectElement = document.getElementById('divs');
+        const formElement = document.getElementById('myForm');
+
+        selectElement.addEventListener('change', () => {
+            formElement.submit();
+        });
+    </script><div class="gap">
+            <div class="gap"></div>
+        </div>
         '''
 
     bodyList = ""
@@ -206,6 +243,6 @@ def generateFrom(info):
         <div class="gap-2"></div>
     </div>'''
     
-    total = initial + title + bodyList + ending
+    total = initial + title + dropdown + bodyList + ending
     comp.write(total)
     comp.close()

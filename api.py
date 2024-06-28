@@ -108,7 +108,7 @@ def getCompInfo(ID, division):
 
     return makeRequest(endpoint=endpoint, params=params)['data']
 
-def getCompInfoBySKU(sku):
+def getCompInfoBySKU(sku, div):
     params = {
         "per_page": "250"
     }
@@ -119,17 +119,30 @@ def getCompInfoBySKU(sku):
     numDivs = len(data['divisions'])
     ID = data['id']
 
+    divisionNames = []
+    for division in data['divisions']:
+        divisionNames.append(division['name'])
+
     divisionsData = []
-    for div in range(numDivs):
+
+    '''for div in range(numDivs):
         params = {
             "division": str(div + 1),
             "per_page": "250",
             "round": "2"
         }
         endpoint = f"events/{ID}/divisions/{div+1}/matches"
-        divisionsData.append(makeRequest(endpoint=endpoint, params=params)['data'])
+        divisionsData.append(makeRequest(endpoint=endpoint, params=params)['data'])'''
+    
+    params = {
+        "division": str(div),
+        "per_page": "250",
+        "round": "2"
+    }
+    endpoint = f"events/{ID}/divisions/{div+1}/matches"
+    divisionsData.append(makeRequest(endpoint=endpoint, params=params)['data'])
 
-    return name, divisionsData
+    return name, divisionsData, divisionNames
 
 def getMatchList(compName, matchData):
     matchList = []

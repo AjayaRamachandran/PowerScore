@@ -58,8 +58,9 @@ def handle_teams():
 @app.route("/competitions", methods=["GET"])
 def handle_competitions():
     query = request.args.get("query")
+    division = request.args.get("division")
     try:
-        result = main.runComp(query)
+        result = main.runComp(query, int(division) - 1)
     except Exception as e:
         result = None
         print(e)
@@ -73,7 +74,7 @@ def handle_competitions():
                                issue2 = "This competition has not happened yet",
                                issue3 = "RobotEvents API requests have timed out")
     else:
-        pageGen.generateFrom(result)
+        pageGen.generateFrom(result, query, division)
         return render_template("comp.html")
 
 if __name__ == "__main__":
