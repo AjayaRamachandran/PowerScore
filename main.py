@@ -6,6 +6,7 @@ import api
 import pygame
 import base64
 from PIL import Image
+from openpyxl import Workbook
 
 ###### OPERATOR FUNCTIONS ######
 def getDays(date):
@@ -93,8 +94,7 @@ ranking = [
     ["Ethereal III", 98],
 ]
 
-def giveRanking(value):
-
+def giveRanking(value): # function to get the rank given a powerscore
     index = 0
     while ranking[index][1] < value:
         index += 1
@@ -241,7 +241,7 @@ def runPowerScore(compName, compID, div, typeOfPowerscore, compInfo, onlyForComp
     #print("Output has been saved to output.txt")
     #io.showOutput("output.txt")
 
-def findDivision(name, comp):
+def findDivision(name, comp): # function to search through a competition and find the division a team was in
     numDivs = len(comp["divisions"])
     for div in range(1, numDivs):
         endpoint = "events/" + str(comp["id"]) + f"/divisions/{div}/rankings"
@@ -253,26 +253,39 @@ def findDivision(name, comp):
             roster.append(team["team"]["name"])
         if name in roster:
             return div
-    return 1
+    return 1 # catch case
 
-def runComp(sku, div):
-    name, compInfos, divs = api.getCompInfoBySKU(sku, div)
+def runComp(sku, div): # master function for computing a competition powerscore
+    name, compInfos, divs = api.getCompInfoBySKU(sku, div) # an api module function that gets the competition info for a comp and division
     print(divs)
     for i in range(len(compInfos)):
         fullPSLib, fullPSList = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=compInfos[i], onlyForComp=True)
         fullOPSLib, fullOPSList = runPowerScore(None, None, div=None, typeOfPowerscore="offensive", compInfo=compInfos[i], onlyForComp=True)
         fullDPSLib, fullDPSList = runPowerScore(None, None, div=None, typeOfPowerscore="defensive", compInfo=compInfos[i], onlyForComp=True)
-    
+
+    wb = Workbook() # initializes a new spreadsheet to write the values in for downloading
+    ws = wb.active
+
     newOPSList = []
-    for team in fullPSList:
-        newOPSList.append([team[0], fullOPSLib[team[0]]])
     newDPSList = []
+    row = 1
+    ws['A1'] = "Team Number"
+    ws['B1'] = "Powerscore"
+    ws['C1'] = "Offensive PS"
+    ws['D1'] = "Defensive PS"
     for team in fullPSList:
+        row += 1
+        newOPSList.append([team[0], fullOPSLib[team[0]]]) # reorders the ops and dps lists to be in the same order as the ps list
         newDPSList.append([team[0], fullDPSLib[team[0]]])
-    #print(fullPSList)
-    #print(newOPSList)
-    #print(newDPSList)
-    return [name, fullPSList, newOPSList, newDPSList, divs]
+        ws[f'A{row}'] = team[0]
+        ws[f'B{row}'] = team[1]
+        ws[f'C{row}'] = newOPSList[row - 2][1]
+        ws[f'D{row}'] = newDPSList[row - 2][1]
+    wb.save('ps.xlsx')
+
+    with open('ps.xlsx', 'rb') as file:
+        base64_data = base64.b64encode(file.read()).decode('utf-8')
+    return [name, fullPSList, newOPSList, newDPSList, divs, base64_data]
 
 #runComp("RE-VRC-23-2380")
 #runComp('RE-VRC-23-2382')
@@ -302,6 +315,7 @@ def runAlgorithm(team):
             div = findDivision(team, comps["data"][comp])
         try:
             compInfo = api.getCompInfo(comps["data"][comp]["id"], str(div))
+            # the new powerscore algorithm works for offensive and defensive powerscore. thus the alg is split in three pieces. overall ps is the most important still.
             fullPSLib, fullPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="general", compInfo=compInfo)
             fullOPSLib, fullOPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="offensive", compInfo=compInfo)
             fullDPSLib, fullDPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="defensive", compInfo=compInfo)
@@ -310,6 +324,7 @@ def runAlgorithm(team):
             compOPS = fullOPSLib[team]
             compDPS = fullDPSLib[team]
             #print(compPS)
+            ### ACCOLADES ###
             if round((((2/(1 + exp(-0.045 * (compPS)))) - 1) / 2 + 0.5) * 1000) / 10 >= 90 and not "First Class" in accolades:
                 accolades.append("First Class")
             if round((((2/(1 + exp(-0.045 * (compPS)))) - 1) / 2 + 0.5) * 1000) / 10 >= 90 and ("Signature Event" in comps["data"][comp]["name"]) and not "World Class" in accolades:
@@ -324,7 +339,7 @@ def runAlgorithm(team):
             dpsList.append([compDPS, compWeight, getDays(comps["data"][comp]["start"][:10])])
             #print([compPS, compSum, log(0.51 * (compSum ** 0.225)) ** 2])
         except:
-            print("This team deregistered from a comp")
+            print("This team deregistered from a comp") # if the team's name cannot be found at the comp, we know they did not attend / deregistered
 
     #matchPower = (2/(1 + exp(-0.05 * (matchDiff - allianceDiffs[index] + opponentDiffs[index])))) - 1 # performs sigmoid calculation based on the 3 factors
     
@@ -352,7 +367,7 @@ def runAlgorithm(team):
 
     nextRank = 0
     prevRank = 0
-    for rank in reversed(ranking):
+    for rank in reversed(ranking): # finds the previous and next rank of the player to calculate the xp to next rank
         if careerPS < rank[1]:
             nextRank = rank[1]
     for rank in ranking:
@@ -363,7 +378,7 @@ def runAlgorithm(team):
 
     percentageXP = round(((careerPS - prevRank) / (nextRank - prevRank)) * 100) / 100
 
-    image = Image.new("RGBA", (100, 10))
+    image = Image.new("RGBA", (100, 10)) # generates progress bar for xp
     for y in range(10):
         for x in range(100):
             if x / 100 < percentageXP:

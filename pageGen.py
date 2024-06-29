@@ -148,6 +148,23 @@ initial = '''<!DOCTYPE html>
             align-self: center;
             justify-content: center;
         }
+        .download-button {
+            display: flex;
+            width: 140px;
+            font-size: 16px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ffffff;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: -0.3px;
+            text-align: center;
+            background-color: #095d6a;
+            color: #ffffff;
+            justify-content: center;
+            align-items: center;
+            justify-self: center;
+            margin: 0 auto; /* Center horizontally within its container */
+        }
     </style>
 </head>
 <body>
@@ -171,6 +188,7 @@ initial = '''<!DOCTYPE html>
                     <button type="submit" id="overlayButton">
                         <i id="overlayButton" class="fas fa-search"></i>
                     </button>
+                    <input type="hidden" name="division" value="1">
                 </form>
             </div>
         </div>
@@ -219,6 +237,8 @@ def generateFrom(info, sku, division = "1"):
     </script><div class="gap">
             <div class="gap"></div>
         </div>
+        <div class="download-button"><a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{{ base64_data }}" download>Download XLSX</a></div>
+        <div class="gap-2"><div class="gap-2"></div></div>
         '''
 
     bodyList = ""
