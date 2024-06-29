@@ -3,10 +3,11 @@ initial = '''<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{name}} On VRC Tracker</title>
+    <title>Powerscore on VRC Tracker</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="https://www.dropbox.com/scl/fi/jgpvl6s9otkgc6uqg5pmt/favicon.ico?rlkey=nb39qqv34ppoyk6k3b2qd1yl0&st=lgn1ldkn&raw=1">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -26,8 +27,10 @@ initial = '''<!DOCTYPE html>
             margin: 0;
             padding: 0;
             display: flex;
+            width: 1000px;
             justify-content: center;
             align-items: center;
+            text-align: center;
             height: 108px;
             font-size: 30px;
             font-weight: 900;
@@ -145,8 +148,6 @@ initial = '''<!DOCTYPE html>
             border-radius: 5px;
             padding: 5px;
             font-size: 20px;
-            align-self: center;
-            justify-content: center;
         }
         .download-button {
             display: flex;
@@ -162,8 +163,12 @@ initial = '''<!DOCTYPE html>
             color: #ffffff;
             justify-content: center;
             align-items: center;
-            justify-self: center;
-            margin: 0 auto; /* Center horizontally within its container */
+            margin-left: 700px;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between; /* This will push the form and button to opposite sides */
+            align-items: center; /* Vertically center the items */
         }
     </style>
 </head>
@@ -209,13 +214,13 @@ def generateFrom(info, sku, division = "1"):
     defensive = info[3]
     divisions = info[4]
 
-    title = f'''<title>{name}</title><title> Powerscore</title><div class="gap">
+    title = f'''<title>{name} Powerscore</title><div class="gap">
             <div class="gap-2"></div>
         </div>
         <div class="gap-2"><div class="gap-2"></div></div>
         '''
 
-    dropdown = f'''<form id="myForm" action="/competitions" method="GET">
+    dropdown = f'''<div class="container"><form id="myForm" action="/competitions" method="GET">
     <input type="hidden" id="sku" name="query" value="{sku}">
     <label for="division">Division</label>
 <select name="division" id="divs" class="dropdown">'''
@@ -237,8 +242,8 @@ def generateFrom(info, sku, division = "1"):
     </script><div class="gap">
             <div class="gap"></div>
         </div>
-        <div class="download-button"><a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{{ base64_data }}" download>Download XLSX</a></div>
-        <div class="gap-2"><div class="gap-2"></div></div>
+        <div class="download-button"><a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{{ base64_data }}" download="''' + name + '''.xslx">Download XLSX</a></div>
+        <div class="gap-2"><div class="gap-2"></div></div></div>
         '''
 
     bodyList = ""
