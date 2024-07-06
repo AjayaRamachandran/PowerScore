@@ -77,5 +77,7 @@ def handle_competitions():
         pageGen.generateFrom(result, query, division)
         return render_template("comp.html", base64_data = result[5])
 
+'''
 if __name__ == "__main__":
     app.run(debug=True)
+    '''
