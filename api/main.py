@@ -1,3 +1,4 @@
+import numpy as np
 from math import *
 import inout as io
 import api
@@ -157,7 +158,7 @@ def runPowerScore(compName, compID, div, typeOfPowerscore, compInfo, onlyForComp
         
     def getAverageDiff(player): # returns the average value of a list of score differentials. this is separated from the above function because we sometimes want the list, other times want the avg
         scoreDiffs = getListOfDiffs(player=player)
-        avgDiff = (sum(scoreDiffs) / len(scoreDiffs))
+        avgDiff = np.average(scoreDiffs)
         return round(avgDiff*1000)/1000
 
     def getAllianceAverageDiffs(player): # gets a list of the average score differentials amongst all the alliance partners a team has had. used to compare against the player's own score diffs
@@ -216,10 +217,10 @@ def runPowerScore(compName, compID, div, typeOfPowerscore, compInfo, onlyForComp
             matchPowers.append(matchPower)
         
         if onlyForComp:
-            powerScore = (sum(matchPowers) / len(matchPowers)) / 2 + 0.5
+            powerScore = np.average(matchPowers) / 2 + 0.5
             return round(powerScore * 1000) / 10 # change to 10 outside the parentheses if need to revert
         else:
-            powerScore = (sum(matchPowers) / len(matchPowers))# / 2 + 0.5
+            powerScore = np.average(matchPowers)# / 2 + 0.5
             return round(powerScore * 1000) / 1000 # change to 10 outside the parentheses if need to revert
             
     ###### MAIN ######

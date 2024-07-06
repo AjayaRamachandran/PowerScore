@@ -1,3 +1,14 @@
 {
-    "rewrites": [{ "source": "/(.*)", "destination": "/api/app.py" }]
-  }
+    "functions": {
+        "api/index.py":
+        {
+        "runtime": "python@3.11"
+        }
+    },
+    "routes": [
+        {
+        "src": "/(.*)",
+        "dest": "api/app.py"
+        }
+    ]
+}
