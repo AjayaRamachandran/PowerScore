@@ -1,3 +1,5 @@
+from io import BytesIO
+
 initial = '''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -207,7 +209,7 @@ ending = '''
 </html>'''
 
 def generateFrom(info, sku, division = "1"):
-    comp = open("templates/comp.html", "w")
+    #comp = open("templates/comp.html", "w")
     name = info[0]
     powerscores = info[1]
     offensive = info[2]
@@ -269,5 +271,8 @@ def generateFrom(info, sku, division = "1"):
     </div>'''
     
     total = initial + title + dropdown + bodyList + ending
-    comp.write(total)
-    comp.close()
+    html_file = BytesIO(total.encode('utf-8'))
+    html_file.seek(0)
+    return html_file
+    #comp.write(total)
+    #comp.close()
