@@ -19,7 +19,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template("splash.html", banner = img_tag, favicon = base64.b64encode(open('favicon.ico', 'rb').read()).decode('utf-8'))
+    return render_template("splash.html", banner = img_tag, favicon = "")#base64.b64encode(open('favicon.ico', 'rb').read()).decode('utf-8'))
 
 @app.route("/teams", methods=["GET"])
 def handle_teams():
