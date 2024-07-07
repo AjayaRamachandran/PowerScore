@@ -1,11 +1,11 @@
 #import numpy as np
 from math import *
-import inout as io
+#import inout as io
 import apiHandler
 #import matplotlib as mpl
 import os
-#os.environ["SDL_VIDEODRIVER"] = "dummy"
-#import pygame
+os.environ["SDL_VIDEODRIVER"] = "dummy"
+import pygame
 import base64
 from PIL import Image
 from openpyxl import Workbook
@@ -16,7 +16,7 @@ def getDays(date):
     monthLengths = [31,28,31,30,31,30,31,31,30,31,30,31]
     return int(date[:4]) * 365 + sum(monthLengths[:int(date[5:7]) - 1]) + int(date[8:])
 
-'''
+
 def createPlot(data, teamname):
     pygame.init()
     windowSize = [630, 250]
@@ -68,7 +68,7 @@ def createPlot(data, teamname):
     #pygame.draw.circle(screen, (255, 255, 255), (rightBound, yPos), 2)
 
     pygame.image.save(screen, "plot.png")
-'''
+
 
 ###### RANKING ######
 
