@@ -9,6 +9,7 @@ import pygame
 import base64
 from PIL import Image
 from openpyxl import Workbook
+from io import BytesIO
 
 
 ###### OPERATOR FUNCTIONS ######
@@ -285,9 +286,12 @@ def runComp(sku, div): # master function for computing a competition powerscore
         ws[f'B{row}'] = team[1]
         ws[f'C{row}'] = newOPSList[row - 2][1]
         ws[f'D{row}'] = newDPSList[row - 2][1]
-    wb.save('ps.xlsx')
+    excelFile = BytesIO()
+    wb.save(excelFile)
+    excelFile.seek(0) 
+    #wb.save('ps.xlsx')
 
-    with open('ps.xlsx', 'rb+') as file:
+    with excelFile as file:
         base64_data = base64.b64encode(file.read()).decode('utf-8')
     return [name, fullPSList, newOPSList, newDPSList, divs, base64_data]
 
