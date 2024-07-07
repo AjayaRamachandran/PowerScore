@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{name}} On VRC Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="https://www.dropbox.com/scl/fi/jgpvl6s9otkgc6uqg5pmt/favicon.ico?rlkey=nb39qqv34ppoyk6k3b2qd1yl0&st=lgn1ldkn&raw=1">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #084d5a;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 108px;
+        }
+        img {
+            width: 100%;
+            height: 100%;
+        }
+        .total-parent-container {
+            display: flex;
+            flex-direction: column;
+            height: 108px;
+        }
+        .input-parent-container {
+            text-align: center;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .input-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .input-container input {
+            width: 500px;
+            height: 20px;
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 5px 0 0 5px;
+            border: 1px solid #ffffff;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: -0.3px;
+            text-align: center;
+            background-color: #084d5a;
+            color: #ffffff;
+        }
+        .input-container button {
+            width: 42px;
+            height: 42px;
+            border: 1px solid #ffffff;
+            border-left: none;
+            background-color: #084d5a;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .input-container button i {
+            color: #ffffff;
+            font-size: 15px;
+        }
+        .gap {
+            width: 500px;
+            height: 30px;
+            display: block;
+        }
+        a {
+            text-decoration: none;
+            color: white;
+        }
+        .banner {
+            background-color: black;
+            width: 100%;
+            position: fixed; /* Keeps it at the top even when scrolling */
+            top: 0;
+            left: 0;
+            font-weight: 500;
+            letter-spacing: -1px;
+            font-size: 30px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            text-align: center;
+        }
+        .top-bar-parent-container {
+            width: 1000px;
+            height: 100px;
+            display: block;
+        }
+        .top-bar-container {
+            font-size: 70px;
+            text-align: right;
+            font-family: 'Teko', sans-serif;
+            color: #ffffff;
+            background-color: #0e6172;
+            display: flex;
+            padding-top: 10px;
+            padding-right: 20px;
+            padding-bottom: -10px;
+            border-radius: 5px;
+            border: 1px solid #ffffff;
+            justify-content: right;
+        }
+        .body-parent-container {
+            display: block;
+            width: 1000px;
+            height: 150px;
+            border: 1px transparent;
+        }
+        .body-container {
+            display: flex;
+            width: 1000px;
+            height: 150px;
+            border: 1px transparent;
+            flex-direction: row;
+        }
+        .item1 {
+            flex: 0 0 15%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 15% */
+            background-color: transparent;
+            font-family: "Teko";
+            font-size: 200px;
+            text-align: center;
+            font-weight: 700;
+            color:#ffffff;
+            line-height: 90%;
+            padding-top: 0;
+        }
+        .item2 {
+            flex: 0 0 10%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 10% */
+            background-color: transparent;
+            font-family: "Teko";
+            font-size: 50px;
+            text-align: center;
+            font-weight: 700;
+            color:#1b778a;
+            line-height: 80%;
+            padding-top: 27px;
+        }
+        .item3 {
+            flex: 0 0 15%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 50% */
+            border-radius: 10px;
+            background-color: #0e6172;
+            padding: 0%;
+            border-radius: 20px 0 0 20px;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: "Teko";
+            font-size: 40px;
+        }
+        .item4 {
+            flex: 0 0 30%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 25% */
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            border-radius: 0 20px 20px 0;
+            align-items: center;
+            justify-content: center;
+            background-color: #0e6172;
+        }
+        .item4-top {
+            height: 73px;
+            width: 300px;
+            background-color: #0e6172;
+            text-align: center;
+            font-family: "Teko";
+            font-size: 40px;
+            align-items: center;
+        }
+        .item4-middle {
+            flex: 0 0 4%;
+            height: 15px;
+            width: 300px;
+            background-color: #0e6172;
+            text-align: center;
+            font-family: "Teko";
+            font-size: 20px;
+            align-items: center;
+        }
+        .item4-bmiddle {
+            height: 15px;
+            width: 300px;
+            background-color: #0e6172;
+            text-align: center;
+            font-family: "Teko";
+            font-size: 20px;
+            align-items: center;
+        }
+        .item4-bottom {
+            flex: 0 0 25%;
+            height: 30px;
+            width: 300px;
+            background-color: #0e6172;
+            text-align: center;
+            font-family: "Teko";
+            font-size: 20px;
+            align-items: center;
+        }
+        .item5 {
+            flex: 0 0 20%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 25% */
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            align-items: center;
+            justify-content: center;
+        }
+        .item5-top {
+            background-color: transparent;
+            font-size: 32px;
+            text-align: center;
+            font-family: 'Teko', sans-serif;
+            color: #ffffff;
+            border-radius: 0;
+            line-height: 100%;
+        }
+        .item5-bottom {
+            background-color: transparent;
+            font-size: 32px;
+            text-align: center;
+            font-family: 'Teko', sans-serif;
+            color: #ffffff;
+            border-radius: 0;
+            line-height: 100%;
+        }
+        .body2-parent-container {
+            display: block;
+            width: 1000px;
+            height: 250px;
+            border-radius: 5;
+        }
+        .body2-container {
+            display: flex;
+            width: 1000px;
+            height: 250px;
+            flex-direction: row;
+            border-radius: 5;
+        }
+        .item21 {
+            flex: 0 0 35%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 15% */
+            display: flex;
+            flex-direction: column;
+            background-color: #0e6172;
+            border: 1px solid #ffffff;
+            border-radius: 5px;
+            padding-top: 15px;
+        }
+        .item21-high {
+            font-family: "Teko";
+            font-size: 35px;
+            line-height: 84%;
+            text-align: center;
+            color:#ffffff;
+        }
+        .item21-low {
+            font-family: "Teko";
+            font-size: 21px;
+            line-height: 120%;
+            text-align: left;
+            color:#ffffff;
+            padding-top: 2px;
+            padding-left: 15px;
+        }
+        .item22 {
+            flex: 0 0 2%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 15% */
+            background-color: transparent;
+            font-family: "Teko";
+            font-size: 20px;
+            text-align: center;
+            color:#ffffff;
+            border: transparent;
+            border-radius: 5px;
+        }
+        .item23 {
+            flex: 0 0 63%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 15% */
+            background-color: #0e6172;
+            font-family: "Teko";
+            font-size: 20px;
+            text-align: center;
+            color:#ffffff;
+            border: 1px solid #ffffff;
+            border-radius: 5px;
+        }
+        .imageOverlay {
+            position: fixed;
+            margin-top: 100px;
+            align-items: center;
+            width: 1010px;
+            height: 720px;
+            background-position: center;
+            background-color: #084d5a;
+            background-image: none;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner"><a href="http://localhost:5000">VRC-Tracker</a></div>
+    <div class="total-parent-container">
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="imageOverlay">
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="input-parent-container">
+            <div class="input-container">
+                <form action="/teams" method="GET" class="input-container">
+                    <input type="text" name="query" placeholder="Search a Team Number">
+                    <button type="submit" id="overlayButton">
+                        <i id="overlayButton" class="fas fa-search"></i>
+                        <script>
+                            const overlayButton = document.getElementById('overlayButton');
+                            const imageOverlay = document.querySelector('.imageOverlay');
+
+                            overlayButton.addEventListener("click", function() {
+                                imageOverlay.style.backgroundImage = 'url("https://www.dropbox.com/scl/fi/gv0549s6zm6vij93ggf9p/Skeleton.gif?rlkey=dyv46jhjc5bkqseumcsvcw2eo&st=5ikvb3uo&raw=1")';
+                                imageOverlay.style.display = 'block';
+                            });
+                        </script>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="top-bar-parent-container">
+            <div class="top-bar-container">
+                <div><i><small><small><small>Team</small></small></small> <b>{{name}}</b></i></div>
+            </div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="body-parent-container">
+            <div class="body-container">
+                <div class="item1">{{ powerscore }}</div>
+                <div class="item2"><small><small><small>Prev</small></small></small> {{ old_powerscore }}</div>
+                <div class="item3">
+                    <img src="data:plot/png;base64,{{ badgeByteString }}" alt="Generated Image">
+                </div>
+                <div class="item4">
+                    <div class="item4-top">Rank: <b>{{ rank }}</b></div>
+                    <div class="item4-middle">
+                        <img src="data:plot/png;base64,{{ barByteString }}" alt="badge">
+                    </div>
+                    <div class="item4-bmiddle"></div>
+                    <div class="item4-bottom">XP to Next Rank: <i><b>{{ xpLeft }}</b></i></div>
+                </div>
+                <div class="item5">
+                    <div class="item5-top">
+                    <small>Offensive Powerscore</small><b> {{ offensive_powerscore }}</b>
+                    </div>
+                    <div class="item5-bottom">
+                    <small>Defensive Powerscore</small><b> {{ defensive_powerscore }}</b>
+                    </div>
+                </div>
+            </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="body2-parent-container">
+            <div class="body2-container">
+                <div class="item21">
+                    <div class="item21-high">
+                        <div class="text"><small>Title</small></div>
+                        <div class="text"><b><i>{{ title }}</i></b></div>
+                        <div class="text"><small><small><small>··························································</small></small></small></div>
+                        <div class="text"><small>Accolades</small></div>
+                    </div>
+                    <div class="item21-low">
+                        <div class="text"><b>{{ accolade1[0] }}</b></div>
+                        <div class="text"><small>{{ accolade1[1] }}</small></div>
+                        <div class="text"><b>{{ accolade2[0] }}</b></div>
+                        <div class="text"><small>{{ accolade2[1] }}</small></div>
+                    </div>
+                </div>
+                <div class="item22"></div>
+                <div class="item23">
+                    <img src="data:plot/png;base64,{{ graphByteString }}" alt="Generated Image">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
