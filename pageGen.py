@@ -271,7 +271,7 @@ def generateFrom(info, sku, division = "1"):
     </div>'''
     
     total = initial + title + dropdown + bodyList + ending
-    html_file = BytesIO(total.encode('utf-8'))
+    html_file = BytesIO(str(total).encode("utf-8"))
     html_file.seek(0)
     return html_file
     #comp.write(total)
