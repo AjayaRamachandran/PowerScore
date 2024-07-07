@@ -74,8 +74,8 @@ def handle_competitions():
                                issue2 = "This competition has not happened yet",
                                issue3 = "RobotEvents API requests have timed out")
     else:
-        htmlFile = pageGen.generateFrom(result, query, division)
-        return render_template_string(htmlFile, base64_data = result[5])
+        htmlFile = pageGen.generateFrom(result, query, division, result[5])
+        return render_template_string(htmlFile)
 
 
 if __name__ == "__main__":

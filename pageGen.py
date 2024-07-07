@@ -208,7 +208,7 @@ ending = '''
 </body>
 </html>'''
 
-def generateFrom(info, sku, division = "1"):
+def generateFrom(info, sku, division = "1", base64data = None):
     #comp = open("templates/comp.html", "w")
     name = info[0]
     powerscores = info[1]
@@ -244,7 +244,7 @@ def generateFrom(info, sku, division = "1"):
     </script><div class="gap">
             <div class="gap"></div>
         </div>
-        <div class="download-button"><a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{{ base64_data }}" download="''' + name + '''.xslx">Download XLSX</a></div>
+        <div class="download-button"><a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,''' + base64data + '''" download="''' + name + '''.xslx">Download XLSX</a></div>
         <div class="gap-2"><div class="gap-2"></div></div></div>
         '''
 
@@ -271,8 +271,7 @@ def generateFrom(info, sku, division = "1"):
     </div>'''
     
     total = initial + title + dropdown + bodyList + ending
-    html_file = BytesIO(str(total).encode("utf-8"))
-    html_file.seek(0)
-    return html_file
+
+    return total
     #comp.write(total)
     #comp.close()
