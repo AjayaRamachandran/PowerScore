@@ -287,7 +287,7 @@ def runComp(sku, div): # master function for computing a competition powerscore
         ws[f'D{row}'] = newDPSList[row - 2][1]
     wb.save('ps.xlsx')
 
-    with open('ps.xlsx', 'rb') as file:
+    with open('ps.xlsx', 'rb+') as file:
         base64_data = base64.b64encode(file.read()).decode('utf-8')
     return [name, fullPSList, newOPSList, newDPSList, divs, base64_data]
 
