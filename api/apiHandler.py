@@ -1,5 +1,4 @@
 import requests
-import time
 from datetime import datetime
 
 monthsLimits = [31,28,31,30,31,30,31,31,30,31,30,31]

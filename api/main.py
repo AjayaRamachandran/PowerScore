@@ -1,7 +1,7 @@
 import numpy as np
 from math import *
-import inout as io
-import api
+from api import inout as io
+from api import apiHandler
 #import matplotlib as mpl
 import pygame
 import base64
@@ -116,7 +116,7 @@ def runPowerScore(compName, compID, div, typeOfPowerscore, compInfo, onlyForComp
 
         return uniqueTeams
 
-    chart = api.getMatchList(compName, compInfo)
+    chart = apiHandler.getMatchList(compName, compInfo)
     teamList = generateTeamsListFromComp(chart)
 
     ###### FUNCTIONS ######
@@ -246,7 +246,7 @@ def findDivision(name, comp): # function to search through a competition and fin
     for div in range(1, numDivs):
         endpoint = "events/" + str(comp["id"]) + f"/divisions/{div}/rankings"
         params = {"per_page": "250"}
-        data = api.makeRequest(endpoint=endpoint, params=params)["data"]
+        data = apiHandler.makeRequest(endpoint=endpoint, params=params)["data"]
         print("Checking division " + data[0]["division"]["name"] + " at the " + data[0]["event"]["name"])
         roster = []
         for team in data:
@@ -256,7 +256,7 @@ def findDivision(name, comp): # function to search through a competition and fin
     return 1 # catch case
 
 def runComp(sku, div): # master function for computing a competition powerscore
-    name, compInfos, divs = api.getCompInfoBySKU(sku, div) # an api module function that gets the competition info for a comp and division
+    name, compInfos, divs = apiHandler.getCompInfoBySKU(sku, div) # an api module function that gets the competition info for a comp and division
     print(divs)
     for i in range(len(compInfos)):
         fullPSLib, fullPSList = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=compInfos[i], onlyForComp=True)
@@ -298,7 +298,7 @@ def runAlgorithm(team):
     teamname = team
 
     #team = str(input("Enter a Team Number: "))
-    comps = api.getCompList(team)
+    comps = apiHandler.getCompList(team)
     #print(comps["meta"])
     psList = []
     opsList = []
@@ -314,7 +314,7 @@ def runAlgorithm(team):
             #print("Competition has more than one division. Please fix this issue ASAP")
             div = findDivision(team, comps["data"][comp])
         try:
-            compInfo = api.getCompInfo(comps["data"][comp]["id"], str(div))
+            compInfo = apiHandler.getCompInfo(comps["data"][comp]["id"], str(div))
             # the new powerscore algorithm works for offensive and defensive powerscore. thus the alg is split in three pieces. overall ps is the most important still.
             fullPSLib, fullPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="general", compInfo=compInfo)
             fullOPSLib, fullOPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="offensive", compInfo=compInfo)
