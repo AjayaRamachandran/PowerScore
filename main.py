@@ -3,12 +3,13 @@ from math import *
 import inout as io
 import apiHandler
 #import matplotlib as mpl
+import os
+os.environ["SDL_VIDEODRIVER"] = "dummy"
 import pygame
 import base64
 from PIL import Image
 from openpyxl import Workbook
-import os
-os.environ["SDL_VIDEODRIVER"] = "dummy"
+
 
 ###### OPERATOR FUNCTIONS ######
 def getDays(date):
