@@ -59,11 +59,11 @@ def handle_teams():
 def handle_competitions():
     query = request.args.get("query")
     division = request.args.get("division")
-    try:
-        result = main.runComp(query, int(division) - 1)
-    except Exception as e:
-        result = None
-        print(e)
+    #try:
+    result = main.runComp(query, int(division) - 1)
+    #except Exception as e:
+        #result = None
+        #print(e)
     if result == None:
         return render_template("oops.html",
                                query = query,
