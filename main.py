@@ -108,7 +108,7 @@ def giveRanking(value): # function to get the rank given a powerscore
 ###### ALGORITHM ######
 
 def runPowerScore(compName, compID, div, typeOfPowerscore, compInfo, onlyForComp=False):
-    output = open("output.txt", "w")
+    #output = open("output.txt", "w")
 
     def generateTeamsListFromComp(fileList): # uses the match list to generate a list of teams that attended a comp, so that a second teamList is unnecessary
         uniqueTeams = []
