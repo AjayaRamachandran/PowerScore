@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, render_template_string
 import random
 import main
 import base64
@@ -75,7 +75,7 @@ def handle_competitions():
                                issue3 = "RobotEvents API requests have timed out")
     else:
         htmlFile = pageGen.generateFrom(result, query, division)
-        return render_template(htmlFile, base64_data = result[5])
+        return render_template_string(htmlFile, base64_data = result[5])
 
 
 if __name__ == "__main__":
