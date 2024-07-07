@@ -4,8 +4,8 @@ import inout as io
 import apiHandler
 #import matplotlib as mpl
 import os
-os.environ["SDL_VIDEODRIVER"] = "dummy"
-import pygame
+#os.environ["SDL_VIDEODRIVER"] = "dummy"
+#import pygame
 import base64
 from PIL import Image
 from openpyxl import Workbook
@@ -16,6 +16,7 @@ def getDays(date):
     monthLengths = [31,28,31,30,31,30,31,31,30,31,30,31]
     return int(date[:4]) * 365 + sum(monthLengths[:int(date[5:7]) - 1]) + int(date[8:])
 
+'''
 def createPlot(data, teamname):
     pygame.init()
     windowSize = [630, 250]
@@ -67,7 +68,7 @@ def createPlot(data, teamname):
     #pygame.draw.circle(screen, (255, 255, 255), (rightBound, yPos), 2)
 
     pygame.image.save(screen, "plot.png")
-
+'''
 
 ###### RANKING ######
 
@@ -358,7 +359,7 @@ def runAlgorithm(team):
         temporalPS = summation / index
         progression.append([x[2], round((((2/(1 + exp(-0.045 * (temporalPS)))) - 1) / 2 + 0.5) * 1000) / 10])
         index += 1
-    createPlot(progression, teamname)
+    #createPlot(progression, teamname)
     if progression[0][1] < 51 and progression[len(progression) - 1][1] > 70:
         accolades.append("Glow Up")
     sortedProgression = sorted(progression, key=lambda x: x[1], reverse=True) # sorts the list based on powerScore from largest to smallest
