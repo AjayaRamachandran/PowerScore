@@ -24,11 +24,11 @@ def index():
 @app.route("/teams", methods=["GET"])
 def handle_teams():
     query = request.args.get("query")
-    try:
-        result = main.runAlgorithm(query)
-    except Exception as e:
-        result = None
-        print(e)
+    #try:
+    result = main.runAlgorithm(query)
+    #except Exception as e:
+        #result = None
+        #print(e)
     # Process the search query (e.g., query a database, perform a search, etc.)
     if result == None:
         return render_template("oops.html",
@@ -60,12 +60,12 @@ def handle_competitions():
     global excelFile, name, division
     query = request.args.get("query")
     division = request.args.get("division")
-    #try:
-    result, excelFile = main.runComp(query, int(division) - 1)
-    name = result[0]
-    #except Exception as e:
-        #result = None
-        #print(e)
+    try:
+        result, excelFile = main.runComp(query, int(division) - 1)
+        name = result[0]
+    except Exception as e:
+        result = None
+        print(e)
     if result == None:
         return render_template("oops.html",
                                query = query,
