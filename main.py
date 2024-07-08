@@ -288,12 +288,12 @@ def runComp(sku, div): # master function for computing a competition powerscore
         ws[f'D{row}'] = newDPSList[row - 2][1]
     excelFile = BytesIO()
     wb.save(excelFile)
-    excelFile.seek(0) 
-    #wb.save('ps.xlsx')
+    excelFile.seek(0)
+    #print(excelFile.getvalue())
 
-    with excelFile as file:
-        base64_data = base64.b64encode(file.read()).decode('utf-8')
-    return [name, fullPSList, newOPSList, newDPSList, divs, base64_data]
+    #with excelFile as file:
+        #base64_data = base64.b64encode(file.getvalue()).decode('utf-8')
+    return [name, fullPSList, newOPSList, newDPSList, divs], excelFile
 
 #runComp("RE-VRC-23-2380")
 #runComp('RE-VRC-23-2382')

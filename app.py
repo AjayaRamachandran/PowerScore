@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, render_template_string
+from flask import Flask, request, render_template, send_file
 import random
 import main
 import base64
@@ -57,10 +57,12 @@ def handle_teams():
 
 @app.route("/competitions", methods=["GET"])
 def handle_competitions():
+    global excelFile, name, division
     query = request.args.get("query")
     division = request.args.get("division")
     #try:
-    result = main.runComp(query, int(division) - 1)
+    result, excelFile = main.runComp(query, int(division) - 1)
+    name = result[0]
     #except Exception as e:
         #result = None
         #print(e)
@@ -74,9 +76,12 @@ def handle_competitions():
                                issue2 = "This competition has not happened yet",
                                issue3 = "RobotEvents API requests have timed out")
     else:
-        htmlFile = pageGen.generateFrom(result, query, division, result[5])
-        return render_template_string(htmlFile)
-
+        htmlFile = pageGen.generateFrom(result, query, division, "")
+        return htmlFile
+    
+@app.route("/download", methods=["GET"])
+def download():
+    return send_file(excelFile, as_attachment=True, download_name= name + "-division" + division + '.xlsx', mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
 if __name__ == "__main__":
     app.run(debug=True)

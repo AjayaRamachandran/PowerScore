@@ -1,4 +1,5 @@
 from io import BytesIO
+import base64
 
 initial = '''<!DOCTYPE html>
 <html lang="en">
@@ -167,6 +168,15 @@ initial = '''<!DOCTYPE html>
             align-items: center;
             margin-left: 700px;
         }
+        .download-text {
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: -0.3px;
+            color: #ffffff;
+            border: 0px transparent;
+            background-color: #095d6a;
+            cursor: pointer;
+        }
         .container {
             display: flex;
             justify-content: space-between; /* This will push the form and button to opposite sides */
@@ -208,7 +218,7 @@ ending = '''
 </body>
 </html>'''
 
-def generateFrom(info, sku, division = "1", base64data = None):
+def generateFrom(info, sku, division = "1", excelFile = None):
     #comp = open("templates/comp.html", "w")
     name = info[0]
     powerscores = info[1]
@@ -234,6 +244,7 @@ def generateFrom(info, sku, division = "1", base64data = None):
         else:
             dropdown = dropdown + f'''<option value="{divID + 1}">{divName}</option>
             '''
+
     dropdown = dropdown + '''</select></form><script>
         const selectElement = document.getElementById('divs');
         const formElement = document.getElementById('myForm');
@@ -244,7 +255,7 @@ def generateFrom(info, sku, division = "1", base64data = None):
     </script><div class="gap">
             <div class="gap"></div>
         </div>
-        <div class="download-button"><a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,''' + base64data + '''" download="''' + name + '''.xslx">Download XLSX</a></div>
+        <form action="/download" method="GET" class="download-button"><button type="submit" class="download-text">Download XLSX</button></form>
         <div class="gap-2"><div class="gap-2"></div></div></div>
         '''
 
@@ -271,7 +282,6 @@ def generateFrom(info, sku, division = "1", base64data = None):
     </div>'''
     
     total = initial + title + dropdown + bodyList + ending
-
     return total
     #comp.write(total)
     #comp.close()
