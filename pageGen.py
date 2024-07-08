@@ -185,7 +185,7 @@ initial = '''<!DOCTYPE html>
     </style>
 </head>
 <body>
-    <div class="banner"><a href="http://localhost:5000">VRC-Tracker</a></div>
+    <div class="banner"><a href="https://powerscore.vercel.app">VRC-Tracker</a></div>
     <div class="total-parent-container">
         <div class="gap">
             <div class="gap"></div>
