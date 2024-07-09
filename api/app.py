@@ -1,8 +1,8 @@
 from flask import Flask, request, render_template, send_file
 import random
-import main
+from api import main
 import base64
-import pageGen
+from api import pageGen
 
 ###### BANNER ######
 # Read the image file

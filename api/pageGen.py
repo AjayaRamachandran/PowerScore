@@ -1,6 +1,3 @@
-from io import BytesIO
-import base64
-
 initial = '''<!DOCTYPE html>
 <html lang="en">
 <head>
