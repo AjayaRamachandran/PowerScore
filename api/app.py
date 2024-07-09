@@ -19,7 +19,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template("splash.html", banner = img_tag, favicon = "")#base64.b64encode(open('favicon.ico', 'rb').read()).decode('utf-8'))
+    return render_template("templates/splash.html", banner = img_tag, favicon = "")#base64.b64encode(open('favicon.ico', 'rb').read()).decode('utf-8'))
 
 @app.route("/teams", methods=["GET"])
 def handle_teams():
@@ -31,7 +31,7 @@ def handle_teams():
         #print(e)
     # Process the search query (e.g., query a database, perform a search, etc.)
     if result == None:
-        return render_template("oops.html",
+        return render_template("templates/oops.html",
                                query = query,
                                destination = "/teams",
                                placeholder = "Search a Team Number",
@@ -40,7 +40,7 @@ def handle_teams():
                                issue2 = "This team exists but has not competed yet this season",
                                issue3 = "RobotEvents API requests have timed out")
     else:
-        return render_template("index.html",
+        return render_template("templates/index.html",
             name = result[0],
             powerscore = result[1],
             old_powerscore = result[2],
@@ -67,7 +67,7 @@ def handle_competitions():
         result = None
         print(e)
     if result == None:
-        return render_template("oops.html",
+        return render_template("templates/oops.html",
                                query = query,
                                destination = "/competitions",
                                placeholder = "Enter a Competition SKU (ex: RE-VRC-XX-XXXX)",
