@@ -21,7 +21,7 @@ app = Flask(__name__)
 def index():
     user_agent = request.headers.get('User-Agent').lower()
     if 'iphone' in user_agent or 'android' in user_agent:
-        return render_template('splash-mobile.html')
+        return render_template('splash.html')
     else:
         return render_template("splash-mobile.html", banner = img_tag, favicon = "")#base64.b64encode(open('favicon.ico', 'rb').read()).decode('utf-8'))
 
