@@ -2,6 +2,6 @@
     "version": 2,
 
     "routes": [
-        {"src": "/(.*)", "dest": "api/app.py"}
+        {"src": "/(.*)", "dest": "app.py"}
     ]
 }
