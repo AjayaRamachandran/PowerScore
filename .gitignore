@@ -5,12 +5,14 @@ output.txt
 *.log
 *.pyc
 __pycache__
-
-# Environments 
-.env 
-.venv 
-env/ 
-venv/ 
-ENV/ 
-env.bak/ 
-venv.bak/ 
+.env
+.venv
+env/
+__venv__
+venv/
+pyvenv.cfg
+venv/Lib
+venv/Scripts
+ENV/
+env.bak/
+venv.bak/
