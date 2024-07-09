@@ -5,7 +5,7 @@
         {"src": "/(.*)", "dest": "app.py"}
     ],
         "functions": {
-          "api/app.py": {
+          "./app.py": {
             "maxDuration": 60
           }
         }
