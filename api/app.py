@@ -19,7 +19,11 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template("splash.html", banner = img_tag, favicon = "")#base64.b64encode(open('favicon.ico', 'rb').read()).decode('utf-8'))
+    user_agent = request.headers.get('User-Agent').lower()
+    if 'iphone' in user_agent or 'android' in user_agent:
+        return render_template('splash-mobile.html')
+    else:
+        return render_template("splash.html", banner = img_tag, favicon = "")#base64.b64encode(open('favicon.ico', 'rb').read()).decode('utf-8'))
 
 @app.route("/teams", methods=["GET"])
 def handle_teams():
