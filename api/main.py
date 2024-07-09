@@ -1,7 +1,7 @@
 #import numpy as np
 from math import *
 #import inout as io
-from api import apiHandler
+import apiHandler
 #import matplotlib as mpl
 import os
 os.environ["SDL_VIDEODRIVER"] = "dummy"

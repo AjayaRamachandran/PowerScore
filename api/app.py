@@ -1,8 +1,8 @@
 from flask import Flask, request, render_template, send_file
 import random
-from api import main
+import main
 import base64
-from api import pageGen
+import pageGen
 
 ###### BANNER ######
 # Read the image file
@@ -23,7 +23,7 @@ def index():
 
 @app.route("/teams", methods=["GET"])
 def handle_teams():
-    query = request.args.get("query")
+    query = request.args.get("query").upper()
     try:
         result = main.runAlgorithm(query)
     except Exception as e:
