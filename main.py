@@ -68,7 +68,10 @@ def createPlot(data, teamname):
     screen.blit(bottomText, bottomRect)
     #pygame.draw.circle(screen, (255, 255, 255), (rightBound, yPos), 2)
 
-    pygame.image.save(screen, "plot.png")
+    plotBytes = BytesIO()
+    pygame.image.save(screen, plotBytes, "jpg")
+    plotBytes.seek(0)
+    return plotBytes
 
 
 ###### RANKING ######
@@ -363,7 +366,8 @@ def runAlgorithm(team):
         temporalPS = summation / index
         progression.append([x[2], round((((2/(1 + exp(-0.045 * (temporalPS)))) - 1) / 2 + 0.5) * 1000) / 10])
         index += 1
-    #createPlot(progression, teamname)
+    plotBytes = createPlot(progression, teamname)
+    plotBytes.seek(0)
     if progression[0][1] < 51 and progression[len(progression) - 1][1] > 70:
         accolades.append("Glow Up")
     sortedProgression = sorted(progression, key=lambda x: x[1], reverse=True) # sorts the list based on powerScore from largest to smallest
@@ -393,7 +397,9 @@ def runAlgorithm(team):
                 image.putpixel((x, y), (132, 238, 255, 255))
             else:
                 image.putpixel((x, y), (27, 119, 138, 255))
-    image.save("bar.png")
+    imageBytes = BytesIO()
+    image.save(imageBytes, "png")
+    imageBytes.seek(0)
     rank = giveRanking(careerPS)
     careerPS = round(careerPS)
 
@@ -450,25 +456,26 @@ def runAlgorithm(team):
 
     rankCopy = rank.replace(" ", "")
     badgeFileDir = "newbadges/" + rankCopy + ".png"
+    
     # Read the image file
     image_data = open(badgeFileDir, 'rb').read()
     # Encode as base64
     data_uri = base64.b64encode(image_data).decode('utf-8')
     # Create an <img> tag with the base64-encoded image
     badge_tag = data_uri
-
-    image_data = open("plot.png", 'rb').read()
+    
+    image_data = plotBytes.getvalue()
     # Encode as base64
     data_uri = base64.b64encode(image_data).decode('utf-8')
     # Create an <img> tag with the base64-encoded image
     graph_tag = data_uri
 
-    image_data = open("bar.png", 'rb').read()
+    image_data = imageBytes.getvalue()
     # Encode as base64
     data_uri = base64.b64encode(image_data).decode('utf-8')
     # Create an <img> tag with the base64-encoded image
     bar_tag = data_uri
-
+    
     return [team, careerPS, oldCareerPS, rank, careerOPS, careerDPS, title, accolade1, accolade2, badge_tag, graph_tag, xpToNext, bar_tag]
 
     #print(comps["data"][comp]["id"])
