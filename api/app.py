@@ -21,9 +21,9 @@ app = Flask(__name__)
 def index():
     user_agent = request.headers.get('User-Agent').lower()
     if 'iphone' in user_agent or 'android' in user_agent:
-        return render_template('splash-mobile.html')
+        return render_template('splash.html')
     else:
-        return render_template("splash.html", banner = img_tag, favicon = "")#base64.b64encode(open('favicon.ico', 'rb').read()).decode('utf-8'))
+        return render_template("splash-mobile.html", banner = img_tag, favicon = "")#base64.b64encode(open('favicon.ico', 'rb').read()).decode('utf-8'))
 
 @app.route("/teams", methods=["GET"])
 def handle_teams():
@@ -35,29 +35,58 @@ def handle_teams():
         print(e)
     # Process the search query (e.g., query a database, perform a search, etc.)
     if result == None:
-        return render_template("oops.html",
-                               query = query,
-                               destination = "/teams",
-                               placeholder = "Search a Team Number",
-                               type = "team with the number",
-                               issue1 = "This team does not exist",
-                               issue2 = "This team exists but has not competed yet this season",
-                               issue3 = "RobotEvents API requests have timed out")
+        user_agent = request.headers.get('User-Agent').lower()
+        if 'iphone' in user_agent or 'android' in user_agent:
+            return render_template("oops-mobile.html",
+                                query = query,
+                                destination = "/teams",
+                                placeholder = "Search a Team Number",
+                                type = "team with the number",
+                                issue1 = "This team does not exist",
+                                issue2 = "This team exists but has not competed yet this season",
+                                issue3 = "RobotEvents API requests have timed out")
+        else:
+            return render_template("oops.html",
+                                query = query,
+                                destination = "/teams",
+                                placeholder = "Search a Team Number",
+                                type = "team with the number",
+                                issue1 = "This team does not exist",
+                                issue2 = "This team exists but has not competed yet this season",
+                                issue3 = "RobotEvents API requests have timed out")
+
     else:
-        return render_template("index.html",
-            name = result[0],
-            powerscore = result[1],
-            old_powerscore = result[2],
-            rank = result[3],
-            offensive_powerscore = result[4],
-            defensive_powerscore = result[5],
-            title = result[6],
-            accolade1 = result[7],
-            accolade2 = result[8],
-            badgeByteString = result[9],
-            graphByteString = result[10],
-            xpLeft = result[11],
-            barByteString = result[12])
+        user_agent = request.headers.get('User-Agent').lower()
+        if 'iphone' in user_agent or 'android' in user_agent:
+            return render_template("index-mobile.html",
+                name = result[0],
+                powerscore = result[1],
+                old_powerscore = result[2],
+                rank = result[3],
+                offensive_powerscore = result[4],
+                defensive_powerscore = result[5],
+                title = result[6],
+                accolade1 = result[7],
+                accolade2 = result[8],
+                badgeByteString = result[9],
+                graphByteString = result[10],
+                xpLeft = result[11],
+                barByteString = result[12])
+        else:
+            return render_template("index-mobile.html",
+                name = result[0],
+                powerscore = result[1],
+                old_powerscore = result[2],
+                rank = result[3],
+                offensive_powerscore = result[4],
+                defensive_powerscore = result[5],
+                title = result[6],
+                accolade1 = result[7],
+                accolade2 = result[8],
+                badgeByteString = result[9],
+                graphByteString = result[10],
+                xpLeft = result[11],
+                barByteString = result[12])
 
 @app.route("/competitions", methods=["GET"])
 def handle_competitions():

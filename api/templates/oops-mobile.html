@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VRC Tracker</title>
+    <title>Oops!</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -19,12 +19,11 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            height: 108px;
-            font-size: 40px;
+            font-size: 60px;
             font-weight: 900;
         }
-        .title2 {
-            font-family: 'Teko', sans-serif;
+        .title {
+            font-family: 'Inter', sans-serif;
             background-color: #084d5a;
             color: #ffffff;
             margin: 0;
@@ -33,22 +32,8 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            height: 40px;
-            font-size: 30px;
-            font-weight: 900;
-        }
-        .title3 {
-            font-family: 'Inter', sans-serif;
-            background-color: #084d5a;
-            color: #7dc6d4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            height: 78px;
-            font-size: 30px;
+            width: 100vh;
+            font-size: 60px;
             font-weight: 900;
         }
         body {
@@ -61,57 +46,44 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            height: 108px;
+            width: 350px;
+            font-size: 20px;
+            letter-spacing: -0.4px;
+        }
+        .body {
+            font-family: 'Inter', sans-serif;
+            background-color: #084d5a;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 330px;
             font-size: 20px;
             letter-spacing: -0.4px;
         }
         .body2 {
             font-family: 'Inter', sans-serif;
+            background-color: #084d5a;
             color: #ffffff;
-            margin: 0;
-            padding: 0;
+            margin: 0px;
             display: flex;
-            justify-content: center;
+            justify-content: left;
             align-items: center;
-            text-align: center;
-            height: 25px;
-            width: 100%;
-            font-size: 18px;
-            letter-spacing: 0px;
-            font-weight: 400;
-        }
-        .body3 {
-            font-family: 'Inter', sans-serif;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            width: 350px;
-            font-size: 17px;
-            letter-spacing: 0px;
-            font-weight: 400;
-        }
-        .body4 {
-            font-family: 'Inter', sans-serif;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 350px;
+            text-align: left;
+            width: 330px;
             font-size: 16px;
-            letter-spacing: 0px;
-            font-weight: 400;
-            line-height: 21px;
+            letter-spacing: -0.2px;
         }
         img {
             width: 100%;
             height: 100%;
+        }
+        a {
+            text-decoration: none;
+            color: white;
         }
         .banner {
             background-color: black;
@@ -137,45 +109,6 @@
             border: 1px solid #ffffff;
             border-radius: 5px;
         }
-        .banner2 {
-            background-color: #23212b;
-            font-family: 'Inter', sans-serif;
-            color: #ffffff;
-            margin: 0;
-            top: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            font-size: 40px;
-            font-weight: 900;
-            width: 100%;
-            height: 450px;
-            background-size: cover;
-            background-image: url("https://www.dropbox.com/scl/fi/peqq4w3n1rzsmtul2kdvu/BannerSmall.jpg?rlkey=q1gz8ytrnayimgfofqfcghj42&st=0tovckvh&raw=1");
-        }
-        .banner2-title {
-            font-family: 'Inter', sans-serif;
-            color: #ffffff;
-            margin: 0;
-            padding: 50px 0 0 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            font-size: 32px;
-            font-weight: 900;
-            width: 350px;
-        }
-        .search-bars-parent-container {
-            display: flex;
-            flex-direction: column;
-            justify-items: center;
-            text-align: center;
-        }
         .total-parent-container {
             display: flex;
             flex-direction: column;
@@ -188,47 +121,15 @@
             display: flex;
             flex-direction: column;
         }
-        .input-parent-container2 {
-            text-align: center;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        .left-content-parent-container {
-            align-items: center;
-            display: flex;
-            flex-direction: column;
-        }
-        .right-content-parent-container {
-            align-items: center;
-            display: flex;
-            flex-direction: column;
-        }
         .input-container {
             display: flex;
             justify-content: center;
+            margin-top: 20px;
         }
         .input-container input {
-            width: 280px;
-            height: 15px;
-            font-size: 15px;
-            padding: 10px;
-            border-radius: 5px 0 0 5px;
-            border: 1px solid #ffffff;
-            font-family: 'Inter', sans-serif;
-            letter-spacing: -0.3px;
-            text-align: center;
-            background-color: #ffffff;
-            color: #000000;
-        }
-        .input-container2 {
-            display: flex;
-            justify-content: center;
-        }
-        .input-container2 input {
-            width: 280px;
-            height: 15px;
-            font-size: 15px;
+            width: 300px;
+            height: 20px;
+            font-size: 16px;
             padding: 10px;
             border-radius: 5px 0 0 5px;
             border: 1px solid #ffffff;
@@ -239,8 +140,8 @@
             color: #ffffff;
         }
         .input-container button {
-            width: 37px;
-            height: 37px;
+            width: 42px;
+            height: 42px;
             border: 1px solid #ffffff;
             border-left: none;
             background-color: #084d5a;
@@ -255,13 +156,8 @@
             font-size: 15px;
         }
         .gap {
-            width: 500px;
-            height: 10px;
-            display: block;
-        }
-        .v-gap {
             width: 10px;
-            height: 10px;
+            height: 30px;
             display: block;
         }
         .top-bar-parent-container {
@@ -291,7 +187,7 @@
         }
         .body-container {
             display: flex;
-            width: 1000px;
+            width: 350px;
             height: 150px;
             border: 1px transparent;
             flex-direction: row;
@@ -466,19 +362,26 @@
 </head>
 <body>
     <div class="banner">VRC-Tracker</div>
+    <div class="home-button"><a href="https://powerscore.vercel.app"> ◀ Home </a></div>
     <div class="total-parent-container">
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
         <div class="input-parent-container">
-            <div class="banner2">
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="banner2-title">The One Statistic That Can't Be Fooled.</div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="body4">VRC-Tracker is the only tracker to use the cutting-edge Powerscore Algorithm, capable of seeing the bigger picture — without random chance, region competitiveness, and other annoying factors getting in the way.</div>
+            <div class="input-container">
+                <form action="{{ destination }}" method="GET" class="input-container">
+                    <input type="text" name="query" placeholder="{{ placeholder }}">
+                    <button type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
             </div>
-            <!--<img src="data:plot/png;base64,{{ banner }}" alt="Banner">-->
         </div>
         <div class="gap">
             <div class="gap"></div>
@@ -489,87 +392,18 @@
         <div class="gap">
             <div class="gap"></div>
         </div>
-        <div class="title3">Choose your fighter.</div>
+        <div class="title">Oops!</div>
         <div class="gap">
             <div class="gap"></div>
         </div>
+        <div class="body">We couldn't find a {{ type }} "{{ query }}".</div>
         <div class="gap">
             <div class="gap"></div>
         </div>
-        <div class="search-bars-parent-container">
-            <div class="left-content-parent-container">
-                <div class="title2">Career Powerscore</div>
-                <div class="body3">A computationally heavy method of tracking a team's progression over time. Less tactical, but more epic.<small><small>We recommend starting here if you're new.</small></small></div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="input-parent-container">
-                    <div class="input-container">
-                        <form action="/teams" method="GET" class="input-container">
-                            <input type="text" name="query" placeholder="Search any Team Number">
-                            <button type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="v-gap">
-                <div class="v-gap"></div>
-            </div>
-            <div class="title3"><small><small><i>OR</i></small></small></div>
-            <div class="v-gap">
-                <div class="v-gap"></div>
-            </div>
-            <div class="right-content-parent-container">
-                <div class="title2">Competition Powerscore</div>
-                <div class="body3">A lightweight algorithm that still utilizes Powerscore but to only analyze within a competition. Extremely useful for alliance selection and post-match analysis.</div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="input-parent-container">
-                    <div class="input-container">
-                        <form action="/competitions" method="GET" class="input-container2">
-                            <input type="text" name="query" placeholder="Enter a Competition SKU (ex: RE-VRC-XX-XXXX)">
-                            <button type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                            <input type="hidden" name="division" value="1">
-                        </form>
-                    </div>
-                </div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-            </div>
-        </div>
+        <div class="body2">The issue could be:</div>
+        <div class="body2">1. {{ issue1 }}</div>
+        <div class="body2">2. {{ issue2 }}</div>
+        <div class="body2">3. {{ issue3 }}</div>
     </div>
 </body>
 </html>
