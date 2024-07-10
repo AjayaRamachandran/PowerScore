@@ -21,9 +21,9 @@ app = Flask(__name__)
 def index():
     user_agent = request.headers.get('User-Agent').lower()
     if 'iphone' in user_agent or 'android' in user_agent:
-        return render_template('splash.html')
+        return render_template('splash-mobile.html')
     else:
-        return render_template("splash-mobile.html", banner = img_tag, favicon = "")#base64.b64encode(open('favicon.ico', 'rb').read()).decode('utf-8'))
+        return render_template("splash.html", banner = img_tag, favicon = "")#base64.b64encode(open('favicon.ico', 'rb').read()).decode('utf-8'))
 
 @app.route("/teams", methods=["GET"])
 def handle_teams():
@@ -73,7 +73,7 @@ def handle_teams():
                 xpLeft = result[11],
                 barByteString = result[12])
         else:
-            return render_template("index-mobile.html",
+            return render_template("index.html",
                 name = result[0],
                 powerscore = result[1],
                 old_powerscore = result[2],
