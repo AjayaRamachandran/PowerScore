@@ -1,6 +1,15 @@
 import requests
-import os
+
+###### CONTROL ######
+config = "api/config.txt"
+debug = open(config).read().replace("\n", "")[open(config).read().replace("\n", "").index("debug") - 5]
+#-------------------#
+if debug == "Y":
+    import osEmul as os
+else:
+    import os
 from datetime import datetime
+#print(os.environ.get("pee"))
 
 monthsLimits = [31,28,31,30,31,30,31,31,30,31,30,31]
 apiKeys = []

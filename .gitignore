@@ -17,3 +17,4 @@ venv/Scripts
 ENV/
 env.bak/
 venv.bak/
+osEmul.py

@@ -18,7 +18,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 108px;
         }
         img {
             width: 100%;
@@ -28,6 +27,7 @@
             display: flex;
             flex-direction: column;
             height: 108px;
+            align-items: center;
         }
         .input-parent-container {
             text-align: center;
@@ -41,9 +41,9 @@
             margin-top: 20px;
         }
         .input-container input {
-            width: 350px;
-            height: 15px;
-            font-size: 15px;
+            width: 250px;
+            height: 20px;
+            font-size: 16px;
             padding: 10px;
             border-radius: 5px 0 0 5px;
             border: 1px solid #ffffff;
@@ -54,8 +54,8 @@
             color: #ffffff;
         }
         .input-container button {
-            width: 37px;
-            height: 37px;
+            width: 42px;
+            height: 42px;
             border: 1px solid #ffffff;
             border-left: none;
             background-color: #084d5a;
@@ -70,7 +70,7 @@
             font-size: 15px;
         }
         .gap {
-            width: 500px;
+            width: 30px;
             height: 30px;
             display: block;
         }
@@ -104,7 +104,7 @@
             border-radius: 5px;
         }
         .top-bar-parent-container {
-            width: 1000px;
+            width: 300px;
             height: 100px;
             display: block;
         }
@@ -118,28 +118,36 @@
             padding-top: 10px;
             padding-right: 20px;
             padding-bottom: -10px;
-            border-radius: 5px;
+            border-radius: 10px;
             border: 1px solid #ffffff;
             justify-content: right;
         }
         .body-parent-container {
             display: block;
-            width: 1000px;
+            width: 300px;
             height: 150px;
             border: 1px transparent;
         }
         .body-container {
             display: flex;
-            width: 1000px;
-            height: 150px;
+            width: 300px;
             border: 1px transparent;
             flex-direction: row;
+            justify-content: center;
+        }
+        .card-1 {
+            font-family: 'Teko', sans-serif;
+            color: #ffffff;
+            background-color: #01414e;
+            border-radius: 10px;
+            padding-top: 40px;
+            border: 1px solid #ffffff;
         }
         .item1 {
             flex: 0 0 15%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 15% */
             background-color: transparent;
             font-family: "Teko";
-            font-size: 200px;
+            font-size: 120px;
             text-align: center;
             font-weight: 700;
             color:#ffffff;
@@ -155,14 +163,13 @@
             font-weight: 700;
             color:#1b778a;
             line-height: 80%;
-            padding-top: 27px;
+            padding-top: 0px;
         }
         .item3 {
             flex: 0 0 15%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 50% */
-            border-radius: 10px;
             background-color: #0e6172;
             padding: 0%;
-            border-radius: 20px 0 0 20px;
+            border-radius: 10px 10px 0 0;
             align-items: center;
             justify-content: center;
             text-align: center;
@@ -170,11 +177,10 @@
             font-size: 40px;
         }
         .item4 {
-            flex: 0 0 30%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 25% */
             display: flex;
             flex-direction: column;
-            padding: 10px;
-            border-radius: 0 20px 20px 0;
+            padding: 0 10px 10px 10px;
+            border-radius: 0 0 10px 10px;
             align-items: center;
             justify-content: center;
             background-color: #0e6172;
@@ -191,7 +197,7 @@
         .item4-middle {
             flex: 0 0 4%;
             height: 15px;
-            width: 300px;
+            width: 250px;
             background-color: #0e6172;
             text-align: center;
             font-family: "Teko";
@@ -200,7 +206,7 @@
         }
         .item4-bmiddle {
             height: 15px;
-            width: 300px;
+            width: 250px;
             background-color: #0e6172;
             text-align: center;
             font-family: "Teko";
@@ -209,9 +215,8 @@
         }
         .item4-bottom {
             flex: 0 0 25%;
-            height: 30px;
+            height: 5px;
             width: 300px;
-            background-color: #0e6172;
             text-align: center;
             font-family: "Teko";
             font-size: 20px;
@@ -244,17 +249,17 @@
             line-height: 100%;
         }
         .body2-parent-container {
-            display: block;
-            width: 1000px;
+            display: flex;
+            width: 300px;
             height: 250px;
-            border-radius: 5;
+            border-radius: 10px;
         }
         .body2-container {
             display: flex;
-            width: 1000px;
+            width: 300px;
             height: 250px;
-            flex-direction: row;
-            border-radius: 5;
+            flex-direction: column;
+            border-radius: 10px;
         }
         .item21 {
             flex: 0 0 35%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 15% */
@@ -262,8 +267,9 @@
             flex-direction: column;
             background-color: #0e6172;
             border: 1px solid #ffffff;
-            border-radius: 5px;
+            border-radius: 10px;
             padding-top: 15px;
+            padding-bottom: 15px;
         }
         .item21-high {
             font-family: "Teko";
@@ -289,17 +295,17 @@
             text-align: center;
             color:#ffffff;
             border: transparent;
-            border-radius: 5px;
+            border-radius: 10px;
         }
         .item23 {
-            flex: 0 0 63%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 15% */
             background-color: #0e6172;
             font-family: "Teko";
             font-size: 20px;
             text-align: center;
             color:#ffffff;
             border: 1px solid #ffffff;
-            border-radius: 5px;
+            border-radius: 10px;
+            padding: 10px;
         }
         .imageOverlay {
             position: fixed;
@@ -359,20 +365,18 @@
         <div class="gap">
             <div class="gap"></div>
         </div>
+        <div class="item22"></div>
+        <div class="item22"></div>
+        <div class="item22"></div>
+        <div class="item22"></div>
         <div class="body-parent-container">
-            <div class="body-container">
-                <div class="item1">{{ powerscore }}</div>
-                <div class="item2"><small><small><small>Prev</small></small></small> {{ old_powerscore }}</div>
-                <div class="item3">
-                    <img src="data:plot/png;base64,{{ badgeByteString }}" alt="Generated Image">
-                </div>
-                <div class="item4">
-                    <div class="item4-top">Rank: <b>{{ rank }}</b></div>
-                    <div class="item4-middle">
-                        <img src="data:plot/png;base64,{{ barByteString }}" alt="badge">
+            <div class="card-1">
+                <div class="body-container">
+                    <div class="item1">{{ powerscore }}</div>
+                    <div class="gap">
+                        <div class="gap"></div>
                     </div>
-                    <div class="item4-bmiddle"></div>
-                    <div class="item4-bottom">XP to Next Rank: <i><b>{{ xpLeft }}</b></i></div>
+                    <div class="item2"><small><small><small>Prev</small></small></small> {{ old_powerscore }}</div>
                 </div>
                 <div class="item5">
                     <div class="item5-top">
@@ -383,6 +387,21 @@
                     </div>
                 </div>
             </div>
+            <div class="gap">
+                <div class="gap"></div>
+            </div>
+            <div class="item3">
+                <img src="data:plot/png;base64,{{ badgeByteString }}" alt="Generated Image">
+            </div>
+            <div class="item4">
+                <div class="item4-top">Rank: <b>{{ rank }}</b></div>
+                <div class="item4-middle">
+                    <img src="data:plot/png;base64,{{ barByteString }}" alt="badge">
+                </div>
+                <div class="item4-bmiddle"></div>
+                <div class="item4-bottom">XP to Next Rank: <i><b>{{ xpLeft }}</b></i></div>
+            </div>
+            <!--</div>-->
         <div class="gap">
             <div class="gap"></div>
         </div>
@@ -403,6 +422,9 @@
                     </div>
                 </div>
                 <div class="item22"></div>
+                <div class="gap">
+                    <div class="gap"></div>
+                </div>
                 <div class="item23">
                     <img src="data:plot/png;base64,{{ graphByteString }}" alt="Generated Image">
                 </div>

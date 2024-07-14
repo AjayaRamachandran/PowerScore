@@ -1,8 +1,12 @@
-#import numpy as np
+###### CONTROL ######
+config = "api/config.txt"
+debug = open(config).read().replace("\n", "")[open(config).read().replace("\n", "").index("debug") - 5]
+#-------------------#
 from math import *
-#import inout as io
-from api import apiHandler
-#import matplotlib as mpl
+if debug == "Y":
+    import apiHandler
+else:
+    from api import apiHandler
 import os
 os.environ["SDL_VIDEODRIVER"] = "dummy"
 import pygame
@@ -11,12 +15,10 @@ from PIL import Image
 from openpyxl import Workbook
 from io import BytesIO
 
-
 ###### OPERATOR FUNCTIONS ######
 def getDays(date):
     monthLengths = [31,28,31,30,31,30,31,31,30,31,30,31]
     return int(date[:4]) * 365 + sum(monthLengths[:int(date[5:7]) - 1]) + int(date[8:])
-
 
 def createPlot(data, teamname):
     pygame.init()
