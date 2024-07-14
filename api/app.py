@@ -8,9 +8,11 @@ import random
 if debug == "Y":
     import main
     import pageGen
+    import pageGenMobile
 else:
     from api import main
     from api import pageGen
+    from api import pageGenMobile
 
 import base64
 
@@ -83,7 +85,7 @@ def handle_teams():
                 xpLeft = result[11],
                 barByteString = result[12])
         else:
-            return render_template("index-mobile.html",
+            return render_template("index.html",
                 name = result[0],
                 powerscore = result[1],
                 old_powerscore = result[2],
@@ -121,7 +123,7 @@ def handle_competitions():
                                 issue2 = "This competition has not happened yet",
                                 issue3 = "RobotEvents API requests have timed out")
         else:
-            return render_template("oops-mobile.html",
+            return render_template("oops.html",
                     query = query,
                     destination = "/competitions",
                     placeholder = "Enter a Competition SKU (ex: RE-VRC-XX-XXXX)",
@@ -130,7 +132,11 @@ def handle_competitions():
                     issue2 = "This competition has not happened yet",
                     issue3 = "RobotEvents API requests have timed out")
     else:
-        htmlFile = pageGen.generateFrom(result, query, division, "")
+        user_agent = request.headers.get('User-Agent').lower()
+        if 'iphone' in user_agent or 'android' in user_agent or debug == "Y":
+            htmlFile = pageGenMobile.generateFrom(result, query, division, "")
+        else:
+            htmlFile = pageGen.generateFrom(result, query, division, "")
         return htmlFile
     
 @app.route("/download", methods=["GET"])
