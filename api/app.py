@@ -6,7 +6,7 @@ down = open(config).read().replace("\n", "")[open(config).read().replace("\n", "
 #-------------------#
 
 from flask import Flask, request, render_template, send_file
-import random
+
 if debug == "Y":
     import main
     import pageGen
