@@ -24,7 +24,7 @@ import base64
 # Read the image file
 image_data = open('Banner.jpg', 'rb').read()
 
-# Encode as base64
+# Encode in base64
 data_uri = base64.b64encode(image_data).decode('utf-8')
 
 # Create an <img> tag with the base64-encoded image
