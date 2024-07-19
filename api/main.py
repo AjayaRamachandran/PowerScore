@@ -1,6 +1,7 @@
 ###### CONTROL ######
 config = "api/config.txt"
 debug = open(config).read().replace("\n", "")[open(config).read().replace("\n", "").index("debug") - 5]
+mobile = open(config).read().replace("\n", "")[open(config).read().replace("\n", "").index("mobile") - 5]
 #-------------------#
 from math import *
 if debug == "Y":
@@ -317,6 +318,7 @@ def runAlgorithm(team):
     opsList = []
     dpsList = []
     #print(comps["data"])
+    dashboard = []
     for comp in range(comps["meta"]["total"]):
         #print(comps["data"][comp]["name"])
         #print(compPS)
@@ -350,6 +352,14 @@ def runAlgorithm(team):
             psList.append([compPS, compWeight, getDays(comps["data"][comp]["start"][:10])])
             opsList.append([compOPS, compWeight, getDays(comps["data"][comp]["start"][:10])])
             dpsList.append([compDPS, compWeight, getDays(comps["data"][comp]["start"][:10])])
+
+            thisComp = {}
+            thisComp['name'] = comps["data"][comp]["name"]
+            thisComp['date'] = comps["data"][comp]["start"][:10]
+            thisComp['sku'] = comps["data"][comp]["sku"]
+            thisComp['score'] = str(round((((2/(1 + exp(-0.045 * compPS))) - 1) / 2 + 0.5) * 100))
+
+            dashboard.append(thisComp)
             #print([compPS, compSum, log(0.51 * (compSum ** 0.225)) ** 2])
         except:
             print("This team deregistered from a comp") # if the team's name cannot be found at the comp, we know they did not attend / deregistered
@@ -478,6 +488,6 @@ def runAlgorithm(team):
     # Create an <img> tag with the base64-encoded image
     bar_tag = data_uri
     
-    return [team, careerPS, oldCareerPS, rank, careerOPS, careerDPS, title, accolade1, accolade2, badge_tag, graph_tag, xpToNext, bar_tag]
+    return [team, careerPS, oldCareerPS, rank, careerOPS, careerDPS, title, accolade1, accolade2, badge_tag, graph_tag, xpToNext, bar_tag, dashboard]
 
     #print(comps["data"][comp]["id"])

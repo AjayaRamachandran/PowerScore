@@ -1,1 +1,3 @@
 N >> debug
+N >> mobile
+Y >> down

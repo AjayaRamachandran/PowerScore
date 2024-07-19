@@ -74,6 +74,11 @@
             height: 30px;
             display: block;
         }
+        .gap-2 {
+            width: 15px;
+            height: 15px;
+            display: block;
+        }
         a {
             text-decoration: none;
             color: white;
@@ -318,6 +323,86 @@
             background-image: none;
             display: none;
         }
+        .dashboard-title {
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #ffffff;
+            display: flex;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: "Teko";
+            font-weight: 600;
+        }
+        .dashboard {
+            text-align: right;
+            color: #ffffff;
+            background-color: #0e6172;
+            display: flex;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ffffff;
+            justify-content: space-between;
+            flex-direction: row;
+        }
+        .dashboard-left {
+            flex-direction: column;
+            text-align: left;
+        }
+        .dashboard-left-link {
+            background-color: #0e6172;
+            font-family: "Inter";
+            font-size: 16px;
+            text-align: left;
+            color:#ffffff;
+            font-weight: 400;
+            border: 0px transparent;
+            cursor: pointer;
+            padding-left: 0px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+        }
+        .dashboard-left-text-title {
+            background-color: #0e6172;
+            font-family: "Inter";
+            font-size: 20px;
+            text-align: left;
+            color:#ffffff;
+            flex-direction: column;
+            justify-content: left;
+            align-items: flex-start;
+            font-weight: 600;
+            border: 0px transparent;
+        }
+        .dashboard-left-text-body {
+            background-color: #0e6172;
+            font-family: "Inter";
+            font-size: 14px;
+            text-align: left;
+            color:#6abaca;
+            flex-direction: column;
+            align-items: flex-end;
+            font-weight: 400;
+        }
+        .dashboard-right {
+            background-color: #0e6172;
+            font-family: "Inter";
+            font-size: 20px;
+            text-align: right;
+            color:#ffffff;
+        }
+        .dashboard-right-text-title {
+            background-color: #0e6172;
+            font-family: "Teko";
+            font-size: 45px;
+            text-align: right;
+            color:#ffffff;
+            flex-direction: column;
+            font-weight: 600;
+            padding-right: 4px;
+            padding-left: 6px;
+        }
     </style>
 </head>
 <body>
@@ -411,7 +496,7 @@
                     <div class="item21-high">
                         <div class="text"><small>Title</small></div>
                         <div class="text"><b><i>{{ title }}</i></b></div>
-                        <div class="text"><small><small><small>··························································</small></small></small></div>
+                        <hr>
                         <div class="text"><small>Accolades</small></div>
                     </div>
                     <div class="item21-low">
@@ -430,6 +515,30 @@
                 </div>
             </div>
         </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <hr>
+        <div class="dashboard-title">Competitions</div>
+<!--
     </div>
 </body>
-</html>
+</html>-->

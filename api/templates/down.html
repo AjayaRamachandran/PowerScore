@@ -3,12 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{name}} On VRC Tracker</title>
+    <title>Error 503</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="https://www.dropbox.com/scl/fi/jgpvl6s9otkgc6uqg5pmt/favicon.ico?rlkey=nb39qqv34ppoyk6k3b2qd1yl0&st=lgn1ldkn&raw=1">
     <style>
+        title {
+            font-family: 'Inter', sans-serif;
+            background-color: #084d5a;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 60px;
+            font-weight: 900;
+        }
+        .title {
+            font-family: 'Inter', sans-serif;
+            background-color: #084d5a;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 350px;
+            font-size: 40px;
+            font-weight: 900;
+        }
         body {
             font-family: 'Inter', sans-serif;
             background-color: #084d5a;
@@ -18,20 +45,78 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 108px;
+            text-align: center;
+            /*width: 350px;*/
+            font-size: 20px;
+            letter-spacing: -0.4px;
+        }
+        .body {
+            font-family: 'Inter', sans-serif;
+            background-color: #084d5a;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 330px;
+            font-size: 20px;
+            letter-spacing: -0.4px;
+        }
+        .body2 {
+            font-family: 'Inter', sans-serif;
+            background-color: #084d5a;
+            color: #ffffff;
+            margin: 0px;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            text-align: left;
+            width: 330px;
+            font-size: 16px;
+            letter-spacing: -0.2px;
         }
         img {
+            width: 200px;
+            height: 200px;
+        }
+        a {
+            text-decoration: none;
+            color: white;
+        }
+        .banner {
+            background-color: black;
             width: 100%;
-            height: 100%;
+            position: fixed; /* Keeps it at the top even when scrolling */
+            top: 0;
+            left: 0;
+            font-weight: 500;
+            letter-spacing: -1px;
+            font-size: 30px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .home-button {
+            background-color: black;
+            position: fixed; /* Keeps it at the top even when scrolling */
+            top: 22px;
+            left: 22px;
+            justify-content: left;
+            font-weight: 500;
+            font-size: 15px;
+            padding: 5px 8px 5px 8px;
+            border: 1px solid #ffffff;
+            border-radius: 5px;
         }
         .total-parent-container {
             display: flex;
             flex-direction: column;
-            height: 108px;
+            align-items: center;
         }
         .input-parent-container {
             text-align: center;
-            width: 100%;
+            /*width: 100%;*/
             display: flex;
             flex-direction: column;
         }
@@ -41,7 +126,7 @@
             margin-top: 20px;
         }
         .input-container input {
-            width: 500px;
+            width: 250px;
             height: 20px;
             font-size: 16px;
             padding: 10px;
@@ -70,43 +155,9 @@
             font-size: 15px;
         }
         .gap {
-            width: 500px;
+            width: 10px;
             height: 30px;
             display: block;
-        }
-        .gap-2 {
-            width: 15px;
-            height: 15px;
-            display: block;
-        }
-        a {
-            text-decoration: none;
-            color: white;
-        }
-        .banner {
-            background-color: black;
-            width: 100%;
-            position: fixed; /* Keeps it at the top even when scrolling */
-            top: 0;
-            left: 0;
-            font-weight: 500;
-            letter-spacing: -1px;
-            font-size: 30px;
-            padding-top: 20px;
-            padding-bottom: 20px;
-            text-align: center;
-        }
-        .home-button {
-            background-color: black;
-            position: fixed; /* Keeps it at the top even when scrolling */
-            top: 22px;
-            left: 22px;
-            justify-content: left;
-            font-weight: 500;
-            font-size: 15px;
-            padding: 5px 8px 5px 8px;
-            border: 1px solid #ffffff;
-            border-radius: 5px;
         }
         .top-bar-parent-container {
             width: 1000px;
@@ -135,7 +186,7 @@
         }
         .body-container {
             display: flex;
-            width: 1000px;
+            width: 350px;
             height: 150px;
             border: 1px transparent;
             flex-direction: row;
@@ -283,7 +334,7 @@
             line-height: 120%;
             text-align: left;
             color:#ffffff;
-            padding-top: -10px;
+            padding-top: 2px;
             padding-left: 15px;
         }
         .item22 {
@@ -297,7 +348,7 @@
             border-radius: 5px;
         }
         .item23 {
-            flex: 0 0 61%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 15% */
+            flex: 0 0 63%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 15% */
             background-color: #0e6172;
             font-family: "Teko";
             font-size: 20px;
@@ -305,108 +356,21 @@
             color:#ffffff;
             border: 1px solid #ffffff;
             border-radius: 5px;
-            padding: 5px;
-        }
-        .imageOverlay {
-            position: fixed;
-            margin-top: 100px;
-            align-items: center;
-            width: 1000px;
-            height: 720px;
-            background-position: center;
-            background-color: #084d5a;
-            background-image: none;
-            display: none;
-        }
-        .dashboard-title {
-            text-align: center;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-            color: #ffffff;
-            display: flex;
-            padding: 10px;
-            border-radius: 5px;
-            font-family: "Teko";
-            font-weight: 600;
-        }
-        .dashboard {
-            text-align: right;
-            color: #ffffff;
-            background-color: #0e6172;
-            display: flex;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ffffff;
-            justify-content: space-between;
-            flex-direction: row;
-        }
-        .dashboard-left {
-            flex-direction: column;
-            text-align: left;
-        }
-        .dashboard-left-link {
-            background-color: #0e6172;
-            font-family: "Inter";
-            font-size: 14px;
-            text-align: left;
-            color:#ffffff;
-            font-weight: 400;
-            border: 0px transparent;
-            cursor: pointer;
-            padding-left: 0px;
-            padding-top: 3px;
-            padding-bottom: 3px;
-        }
-        .dashboard-left-text-title {
-            background-color: #0e6172;
-            font-family: "Inter";
-            font-size: 24px;
-            text-align: left;
-            color:#ffffff;
-            flex-direction: column;
-            justify-content: left;
-            align-items: flex-start;
-            font-weight: 600;
-            border: 0px transparent;
-        }
-        .dashboard-left-text-body {
-            background-color: #0e6172;
-            font-family: "Inter";
-            font-size: 17px;
-            text-align: left;
-            color:#6abaca;
-            flex-direction: column;
-            align-items: flex-end;
-            font-weight: 400;
-        }
-        .dashboard-right {
-            background-color: #0e6172;
-            font-family: "Inter";
-            font-size: 20px;
-            text-align: right;
-            color:#ffffff;
-        }
-        .dashboard-right-text-title {
-            background-color: #0e6172;
-            font-family: "Teko";
-            font-size: 30px;
-            text-align: right;
-            color:#ffffff;
-            flex-direction: column;
-            font-weight: 600;
-            padding-right: 4px;
         }
     </style>
 </head>
 <body>
     <div class="banner">VRC-Tracker</div>
-    <div class="home-button"><a href="https://powerscore.vercel.app"> ◀ Back to Home </a></div>
+    <!--<div class="home-button"><a href="https://powerscore.vercel.app"> ◀ Home </a></div>-->
     <div class="total-parent-container">
         <div class="gap">
             <div class="gap"></div>
         </div>
-        <div class="imageOverlay">
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
         </div>
         <div class="gap">
             <div class="gap"></div>
@@ -414,94 +378,24 @@
         <div class="gap">
             <div class="gap"></div>
         </div>
-        <div class="input-parent-container">
-            <div class="input-container">
-                <form action="/teams" method="GET" class="input-container">
-                    <input type="text" name="query" placeholder="Search a Team Number">
-                    <button type="submit" id="overlayButton">
-                        <i id="overlayButton" class="fas fa-search"></i>
-                        <script>
-                            const overlayButton = document.getElementById('overlayButton');
-                            const imageOverlay = document.querySelector('.imageOverlay');
-
-                            overlayButton.addEventListener("click", function() {
-                                imageOverlay.style.backgroundImage = 'url("https://www.dropbox.com/scl/fi/gv0549s6zm6vij93ggf9p/Skeleton.gif?rlkey=dyv46jhjc5bkqseumcsvcw2eo&st=5ikvb3uo&raw=1")';
-                                imageOverlay.style.display = 'block';
-                            });
-                        </script>
-                    </button>
-                </form>
-            </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <img src="https://www.dropbox.com/scl/fi/804s8l8yf0bqestxa8u0l/maintenance.png?rlkey=u0t0h9oix7pmxc50625fq2zar&st=61xlccwf&raw=1">
+        <div class="gap">
+            <div class="gap"></div>
         </div>
         <div class="gap">
             <div class="gap"></div>
         </div>
-        <div class="top-bar-parent-container">
-            <div class="top-bar-container">
-                <div><i><small><small><small>Team</small></small></small> <b>{{name}}</b></i></div>
-            </div>
-        </div>
+        <div class="title">VRC-Tracker is undergoing maintenance.</div>
         <div class="gap">
             <div class="gap"></div>
         </div>
-        <div class="body-parent-container">
-            <div class="body-container">
-                <div class="item1">{{ powerscore }}</div>
-                <div class="item2"><small><small><small>Prev</small></small></small> {{ old_powerscore }}</div>
-                <div class="item3">
-                    <img src="data:plot/png;base64,{{ badgeByteString }}" alt="Generated Image">
-                </div>
-                <div class="item4">
-                    <div class="item4-top">Rank: <b>{{ rank }}</b></div>
-                    <div class="item4-middle">
-                        <img src="data:plot/png;base64,{{ barByteString }}" alt="badge">
-                    </div>
-                    <div class="item4-bmiddle"></div>
-                    <div class="item4-bottom">RR to Next Rank: <i><b>{{ xpLeft }}</b></i></div>
-                </div>
-                <div class="item5">
-                    <div class="item5-top">
-                    <small>Offensive Powerscore</small><b> {{ offensive_powerscore }}</b>
-                    </div>
-                    <div class="item5-bottom">
-                    <small>Defensive Powerscore</small><b> {{ defensive_powerscore }}</b>
-                    </div>
-                </div>
-            </div>
+        <div class="body">Something epic is being worked on. Check back soon!</div>
         <div class="gap">
             <div class="gap"></div>
         </div>
-        <div class="body2-parent-container">
-            <div class="body2-container">
-                <div class="item21">
-                    <div class="item21-high">
-                        <div class="text"><small>Title</small></div>
-                        <div class="text"><b><i>{{ title }}</i></b></div>
-                        <hr> <!--horizontal line divides accolades from title-->
-                        <div class="text"><small>Accolades</small></div>
-                    </div>
-                    <div class="item21-low">
-                        <div class="text"><b>{{ accolade1[0] }}</b></div>
-                        <div class="text"><small>{{ accolade1[1] }}</small></div>
-                        <div class="text"><b>{{ accolade2[0] }}</b></div>
-                        <div class="text"><small>{{ accolade2[1] }}</small></div>
-                    </div>
-                </div>
-                <div class="item22"></div>
-                <div class="item23">
-                    <img src="data:plot/png;base64,{{ graphByteString }}" alt="Generated Image">
-                </div>
-            </div>
-        </div>
-        <div class="gap">
-            <div class="gap"></div>
-        </div>
-        <hr>
-        <div class="gap">
-            <div class="gap"></div>
-        </div>
-        <div class="dashboard-title">Competitions</div>
-        <!--
     </div>
 </body>
-</html>-->
+</html>
