@@ -357,7 +357,7 @@ def runAlgorithm(team):
             thisComp['name'] = comps["data"][comp]["name"]
             thisComp['date'] = comps["data"][comp]["start"][:10]
             thisComp['sku'] = comps["data"][comp]["sku"]
-            thisComp['score'] = str(round((((2/(1 + exp(-0.045 * compPS))) - 1) / 2 + 0.5) * 100))
+            thisComp['score'] = str(round((((2/(1 + exp(-0.045 * (compPS / 2 + 0.5)))) - 1)) * 100))
 
             dashboard.append(thisComp)
             #print([compPS, compSum, log(0.51 * (compSum ** 0.225)) ** 2])
