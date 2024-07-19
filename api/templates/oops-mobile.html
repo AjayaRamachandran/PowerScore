@@ -77,10 +77,6 @@
             font-size: 16px;
             letter-spacing: -0.2px;
         }
-        img {
-            width: 100%;
-            height: 100%;
-        }
         a {
             text-decoration: none;
             color: white;
@@ -357,6 +353,68 @@
             border: 1px solid #ffffff;
             border-radius: 5px;
         }
+        .big-gap {
+            width: 5px;
+            height: 15px;
+            display: block;
+        }
+        .bigger-gap {
+            width: 5px;
+            height: 50px;
+            display: block;
+        }
+        .bottom {
+            position: absolute;
+            left: 0;
+            bottom: -600px;
+            width: 300px;
+            height: 450px;
+            display: flex;
+            flex-direction: column;
+            background-color: #000000;
+            font-family: "Inter", sans-serif;
+            font-weight: 600;
+            letter-spacing: -0.2px;
+            font-size: 18px;
+            padding: 30px;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            /*border: 1px solid white;*/
+        }
+        .bottom-bottom {
+            display: flex;
+            flex-direction: row;
+            background-color: #000000;
+            font-family: "Inter", sans-serif;
+            font-weight: 400;
+            letter-spacing: -0.2px;
+            font-size: 18px;
+            padding: 20px;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            /*border: 1px solid white;*/
+        }
+        .bottom-column {
+            display: flex;
+            flex-direction: column;
+            font-family: "Inter", sans-serif;
+            font-weight: 400;
+            letter-spacing: -0.2px;
+            font-size: 16px;
+            /*border: 1px solid white;*/
+            text-align: left;
+        }
+        .bottom-column-item {
+            flex-direction: row;
+            font-family: "Inter", sans-serif;
+            font-weight: 400;
+            letter-spacing: -0.2px;
+            font-size: 16px;
+            padding: 8px;
+            /*border: 1px solid white;*/
+        }
     </style>
 </head>
 <body>
@@ -403,6 +461,81 @@
         <div class="body2">1. {{ issue1 }}</div>
         <div class="body2">2. {{ issue2 }}</div>
         <div class="body2">3. {{ issue3 }}</div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="big-gap">
+            <div class="big-gap"></div>
+        </div>
+        <div class="big-gap">
+            <div class="big-gap"></div>
+        </div>
+        <div class="big-gap">
+            <div class="big-gap"></div>
+        </div>
+        <div class="big-gap">
+            <div class="big-gap"></div>
+        </div>
+        <div class="bigger-gap">
+            <div class="bigger-gap"></div>
+        </div>
+        <div class="bigger-gap">
+            <div class="bigger-gap"></div>
+        </div>
+        <div class="bigger-gap">
+            <div class="bigger-gap"></div>
+        </div>
+        <div class="bigger-gap">
+            <div class="bigger-gap"></div>
+        </div>
+        <div class="bigger-gap">
+            <div class="bigger-gap"></div>
+        </div>
+        <div class="bigger-gap">
+            <div class="bigger-gap"></div>
+        </div>
+        <div class="bigger-gap">
+            <div class="bigger-gap"></div>
+        </div>
+        <div class="bigger-gap">
+            <div class="bigger-gap"></div>
+        </div>
+        <div class="bigger-gap">
+            <div class="bigger-gap"></div>
+        </div>
+        <div class="bigger-gap">
+            <div class="bigger-gap"></div>
+        </div>
+
+        <div class="bottom">
+            © Copyright 2024 by Ajaya Ramachandran, Team 8568A 23-24
+            <div class="bottom-bottom">
+                <div class="v-gap">
+                    <div class="v-gap"></div>
+                </div>
+                <div class="v-gap">
+                    <div class="v-gap"></div>
+                </div>
+                <div class="bottom-column">
+                    <div class="bottom-column-item"><a target="_blank" href="https://forms.gle/uv3X3gEELeUg8D2L6">Improve This Site</a></div>
+                    <div class="bottom-column-item"><a target="_blank" href="mailto:na8568a@gmail.com">Contact Us</a></div>
+                    <div class="bottom-column-item"><a target="_blank" href="https://github.com/AjayaRamachandran">Support Me on GitHub</a></div>
+                    <div class="bottom-column-item"><a target="_blank" href="https://www.dropbox.com/scl/fi/kug4ka2zejyvz9yduh5i3/Credits-and-Acknowledgements.pdf?rlkey=gn6tuqgpfump219muz10rduri&st=amh43ydv&dl=0">Credits</a></div>
+                </div>
+                <div class="big-gap">
+                    <div class="big-gap"></div>
+                </div>
+                <div class="bottom-column">
+                    <div class="bottom-column-item"><a href="https://vercel.com/docs">Hosted by <img src="https://www.dropbox.com/scl/fi/rq1lnk9velq0t6dtp42xy/Screenshot-2024-07-19-014853.png?rlkey=rsyn4rp4yh4xfr4pu3t6ypndp&st=dasdd4d1&raw=1" width="80px"></a></div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
