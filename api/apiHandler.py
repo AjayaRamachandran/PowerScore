@@ -20,22 +20,21 @@ for i in range(50):
     apiKeys.append(os.environ.get(f'API_KEY{i + 1}'))
     usableKeys.append(i)
     allKeys.append(i)
-requestNumber = random.randint(0, 49)
 
 BASE_URL = 'https://www.robotevents.com/api/v2/'
 
 def makeRequest(endpoint, params=None):
     global requestNumber
-    headers = {
-        'Authorization': f'Bearer {apiKeys[requestNumber]}',
-        'Content-Type': 'application/json',
-    }
-
     if len(usableKeys) == 0:
         usableKeys = allKeys.copy()
     else:
         requestNumber = random.choice(usableKeys)
         usableKeys.remove(requestNumber)
+    headers = {
+        'Authorization': f'Bearer {apiKeys[requestNumber]}',
+        'Content-Type': 'application/json',
+    }
+
     print(f"Sent request for {BASE_URL}{endpoint}, params:{params}")
     response = requests.get(f'{BASE_URL}{endpoint}', headers=headers, params=params)
 
