@@ -10,7 +10,6 @@ if debug == "Y":
 else:
     import os
 from datetime import datetime
-#print(os.environ.get("pee"))
 
 monthsLimits = [31,28,31,30,31,30,31,31,30,31,30,31]
 apiKeys = []
