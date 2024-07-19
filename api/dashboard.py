@@ -36,7 +36,7 @@ ending = '''
                     <div class="bottom-column-item"><a target="_blank" href="https://forms.gle/uv3X3gEELeUg8D2L6">Improve This Site</a></div>
                     <div class="bottom-column-item"><a target="_blank" href="mailto:na8568a@gmail.com">Contact Us</a></div>
                     <div class="bottom-column-item"><a target="_blank" href="https://github.com/AjayaRamachandran">Support Me on GitHub</a></div>
-                    <div class="bottom-column-item"><a target="_blank" href="https://www.dropbox.com/scl/fi/kug4ka2zejyvz9yduh5i3/Credits-and-Acknowledgements.pdf?rlkey=gn6tuqgpfump219muz10rduri&st=amh43ydv&dl=0">Credits</a></div>
+                    <div class="bottom-column-item"><a target="_blank" href="https://drive.google.com/file/d/1NEs-AuhDzaLs1RFFhTsF3nnK5rGLdCWZ/view?usp=sharing">Credits</a></div>
                 </div>
                 <div class="bigger-gap">
                     <div class="bigger-gap"></div>
