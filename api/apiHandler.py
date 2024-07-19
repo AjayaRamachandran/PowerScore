@@ -24,7 +24,7 @@ for i in range(50):
 BASE_URL = 'https://www.robotevents.com/api/v2/'
 
 def makeRequest(endpoint, params=None):
-    global requestNumber
+    global requestNumber, usableKeys, allKeys, apiKeys
     if len(usableKeys) == 0:
         usableKeys = allKeys.copy()
     else:
