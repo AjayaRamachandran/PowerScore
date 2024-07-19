@@ -13,20 +13,8 @@ from datetime import datetime
 
 monthsLimits = [31,28,31,30,31,30,31,31,30,31,30,31]
 apiKeys = []
-API_KEY1 = os.environ.get('API_KEY1')
-apiKeys.append(API_KEY1)
-API_KEY2 = os.environ.get('API_KEY2')
-apiKeys.append(API_KEY2)
-API_KEY3 = os.environ.get('API_KEY3')
-apiKeys.append(API_KEY3)
-API_KEY4 = os.environ.get('API_KEY4')
-apiKeys.append(API_KEY4)
-API_KEY5 = os.environ.get('API_KEY5')
-apiKeys.append(API_KEY5)
-API_KEY6 = os.environ.get('API_KEY6')
-apiKeys.append(API_KEY6)
-API_KEY7 = os.environ.get('API_KEY7')
-apiKeys.append(API_KEY7)
+for i in range(50):
+    apiKeys.append(os.environ.get(f'API_KEY{i + 1}'))
 requestNumber = 0
 
 BASE_URL = 'https://www.robotevents.com/api/v2/'
@@ -34,7 +22,7 @@ BASE_URL = 'https://www.robotevents.com/api/v2/'
 def makeRequest(endpoint, params=None):
     global requestNumber
     headers = {
-        'Authorization': f'Bearer {apiKeys[requestNumber%3]}',
+        'Authorization': f'Bearer {apiKeys[requestNumber%50]}',
         'Content-Type': 'application/json',
     }
 
