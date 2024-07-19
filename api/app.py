@@ -44,6 +44,18 @@ def index():
         else:
             return render_template("splash.html", banner = img_tag, favicon = "")#base64.b64encode(open('favicon.ico', 'rb').read()).decode('utf-8'))
 
+@app.route("/ranks", methods=["GET"])
+def ranks():
+    if down == "Y":
+        return render_template('down.html')
+    else:
+        user_agent = request.headers.get('User-Agent').lower()
+        if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
+            return render_template("ranks-mobile.html")
+        else:
+            return render_template("ranks.html")
+
+
 @app.route("/teams", methods=["GET"])
 def handle_teams():
     if down == "Y":

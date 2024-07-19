@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{name}} On VRC Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="https://www.dropbox.com/scl/fi/jgpvl6s9otkgc6uqg5pmt/favicon.ico?rlkey=nb39qqv34ppoyk6k3b2qd1yl0&st=lgn1ldkn&raw=1">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #084d5a;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 108px;
+        }
+        .body {
+            font-family: 'Inter', sans-serif;
+            border: 0px transparent;
+            color: #a8d7e0;
+            background-color: #0e6172;
+            font-size: 12px;
+            display: flex;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 0 0 5px 0;
+            font-weight: 700;
+        }
+        .title {
+            font-family: 'Teko', sans-serif;
+            border: 0px transparent;
+            color: #ffffff;
+            background-color: #084d5a;
+            font-size: 40px;
+            display: flex;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        .title-2 {
+            font-family: 'Teko', sans-serif;
+            border: 0px transparent;
+            color: #7cbcc9;
+            background-color: #084d5a;
+            font-size: 20px;
+            display: flex;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            letter-spacing: 3.5px;
+        }
+        .total-parent-container {
+            display: flex;
+            flex-direction: column;
+            height: 108px;
+        }
+        .input-parent-container {
+            text-align: center;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .input-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .input-container input {
+            width: 250px;
+            height: 20px;
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 5px 0 0 5px;
+            border: 1px solid #ffffff;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: -0.3px;
+            text-align: center;
+            background-color: #084d5a;
+            color: #ffffff;
+        }
+        .input-container button {
+            width: 42px;
+            height: 42px;
+            border: 1px solid #ffffff;
+            border-left: none;
+            background-color: #084d5a;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .input-container button i {
+            color: #ffffff;
+            font-size: 15px;
+        }
+        .gap {
+            width: 500px;
+            height: 30px;
+            display: block;
+        }
+        .gap-2 {
+            width: 15px;
+            height: 15px;
+            display: block;
+        }
+        a {
+            text-decoration: none;
+            color: white;
+        }
+        .banner {
+            background-color: black;
+            width: 100%;
+            position: fixed; /* Keeps it at the top even when scrolling */
+            top: 0;
+            left: 0;
+            font-weight: 500;
+            letter-spacing: -1px;
+            font-size: 30px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            text-align: center;
+        }
+        .home-button {
+            background-color: black;
+            position: fixed; /* Keeps it at the top even when scrolling */
+            top: 22px;
+            left: 22px;
+            justify-content: left;
+            font-weight: 500;
+            font-size: 15px;
+            padding: 5px 8px 5px 8px;
+            border: 1px solid #ffffff;
+            border-radius: 5px;
+        }
+        .row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+        .cell {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: "Teko";
+            font-size: 15px;
+            font-weight: 700;
+        }
+        .cell-2 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: "Teko";
+            font-size: 19px;
+            font-weight: 700;
+        }
+        .cell-3 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: "Teko";
+            font-size: 22px;
+            font-weight: 700;
+        }
+        .cell-4 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: "Teko";
+            font-size: 27px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">VRC-Tracker</div>
+    <div class="home-button"><a href="https://powerscore.vercel.app"> ◀ Back to Home </a></div>
+    <div class="total-parent-container">
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="imageOverlay">
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="input-parent-container">
+            <div class="input-container">
+                <form action="/teams" method="GET" class="input-container">
+                    <input type="text" name="query" placeholder="Search a Team Number">
+                    <button type="submit" id="overlayButton">
+                        <i id="overlayButton" class="fas fa-search"></i>
+                        <script>
+                            const overlayButton = document.getElementById('overlayButton');
+                            const imageOverlay = document.querySelector('.imageOverlay');
+
+                            overlayButton.addEventListener("click", function() {
+                                imageOverlay.style.backgroundImage = 'url("https://www.dropbox.com/scl/fi/gv0549s6zm6vij93ggf9p/Skeleton.gif?rlkey=dyv46jhjc5bkqseumcsvcw2eo&st=5ikvb3uo&raw=1")';
+                                imageOverlay.style.display = 'block';
+                            });
+                        </script>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="title">Ranks</div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="title-2">STANDARD RANKS</div>
+        <div class="row">
+            <div class="cell">
+                <img src="https://www.dropbox.com/scl/fi/0t4g7nxsagxiv12oy8b2n/BronzeI.png?rlkey=pggnykl2updf30tdi2locha70&st=j8dmze7o&raw=1" width="90px" height="90px">
+                Bronze I
+            </div>
+            <div class="cell">
+                <img src="https://www.dropbox.com/scl/fi/zn9cbkxsipbwev1udipbp/BronzeII.png?rlkey=65tv4xgfto4reazmthqnx3e27&st=vou5bty2&raw=1" width="90px" height="90px">
+                Bronze II
+            </div>
+            <div class="cell-2">
+                <img src="https://www.dropbox.com/scl/fi/c9jfad9m8g2t5p8f6ez9z/BronzeIII.png?rlkey=5cbwfng3llim5gi4qhnbxukbx&st=gjrikken&raw=1" width="115px" height="115px">
+                Bronze III
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">
+                <img src="https://www.dropbox.com/scl/fi/k0q1kw0mkdey3onszif7x/SilverI.png?rlkey=c5s2epq84wfm8ndsvmo46b0ma&st=8fmhwnea&raw=1" width="90px" height="90px">
+                Silver I
+            </div>
+            <div class="cell">
+                <img src="https://www.dropbox.com/scl/fi/f6ydm7n0t52nuc8rntvt5/SilverII.png?rlkey=oz1loszfd6ebepqtmj26feiqk&st=pfsswv5m&raw=1" width="90px" height="90px">
+                Silver II
+            </div>
+            <div class="cell-2">
+                <img src="https://www.dropbox.com/scl/fi/safp965wwoum3u2ugq5pq/SilverIII.png?rlkey=59tm5m01vvqkajpnxsm99ay0i&st=fw5igr2v&raw=1" width="115px" height="115px">
+                Silver III
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">
+                <img src="https://www.dropbox.com/scl/fi/674heyu2i9pklah7p0nf8/GoldI.png?rlkey=4azon6sqg1q1tr5q5ofdrcg3t&st=dixmpip4&raw=1" width="90px" height="90px">
+                Gold I
+            </div>
+            <div class="cell">
+                <img src="https://www.dropbox.com/scl/fi/s1gspdlioy4akzv8qy9mo/GoldII.png?rlkey=966tc7ao1acpjo9cf0zqwf3tp&st=z4txm3hv&raw=1" width="90px" height="90px">
+                Gold II
+            </div>
+            <div class="cell-2">
+                <img src="https://www.dropbox.com/scl/fi/oa3o5admt9d8ke12h27lm/GoldIII.png?rlkey=lqpdxo8u9yyumv7y3cxirrlz9&st=wc5hag2q&raw=1" width="115px" height="115px">
+                Gold III
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">
+                <img src="https://www.dropbox.com/scl/fi/t6cexrhbgxplhiugbc96d/DiamondI.png?rlkey=tbhzivkdizz1wwun8t39e9zdq&st=e4ptoncq&raw=1" width="90px" height="90px">
+                Diamond I
+            </div>
+            <div class="cell">
+                <img src="https://www.dropbox.com/scl/fi/24q2s4fcjaj4494euqf2i/DiamondII.png?rlkey=0ns75iam6sqeh7lkl60p34rlw&st=npjqhsw0&raw=1" width="90px" height="90px">
+                Diamond II
+            </div>
+            <div class="cell-2">
+                <img src="https://www.dropbox.com/scl/fi/42q6riil0sqrcsdo5ft9a/DiamondIII.png?rlkey=7hrw42juiok4ldaywj7zicjdl&st=hng168wl&raw=1" width="115px" height="115px">
+                Diamond III
+            </div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="title-2">ELITE RANKS</div>
+        <div class="row">
+            <div class="cell-2">
+                <img src="https://www.dropbox.com/scl/fi/6tihjnw1ylccupyab8df7/RoyalI.png?rlkey=hvwla30iize9ys0gtbvrejs0l&st=tgztqs3g&raw=1" width="115px" height="115px">
+                Royal I
+            </div>
+            <div class="cell-2">
+                <img src="https://www.dropbox.com/scl/fi/m5np2qvg5yr06wq532exd/RoyalII.png?rlkey=noq2kzdl3iigemgtoc0ttzvy1&st=ogssjsru&raw=1" width="115px" height="115px">
+                Royal II
+            </div>
+            <div class="cell-3">
+                <img src="https://www.dropbox.com/scl/fi/6v25xwjlp2hxvgofgor7k/RoyalIII.png?rlkey=lu93aguxfq8v0kcrirdipsft1&st=88botskz&raw=1" width="135px" height="135px">
+                Royal III
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell-3">
+                <img src="https://www.dropbox.com/scl/fi/wiizx0oek8p77veuwajey/EtherealI.png?rlkey=1gfi8g1a3dwqpqwyvbf537wx4&st=5mripcsx&raw=1" width="120px" height="120px">
+                Ethereal I
+            </div>
+            <div class="cell-3">
+                <img src="https://www.dropbox.com/scl/fi/vx2xl7v0mvbfeo3x6itz7/EtherealII.png?rlkey=l9z4cdlda21q3a45a4l53skii&st=cgydgenw&raw=1" width="120px" height="120px">
+                Ethereal II
+            </div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="row">
+            <div class="cell-4">
+                <img src="https://www.dropbox.com/scl/fi/s6oa0z8sf8ckij9rld841/EtherealIII.png?rlkey=9s7lu0vo8bfzx7zbstw44bx7d&st=1wtdr85h&raw=1" width="170px" height="170px">
+                Ethereal III
+            </div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+        <div class="gap">
+            <div class="gap"></div>
+        </div>
+    </div>
+</body>
+</html>
