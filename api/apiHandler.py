@@ -1,4 +1,5 @@
 import requests
+import random
 
 ###### CONTROL ######
 config = "api/config.txt"
@@ -15,18 +16,18 @@ monthsLimits = [31,28,31,30,31,30,31,31,30,31,30,31]
 apiKeys = []
 for i in range(50):
     apiKeys.append(os.environ.get(f'API_KEY{i + 1}'))
-requestNumber = 0
+requestNumber = random.randint(0, 49)
 
 BASE_URL = 'https://www.robotevents.com/api/v2/'
 
 def makeRequest(endpoint, params=None):
     global requestNumber
     headers = {
-        'Authorization': f'Bearer {apiKeys[requestNumber%50]}',
+        'Authorization': f'Bearer {apiKeys[requestNumber]}',
         'Content-Type': 'application/json',
     }
 
-    requestNumber += 1
+    requestNumber = random.randint(0, 49)
     print(f"Sent request for {BASE_URL}{endpoint}, params:{params}")
     response = requests.get(f'{BASE_URL}{endpoint}', headers=headers, params=params)
 
