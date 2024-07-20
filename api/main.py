@@ -332,10 +332,12 @@ def runAlgorithm(team):
             compInfo = apiHandler.getCompInfo(comps["data"][comp]["id"], str(div))
             # the new powerscore algorithm works for offensive and defensive powerscore. thus the alg is split in three pieces. overall ps is the most important still.
             fullPSLib, fullPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="general", compInfo=compInfo)
+            newPSLib, newPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="general", compInfo=compInfo, onlyForComp=True)
             fullOPSLib, fullOPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="offensive", compInfo=compInfo)
             fullDPSLib, fullDPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="defensive", compInfo=compInfo)
             #print(fullPS)
             compPS = fullPSLib[team]
+            newPS = newPSLib[team]
             compOPS = fullOPSLib[team]
             compDPS = fullDPSLib[team]
             #print(compPS)
@@ -357,7 +359,7 @@ def runAlgorithm(team):
             thisComp['name'] = comps["data"][comp]["name"]
             thisComp['date'] = comps["data"][comp]["start"][:10]
             thisComp['sku'] = comps["data"][comp]["sku"]
-            thisComp['score'] = str(round((((2/(1 + exp(-0.045 * (compPS / 2 + 0.5)))) - 1)) * 100))
+            thisComp['score'] = round((((2/(1 + exp(-0.045 * (newPS)))) - 1) / 2 + 0.5))
 
             dashboard.append(thisComp)
             #print([compPS, compSum, log(0.51 * (compSum ** 0.225)) ** 2])
