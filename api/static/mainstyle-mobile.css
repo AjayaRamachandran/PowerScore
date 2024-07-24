@@ -51,9 +51,9 @@ a {
     display: flex;
     justify-content: center;
     text-align: center;
-    font-size: 26px;
+    font-size: 28px;
     font-weight: 900;
-    width: 300px;
+    width: 330px;
 }
 .title2 {
     font-family: 'Teko', sans-serif;
@@ -295,7 +295,7 @@ a {
     text-align: center;
     font-size: 50px;
     font-weight: 900;
-    width: 380px;
+    width: 420px;
     background-size: cover;
     background-position: center center;
     background-image: url("https://www.dropbox.com/scl/fi/peqq4w3n1rzsmtul2kdvu/BannerSmall.jpg?rlkey=q1gz8ytrnayimgfofqfcghj42&st=0tovckvh&raw=1");
