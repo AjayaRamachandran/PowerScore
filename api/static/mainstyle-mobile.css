@@ -315,13 +315,16 @@ a {
 .body-container {
     display: flex;
     height: 150px;
+    width: 300px;
     border: 1px transparent;
     flex-direction: row;
 }
 .body2-container {
     display: flex;
+    width: 300px;
     height: 250px;
-    flex-direction: row;
+    flex-direction: column;
+    border-radius: 10px;
 }
 .compact-container {
     display: flex;
