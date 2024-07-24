@@ -6,6 +6,7 @@ down = open(config).read().replace("\n", "")[open(config).read().replace("\n", "
 #-------------------#
 
 from flask import Flask, request, render_template, send_file
+import random
 
 if debug == "Y":
     import main
@@ -37,12 +38,13 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
+    rand = random.randint(1, 10000000)
     if down == "Y":
         return render_template('down.html')
     else:
         user_agent = request.headers.get('User-Agent').lower()
         if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
-            return render_template('splash-mobile.html', home = home)
+            return render_template('splash-mobile.html', home = home, rand = rand)
         else:
             return render_template("splash.html", banner = img_tag, favicon = "", home = home)#base64.b64encode(open('favicon.ico', 'rb').read()).decode('utf-8'))
 
