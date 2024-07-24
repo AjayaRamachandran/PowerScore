@@ -150,6 +150,7 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 500px;
 }
 .input-parent-container {
     text-align: center;
