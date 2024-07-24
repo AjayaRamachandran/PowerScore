@@ -45,7 +45,7 @@ a {
     display: flex;
     justify-content: center;
     text-align: center;
-    font-size: 280px;
+    font-size: 28px;
     font-weight: 900;
     width: 330px;
 }
@@ -284,7 +284,7 @@ a {
     text-align: center;
     font-size: 50px;
     font-weight: 900;
-    width: 600px;
+    width: 470px;
     background-position: center center;
     background-image: url("https://www.dropbox.com/scl/fi/peqq4w3n1rzsmtul2kdvu/BannerSmall.jpg?rlkey=q1gz8ytrnayimgfofqfcghj42&st=0tovckvh&raw=1");
 }
