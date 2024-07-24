@@ -1,0 +1,156 @@
+/*--------------------ITEMS ON CAREER PS----------------*/
+.item1 {
+    flex: 0 0 15%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 15% */
+    background-color: transparent;
+    font-family: "Teko";
+    font-size: 200px;
+    text-align: center;
+    font-weight: 700;
+    color:#ffffff;
+    line-height: 90%;
+    padding-top: 0;
+}
+.item2 {
+    flex: 0 0 10%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 10% */
+    background-color: transparent;
+    font-family: "Teko";
+    font-size: 50px;
+    text-align: center;
+    font-weight: 700;
+    color:#1b778a;
+    line-height: 80%;
+    padding-top: 27px;
+}
+.item3 {
+    flex: 0 0 15%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 50% */
+    border-radius: 10px;
+    background-color: #0e6172;
+    padding: 0%;
+    border-radius: 20px 0 0 20px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "Teko";
+    font-size: 40px;
+}
+.item4 {
+    flex: 0 0 30%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 25% */
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 0 20px 20px 0;
+    align-items: center;
+    justify-content: center;
+    background-color: #0e6172;
+}
+.item4-top {
+    height: 73px;
+    width: 300px;
+    background-color: #0e6172;
+    text-align: center;
+    font-family: "Teko";
+    font-size: 40px;
+}
+.item4-middle {
+    flex: 0 0 4%;
+    height: 15px;
+    width: 300px;
+    background-color: #0e6172;
+    text-align: center;
+    font-family: "Teko";
+    font-size: 20px;
+    align-items: center;
+    flex-direction: column;
+}
+.item4-bmiddle {
+    height: 15px;
+    width: 300px;
+    background-color: #0e6172;
+    text-align: center;
+    font-family: "Teko";
+    font-size: 20px;
+    align-items: center;
+    flex-direction: column;
+}
+.item4-bottom {
+    flex: 0 0 25%;
+    height: 30px;
+    width: 300px;
+    background-color: #0e6172;
+    text-align: center;
+    font-family: "Teko";
+    font-size: 20px;
+    align-items: center;
+}
+.item5 {
+    flex: 0 0 20%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 25% */
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    align-items: center;
+    justify-content: center;
+}
+.item5-top {
+    background-color: transparent;
+    font-size: 32px;
+    text-align: center;
+    font-family: 'Teko', sans-serif;
+    color: #ffffff;
+    border-radius: 0;
+    line-height: 100%;
+}
+.item5-bottom {
+    background-color: transparent;
+    font-size: 32px;
+    text-align: center;
+    font-family: 'Teko', sans-serif;
+    color: #ffffff;
+    border-radius: 0;
+    line-height: 100%;
+}
+.item21 {
+    flex: 0 0 35%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 15% */
+    display: flex;
+    flex-direction: column;
+    background-color: #0e6172;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    padding-top: 15px;
+}
+.item21-high {
+    font-family: "Teko";
+    font-size: 35px;
+    line-height: 84%;
+    text-align: center;
+    color:#ffffff;
+}
+.item21-low {
+    font-family: "Teko";
+    font-size: 21px;
+    line-height: 120%;
+    text-align: left;
+    color:#ffffff;
+    padding-top: -10px;
+    padding-left: 15px;
+}
+.item22 {
+    flex: 0 0 2%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 15% */
+    background-color: transparent;
+    font-family: "Teko";
+    font-size: 20px;
+    text-align: center;
+    color:#ffffff;
+    border: transparent;
+    border-radius: 5px;
+}
+.item23 {
+    flex: 0 0 61%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 15% */
+    background-color: #0e6172;
+    font-family: "Teko";
+    font-size: 20px;
+    text-align: center;
+    color:#ffffff;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    padding: 5px;
+}

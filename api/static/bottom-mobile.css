@@ -1,0 +1,52 @@
+/*---------------FOR BOTTOM BAR----------------*/
+.bottom {
+    width: 350px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    background-color: #000000;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    font-size: 18px;
+    padding: 30px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /*border: 1px solid white;*/
+}
+.bottom-bottom {
+    display: flex;
+    flex-direction: row;
+    background-color: #000000;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.2px;
+    font-size: 18px;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.bottom-column {
+    display: flex;
+    flex-direction: column;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.2px;
+    font-size: 16px;
+    text-align: left;
+}
+.bottom-column-item {
+    flex-direction: row;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.2px;
+    font-size: 16px;
+    padding: 8px;
+}
+.bigger-gap {
+    width: 70px;
+    height: 70px;
+    display: block;
+}

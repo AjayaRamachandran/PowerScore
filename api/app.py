@@ -12,11 +12,13 @@ if debug == "Y":
     import pageGen
     import pageGenMobile
     import dashboard
+    home = "http://localhost:5000"
 else:
     from api import main
     from api import pageGen
     from api import pageGenMobile
     from api import dashboard
+    home = "https://powerscore.vercel.app"
 
 import base64
 
@@ -40,9 +42,9 @@ def index():
     else:
         user_agent = request.headers.get('User-Agent').lower()
         if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
-            return render_template('splash-mobile.html')
+            return render_template('splash-mobile.html', home = home)
         else:
-            return render_template("splash.html", banner = img_tag, favicon = "")#base64.b64encode(open('favicon.ico', 'rb').read()).decode('utf-8'))
+            return render_template("splash.html", banner = img_tag, favicon = "", home = home)#base64.b64encode(open('favicon.ico', 'rb').read()).decode('utf-8'))
 
 @app.route("/ranks", methods=["GET"])
 def ranks():
@@ -51,9 +53,9 @@ def ranks():
     else:
         user_agent = request.headers.get('User-Agent').lower()
         if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
-            return render_template("ranks-mobile.html")
+            return render_template("ranks-mobile.html", home = home)
         else:
-            return render_template("ranks.html")
+            return render_template("ranks.html", home = home)
 
 
 @app.route("/teams", methods=["GET"])
@@ -78,7 +80,8 @@ def handle_teams():
                                     type = "team with the number",
                                     issue1 = "This team does not exist",
                                     issue2 = "This team exists but has not competed yet this season",
-                                    issue3 = "RobotEvents API requests have timed out")
+                                    issue3 = "RobotEvents API requests have timed out",
+                                    home = home)
             else:
                 return render_template("oops.html",
                                     query = query,
@@ -87,7 +90,8 @@ def handle_teams():
                                     type = "team with the number",
                                     issue1 = "This team does not exist",
                                     issue2 = "This team exists but has not competed yet this season",
-                                    issue3 = "RobotEvents API requests have timed out")
+                                    issue3 = "RobotEvents API requests have timed out",
+                                    home = home)
 
         else:
             user_agent = request.headers.get('User-Agent').lower()
@@ -105,7 +109,8 @@ def handle_teams():
                     badgeByteString = result[9],
                     graphByteString = result[10],
                     xpLeft = result[11],
-                    barByteString = result[12]) + dashboard.generateFrom(result[13])
+                    barByteString = result[12],
+                    home = home) + dashboard.generateFrom(result[13])
             else:
                 return render_template("index.html",
                     name = result[0],
@@ -120,7 +125,8 @@ def handle_teams():
                     badgeByteString = result[9],
                     graphByteString = result[10],
                     xpLeft = result[11],
-                    barByteString = result[12]) + dashboard.generateFrom(result[13])
+                    barByteString = result[12],
+                    home = home) + dashboard.generateFrom(result[13])
 
 @app.route("/competitions", methods=["GET"])
 def handle_competitions():
@@ -146,7 +152,8 @@ def handle_competitions():
                                     type = "competition with the SKU",
                                     issue1 = "This competition does not exist",
                                     issue2 = "This competition has not happened yet",
-                                    issue3 = "RobotEvents API requests have timed out")
+                                    issue3 = "RobotEvents API requests have timed out",
+                                    home = home)
             else:
                 return render_template("oops.html",
                         query = query,
@@ -155,13 +162,14 @@ def handle_competitions():
                         type = "competition with the SKU",
                         issue1 = "This competition does not exist",
                         issue2 = "This competition has not happened yet",
-                        issue3 = "RobotEvents API requests have timed out")
+                        issue3 = "RobotEvents API requests have timed out",
+                        home = home)
         else:
             user_agent = request.headers.get('User-Agent').lower()
             if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
                 htmlFile = pageGenMobile.generateFrom(result, query, division, "")
             else:
-                htmlFile = pageGen.generateFrom(result, query, division, "")
+                htmlFile = render_template("comp.html", home = home) + pageGen.generateFrom(result, query, division, "")
             return htmlFile
     
 @app.route("/download", methods=["GET"])

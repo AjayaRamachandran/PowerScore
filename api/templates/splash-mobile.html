@@ -7,369 +7,55 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!--Inner CSS Styles-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='mainstyle-mobile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bottom-mobile.css') }}">
+    <!--Other-->
     <link rel="icon" type="image/x-icon" href="https://www.dropbox.com/scl/fi/jgpvl6s9otkgc6uqg5pmt/favicon.ico?rlkey=nb39qqv34ppoyk6k3b2qd1yl0&st=lgn1ldkn&raw=1">
-    <style>
-        title {
-            font-family: 'Inter', sans-serif;
-            background-color: #084d5a;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            height: 108px;
-            font-size: 40px;
-            font-weight: 900;
-        }
-        .title2 {
-            font-family: 'Teko', sans-serif;
-            background-color: #084d5a;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            height: 40px;
-            font-size: 30px;
-            font-weight: 900;
-        }
-        .title3 {
-            font-family: 'Inter', sans-serif;
-            background-color: #084d5a;
-            color: #7dc6d4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            height: 78px;
-            font-size: 30px;
-            font-weight: 900;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #084d5a;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            height: 108px;
-            font-size: 20px;
-            letter-spacing: -0.4px;
-        }
-        .body2 {
-            font-family: 'Inter', sans-serif;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            height: 25px;
-            width: 100%;
-            font-size: 18px;
-            letter-spacing: 0px;
-            font-weight: 400;
-        }
-        .body3 {
-            font-family: 'Inter', sans-serif;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            width: 350px;
-            font-size: 17px;
-            letter-spacing: 0px;
-            font-weight: 400;
-        }
-        .body4 {
-            font-family: 'Inter', sans-serif;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 350px;
-            font-size: 16px;
-            letter-spacing: 0px;
-            font-weight: 400;
-            line-height: 21px;
-        }
-        a {
-            text-decoration: none;
-            color: white;
-        }
-        .banner {
-            background-color: black;
-            width: 100%;
-            position: fixed; /* Keeps it at the top even when scrolling */
-            top: 0;
-            left: 0;
-            font-weight: 500;
-            letter-spacing: -1px;
-            font-size: 30px;
-            padding-top: 20px;
-            padding-bottom: 20px;
-        }
-        .home-button {
-            background-color: black;
-            position: fixed; /* Keeps it at the top even when scrolling */
-            top: 22px;
-            left: 22px;
-            justify-content: left;
-            font-weight: 500;
-            font-size: 15px;
-            padding: 5px 8px 5px 8px;
-            border: 1px solid #ffffff;
-            border-radius: 5px;
-        }
-        .banner2 {
-            background-color: #23212b;
-            font-family: 'Inter', sans-serif;
-            color: #ffffff;
-            margin: 0;
-            top: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            font-size: 40px;
-            font-weight: 900;
-            width: 100%;
-            height: 450px;
-            background-size: cover;
-            background-image: url("https://www.dropbox.com/scl/fi/peqq4w3n1rzsmtul2kdvu/BannerSmall.jpg?rlkey=q1gz8ytrnayimgfofqfcghj42&st=0tovckvh&raw=1");
-        }
-        .banner2-title {
-            font-family: 'Inter', sans-serif;
-            color: #ffffff;
-            margin: 0;
-            padding: 50px 0 0 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            font-size: 32px;
-            font-weight: 900;
-            width: 350px;
-        }
-        .search-bars-parent-container {
-            display: flex;
-            flex-direction: column;
-            justify-items: center;
-            text-align: center;
-        }
-        .total-parent-container {
-            display: flex;
-            flex-direction: column;
-            height: 8px;
-            align-items: center;
-        }
-        .input-parent-container {
-            text-align: center;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        .input-parent-container2 {
-            text-align: center;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        .left-content-parent-container {
-            align-items: center;
-            display: flex;
-            flex-direction: column;
-        }
-        .right-content-parent-container {
-            align-items: center;
-            display: flex;
-            flex-direction: column;
-        }
-        .input-container {
-            display: flex;
-            justify-content: center;
-        }
-        .input-container input {
-            width: 280px;
-            height: 15px;
-            font-size: 15px;
-            padding: 10px;
-            border-radius: 5px 0 0 5px;
-            border: 1px solid #ffffff;
-            font-family: 'Inter', sans-serif;
-            letter-spacing: -0.3px;
-            text-align: center;
-            background-color: #ffffff;
-            color: #000000;
-        }
-        .input-container2 {
-            display: flex;
-            justify-content: center;
-        }
-        .input-container2 input {
-            width: 280px;
-            height: 15px;
-            font-size: 15px;
-            padding: 10px;
-            border-radius: 5px 0 0 5px;
-            border: 1px solid #ffffff;
-            font-family: 'Inter', sans-serif;
-            letter-spacing: -0.3px;
-            text-align: center;
-            background-color: #084d5a;
-            color: #ffffff;
-        }
-        .input-container button {
-            width: 37px;
-            height: 37px;
-            border: 1px solid #ffffff;
-            border-left: none;
-            background-color: #084d5a;
-            border-radius: 0 5px 5px 0;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .input-container button i {
-            color: #ffffff;
-            font-size: 15px;
-        }
-        .gap {
-            width: 500px;
-            height: 10px;
-            display: block;
-        }
-        .v-gap {
-            width: 10px;
-            height: 10px;
-            display: block;
-        }
-        .big-gap {
-            width: 30px;
-            height: 30px;
-            display: block;
-        }
-        .bigger-gap {
-            width: 70px;
-            height: 70px;
-            display: block;
-        }
-        .bottom {
-            width: 350px;
-            height: 450px;
-            display: flex;
-            flex-direction: column;
-            background-color: #000000;
-            font-family: "Inter", sans-serif;
-            font-weight: 600;
-            letter-spacing: -0.2px;
-            font-size: 18px;
-            padding: 30px;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            /*border: 1px solid white;*/
-        }
-        .bottom-bottom {
-            display: flex;
-            flex-direction: row;
-            background-color: #000000;
-            font-family: "Inter", sans-serif;
-            font-weight: 400;
-            letter-spacing: -0.2px;
-            font-size: 18px;
-            padding: 20px;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            /*border: 1px solid white;*/
-        }
-        .bottom-column {
-            display: flex;
-            flex-direction: column;
-            font-family: "Inter", sans-serif;
-            font-weight: 400;
-            letter-spacing: -0.2px;
-            font-size: 16px;
-            /*border: 1px solid white;*/
-            text-align: left;
-        }
-        .bottom-column-item {
-            flex-direction: row;
-            font-family: "Inter", sans-serif;
-            font-weight: 400;
-            letter-spacing: -0.2px;
-            font-size: 16px;
-            padding: 8px;
-            /*border: 1px solid white;*/
-        }
-    </style>
 </head>
 <body>
     <div class="banner">VRC-Tracker</div>
     <div class="total-parent-container">
         <div class="input-parent-container">
+            <div class="big-gap">
+                <div class="big-gap"></div>
+            </div>
             <div class="banner2">
                 <div class="gap">
                     <div class="gap"></div>
                 </div>
-                <div class="banner2-title">The One Statistic That Can't Be Fooled.</div>
-                <div class="gap">
-                    <div class="gap"></div>
+                <div class="title">The One Statistic That Can't Be Fooled.</div>
+                <div class="gap-2">
+                    <div class="gap-2"></div>
                 </div>
-                <div class="body4">VRC-Tracker is the only tracker to use the cutting-edge Powerscore Algorithm, capable of seeing the bigger picture — without random chance, region competitiveness, and other annoying factors getting in the way.</div>
+                <div class="body2">VRC-Tracker is the only tracker to use the cutting-edge Powerscore Algorithm, capable of seeing the bigger picture — without random chance, region competitiveness, and other annoying factors getting in the way.</div>
+                <div class="big-gap">
+                    <div class="big-gap"></div>
+                </div>
             </div>
             <!--<img src="data:plot/png;base64,{{ banner }}" alt="Banner">-->
         </div>
-        <div class="gap">
-            <div class="gap"></div>
+        <div class="gap-2">
+            <div class="gap-2"></div>
         </div>
-        <div class="gap">
-            <div class="gap"></div>
-        </div>
-        <div class="gap">
-            <div class="gap"></div>
+        <div class="v-gap">
+            <div class="v-gap"></div>
         </div>
         <div class="title3">Choose your fighter.</div>
-        <div class="gap">
-            <div class="gap"></div>
+        <div class="gap-2">
+            <div class="gap-2"></div>
         </div>
-        <div class="gap">
-            <div class="gap"></div>
-        </div>
+
         <div class="search-bars-parent-container">
             <div class="left-content-parent-container">
                 <div class="title2">Career Powerscore</div>
                 <div class="body3">A computationally heavy method of tracking a team's progression over time. Less tactical, but more epic.<small><small>We recommend starting here if you're new.</small></small></div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="gap">
-                    <div class="gap"></div>
+                <div class="gap-2">
+                    <div class="gap-2"></div>
                 </div>
                 <div class="input-parent-container">
                     <div class="input-container">
-                        <form action="/teams" method="GET" class="input-container">
+                        <form action="/teams" method="GET" class="input-container3">
                             <input type="text" name="query" placeholder="Search any Team Number">
                             <button type="submit">
                                 <i class="fas fa-search"></i>
@@ -378,21 +64,18 @@
                     </div>
                 </div>
             </div>
-            <div class="v-gap">
-                <div class="v-gap"></div>
+            <div class="gap-2">
+                <div class="gap-2"></div>
             </div>
             <div class="title3"><small><small><i>OR</i></small></small></div>
-            <div class="v-gap">
-                <div class="v-gap"></div>
+            <div class="gap-2">
+                <div class="gap-2"></div>
             </div>
             <div class="right-content-parent-container">
                 <div class="title2">Competition Powerscore</div>
                 <div class="body3">A lightweight algorithm that still utilizes Powerscore but to only analyze within a competition. Extremely useful for alliance selection and post-match analysis.</div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="gap">
-                    <div class="gap"></div>
+                <div class="gap-2">
+                    <div class="gap-2"></div>
                 </div>
                 <div class="input-parent-container">
                     <div class="input-container">
@@ -404,27 +87,6 @@
                             <input type="hidden" name="division" value="1">
                         </form>
                     </div>
-                </div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="gap">
-                    <div class="gap"></div>
-                </div>
-                <div class="gap">
-                    <div class="gap"></div>
                 </div>
                 <div class="gap">
                     <div class="gap"></div>
