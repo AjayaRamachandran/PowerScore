@@ -24,33 +24,23 @@
     align-items: center;
     justify-content: center;
     font-family: "Teko";
-    font-size: 25px;
+    font-size: 17px;
     font-weight: 700;
+    width: 100px;
+    padding: 0 10px 40px 10px;
 }
-.cell-2 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-family: "Teko";
-    font-size: 35px;
-    font-weight: 700;
+.regular {
+    width: 100px;
 }
-.cell-3 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-family: "Teko";
-    font-size: 45px;
-    font-weight: 700;
+
+.enlarge {
+    width: 120px;
 }
-.cell-4 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-family: "Teko";
-    font-size: 55px;
-    font-weight: 700;
+
+.enlarge-2 {
+    width: 140px;
+}
+
+.enlarge-3 {
+    width: 200px;
 }

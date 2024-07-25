@@ -8,31 +8,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap" rel="stylesheet" id="freeze">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" id="freeze">
     <!--Inner CSS Styles-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='mainstyle-mobile.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='bottom-mobile.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='items-mobile.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard-mobile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/mainstyle-mobile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/bottom-mobile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/items-mobile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/dashboard-mobile.css') }}">
     <!--Other-->
     <link rel="icon" type="image/x-icon" href="https://www.dropbox.com/scl/fi/jgpvl6s9otkgc6uqg5pmt/favicon.ico?rlkey=nb39qqv34ppoyk6k3b2qd1yl0&st=lgn1ldkn&raw=1">
+    <script src="/static/js/reload.js"></script>
 </head>
-<script>
-function reloadCSS() {
-    var links = document.getElementsByTagName("link");
-    for (var i = 0; i < links.length; i++) {
-        var link = links[i];
-        if (link.rel === "stylesheet" && link.id != "freeze") {
-            link.href = link.href.split("?")[0] + "?reload=" + new Date().getTime();
-        }
-    }
-}
-reloadCSS();
-</script>
 <body>
     <div class="banner">VRC-Tracker</div>
-    <div class="home-button"><a href="https://powerscore.vercel.app"> ◀ Home </a></div>
+    <div class="home-button"><a href="{{ home }}"> ◀ {{ homeButton }} </a></div>
     <div class="total-parent-container">
-        <div class="gap">
-            <div class="gap"></div>
+        <div class="gap-2">
+            <div class="gap-2"></div>
         </div>
         <div class="imageOverlay">
         </div>
@@ -48,15 +37,7 @@ reloadCSS();
                     <input type="text" name="query" placeholder="Search a Team Number">
                     <button type="submit" id="overlayButton">
                         <i id="overlayButton" class="fas fa-search"></i>
-                        <script>
-                            const overlayButton = document.getElementById('overlayButton');
-                            const imageOverlay = document.querySelector('.imageOverlay');
-
-                            overlayButton.addEventListener("click", function() {
-                                imageOverlay.style.backgroundImage = 'url("https://www.dropbox.com/scl/fi/gv0549s6zm6vij93ggf9p/Skeleton.gif?rlkey=dyv46jhjc5bkqseumcsvcw2eo&st=5ikvb3uo&raw=1")';
-                                imageOverlay.style.display = 'block';
-                            });
-                        </script>
+                        <script src="/static/js/skeleton.js"></script>
                     </button>
                 </form>
             </div>

@@ -4,20 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VRC Tracker</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" id="freeze">
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap" rel="stylesheet" id="freeze">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" id="freeze">
     <!--Inner CSS Styles-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='mainstyle-mobile.css') }}?v={{rand}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='bottom-mobile.css') }}?v={{rand}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/mainstyle-mobile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/bottom-mobile.css') }}">
     <!--Other-->
     <link rel="icon" type="image/x-icon" href="https://www.dropbox.com/scl/fi/jgpvl6s9otkgc6uqg5pmt/favicon.ico?rlkey=nb39qqv34ppoyk6k3b2qd1yl0&st=lgn1ldkn&raw=1">
+    <script src="/static/js/reload.js"></script>
 </head>
 <body>
     <div class="banner">VRC-Tracker</div>
     <div class="total-parent-container">
-        <div class="big-gap">
-            <div class="big-gap"></div>
+        <div class="gap-2">
+            <div class="gap-2"></div>
+        </div>
+        <div class="v-gap">
+            <div class="v-gap"></div>
         </div>
         <div class="banner2">
             <div class="gap">

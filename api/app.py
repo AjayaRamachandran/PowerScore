@@ -5,19 +5,17 @@ mobile = open(config).read().replace("\n", "")[open(config).read().replace("\n",
 down = open(config).read().replace("\n", "")[open(config).read().replace("\n", "").index("down") - 5]
 #-------------------#
 
-from flask import Flask, request, render_template, send_file
+from flask import Flask, request, render_template, send_file, url_for
 import random
 
 if debug == "Y":
     import main
     import pageGen
-    import pageGenMobile
     import dashboard
     home = "http://localhost:5000"
 else:
     from api import main
     from api import pageGen
-    from api import pageGenMobile
     from api import dashboard
     home = "https://powerscore.vercel.app"
 
@@ -46,7 +44,7 @@ def index():
         if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
             return render_template('splash-mobile.html', home = home, rand = rand)
         else:
-            return render_template("splash.html", banner = img_tag, favicon = "", home = home)#base64.b64encode(open('favicon.ico', 'rb').read()).decode('utf-8'))
+            return render_template("splash.html", banner = img_tag, favicon = "")
 
 @app.route("/ranks", methods=["GET"])
 def ranks():
@@ -55,9 +53,15 @@ def ranks():
     else:
         user_agent = request.headers.get('User-Agent').lower()
         if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
-            return render_template("ranks-mobile.html", home = home)
+            homeButton = "Home"
+            return render_template("ranks.html", home = home, homeButton = homeButton, mobile = [url_for('static', filename='/css/mainstyle-mobile.css'),
+                                                                                                 url_for('static', filename='/css/bottom-mobile.css'),
+                                                                                                 url_for('static', filename='/css/ranks-mobile.css')])
         else:
-            return render_template("ranks.html", home = home)
+            homeButton = "Back to Home"
+            return render_template("ranks.html", home = home, homeButton = homeButton, mobile = [url_for('static', filename='/css/mainstyle.css'),
+                                                                                                 url_for('static', filename='/css/bottom.css'),
+                                                                                                 url_for('static', filename='/css/ranks.css')])
 
 
 @app.route("/teams", methods=["GET"])
@@ -75,16 +79,7 @@ def handle_teams():
         if result == None:
             user_agent = request.headers.get('User-Agent').lower()
             if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
-                return render_template("oops-mobile.html",
-                                    query = query,
-                                    destination = "/teams",
-                                    placeholder = "Search a Team Number",
-                                    type = "team with the number",
-                                    issue1 = "This team does not exist",
-                                    issue2 = "This team exists but has not competed yet this season",
-                                    issue3 = "RobotEvents API requests have timed out",
-                                    home = home)
-            else:
+                homeButton = "Home"
                 return render_template("oops.html",
                                     query = query,
                                     destination = "/teams",
@@ -93,11 +88,27 @@ def handle_teams():
                                     issue1 = "This team does not exist",
                                     issue2 = "This team exists but has not competed yet this season",
                                     issue3 = "RobotEvents API requests have timed out",
-                                    home = home)
+                                    home = home, homeButton = homeButton,
+                                    mobile = [url_for('static', filename='/css/mainstyle-mobile.css'),
+                                              url_for('static', filename='/css/bottom-mobile.css')])
+            else:
+                homeButton = "Back to Home"
+                return render_template("oops.html",
+                                    query = query,
+                                    destination = "/teams",
+                                    placeholder = "Search a Team Number",
+                                    type = "team with the number",
+                                    issue1 = "This team does not exist",
+                                    issue2 = "This team exists but has not competed yet this season",
+                                    issue3 = "RobotEvents API requests have timed out",
+                                    home = home, homeButton = homeButton,
+                                    mobile = [url_for('static', filename='/css/mainstyle.css'),
+                                              url_for('static', filename='/css/bottom.css')])
 
         else:
             user_agent = request.headers.get('User-Agent').lower()
             if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
+                homeButton = "Home"
                 return render_template("index-mobile.html",
                     name = result[0],
                     powerscore = result[1],
@@ -112,8 +123,9 @@ def handle_teams():
                     graphByteString = result[10],
                     xpLeft = result[11],
                     barByteString = result[12],
-                    home = home) + dashboard.generateFrom(result[13])
+                    home = home, homeButton = homeButton) + dashboard.generateFrom(result[13])
             else:
+                homeButton = "Back to Home"
                 return render_template("index.html",
                     name = result[0],
                     powerscore = result[1],
@@ -128,7 +140,7 @@ def handle_teams():
                     graphByteString = result[10],
                     xpLeft = result[11],
                     barByteString = result[12],
-                    home = home) + dashboard.generateFrom(result[13])
+                    home = home, homeButton = homeButton) + dashboard.generateFrom(result[13])
 
 @app.route("/competitions", methods=["GET"])
 def handle_competitions():
@@ -147,7 +159,8 @@ def handle_competitions():
         if result == None:
             user_agent = request.headers.get('User-Agent').lower()
             if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
-                return render_template("oops-mobile.html",
+                homeButton = "Home"
+                return render_template("oops.html",
                                     query = query,
                                     destination = "/competitions",
                                     placeholder = "Enter a Competition SKU (ex: RE-VRC-XX-XXXX)",
@@ -155,23 +168,34 @@ def handle_competitions():
                                     issue1 = "This competition does not exist",
                                     issue2 = "This competition has not happened yet",
                                     issue3 = "RobotEvents API requests have timed out",
-                                    home = home)
+                                    home = home, homeButton = homeButton,
+                                    mobile = [url_for('static', filename='/css/mainstyle-mobile.css'),
+                                              url_for('static', filename='/css/bottom-mobile.css')])
             else:
+                homeButton = "Back to Home"
                 return render_template("oops.html",
-                        query = query,
-                        destination = "/competitions",
-                        placeholder = "Enter a Competition SKU (ex: RE-VRC-XX-XXXX)",
-                        type = "competition with the SKU",
-                        issue1 = "This competition does not exist",
-                        issue2 = "This competition has not happened yet",
-                        issue3 = "RobotEvents API requests have timed out",
-                        home = home)
+                                    query = query,
+                                    destination = "/competitions",
+                                    placeholder = "Enter a Competition SKU (ex: RE-VRC-XX-XXXX)",
+                                    type = "competition with the SKU",
+                                    issue1 = "This competition does not exist",
+                                    issue2 = "This competition has not happened yet",
+                                    issue3 = "RobotEvents API requests have timed out",
+                                    home = home, homeButton = homeButton,
+                                    mobile = [url_for('static', filename='/css/mainstyle.css'),
+                                              url_for('static', filename='/css/bottom.css')])
         else:
             user_agent = request.headers.get('User-Agent').lower()
             if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
-                htmlFile = pageGenMobile.generateFrom(result, query, division, "")
+                homeButton = "Home"
+                htmlFile = render_template("comp.html", home = home, homeButton = homeButton, mobile = [url_for('static', filename='/css/mainstyle-mobile.css'),
+                                                                                                        url_for('static', filename='/css/bottom-mobile.css'),
+                                                                                                        url_for('static', filename='/css/comps-mobile.css')]) + pageGen.generateFrom(result, query, division, "")
             else:
-                htmlFile = render_template("comp.html", home = home) + pageGen.generateFrom(result, query, division, "")
+                homeButton = "Back to Home"
+                htmlFile = render_template("comp.html", home = home, homeButton = homeButton, mobile = [url_for('static', filename='/css/mainstyle.css'),
+                                                                                                        url_for('static', filename='/css/bottom.css'),
+                                                                                                        url_for('static', filename='/css/comps.css')]) + pageGen.generateFrom(result, query, division, "")
             return htmlFile
     
 @app.route("/download", methods=["GET"])
