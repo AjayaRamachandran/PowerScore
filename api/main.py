@@ -12,6 +12,7 @@ import os
 os.environ["SDL_VIDEODRIVER"] = "dummy"
 import pygame
 import base64
+from datetime import datetime
 from PIL import Image
 from openpyxl import Workbook
 from io import BytesIO
@@ -21,7 +22,14 @@ def getDays(date):
     monthLengths = [31,28,31,30,31,30,31,31,30,31,30,31]
     return int(date[:4]) * 365 + sum(monthLengths[:int(date[5:7]) - 1]) + int(date[8:])
 
-def createPlot(data, teamname):
+def setLength(value, numDigits):
+    zeroString = ""
+    if len(str(value)) < numDigits:
+        for i in range(numDigits - len(str(value))):
+            zeroString = zeroString + "0"
+    return zeroString + str(value)
+
+def createPlot(data, teamname, startDate):
     pygame.init()
     windowSize = [630, 250]
     screen = pygame.display.set_mode(windowSize)
@@ -30,6 +38,7 @@ def createPlot(data, teamname):
     point = pygame.image.load("point.png")
 
     font = pygame.font.Font("Teko-Regular.ttf", 22)
+    font2 = pygame.font.Font("Teko-Regular.ttf", 18)
 
     screen.fill((14, 97, 114))
     topMargin = 25
@@ -42,21 +51,31 @@ def createPlot(data, teamname):
     topBound = topMargin
     bottomBound = windowSize[1] - bottomMargin
 
+    start = getDays(startDate)
+    now = f"{datetime.now().year}-{setLength(datetime.now().month, 2)}-{setLength(datetime.now().day, 2)}"
+    today = getDays(now)
+    longBreak = False
+
+    if today - getDays(data[-1][0]) > 50:
+        today = getDays(data[-1][0]) + 5
+        now = data[-1][0]
+        longBreak = True
+
     ranks = pygame.transform.scale(ranks, (chartDimensions[0], chartDimensions[1]))
     ranksRect = ((leftBound, topBound), (ranks.get_rect()[2], ranks.get_rect()[3]))
     screen.blit(ranks, ranksRect)
-    #for vertLine in range(vertTicks):
-        #pygame.draw.aaline(screen, (20,80,80), (leftBound + vertLine * (chartDimensions[0] / (vertTicks - 1)), bottomBound), (leftBound + vertLine * (chartDimensions[0] / (vertTicks - 1)), topBound))
-
+    
     for horizLine in range(horizTicks):
         pygame.draw.aaline(screen, (44, 127, 144), (leftBound, topBound + horizLine * (chartDimensions[1] / (horizTicks - 1))), (rightBound, topBound + horizLine * (chartDimensions[1] / (horizTicks - 1))))
 
-    xValues = [item[0] for item in data]
+    xValues = [getDays(item[0]) for item in data]
     yValues = [item[1] for item in data]
+    nextXPos = (xValues[0] - start) / (today - start) * chartDimensions[0] + leftBound
+    nextYPos = (1 - yValues[0] / 100) * (chartDimensions[1]) + topBound
     for index in range(len(data) - 1):
-        xPos = (xValues[index] - min(xValues)) / (max(xValues) - min(xValues) + 25) * chartDimensions[0] + leftBound
+        xPos = (xValues[index] - start) / (today - start) * chartDimensions[0] + leftBound
         yPos = (1 - yValues[index] / 100) * (chartDimensions[1]) + topBound
-        nextXPos = (xValues[min(index + 1, len(xValues) - 1)] - min(xValues)) / (max(xValues) - min(xValues) + 25) * chartDimensions[0] + leftBound
+        nextXPos = (xValues[min(index + 1, len(xValues) - 1)] - start) / (today - start) * chartDimensions[0] + leftBound
         nextYPos = (1 - yValues[min(index + 1, len(yValues) - 1)] / 100) * (chartDimensions[1]) + topBound
 
         #pygame.draw.aaline(screen, (127,160,160), (xPos, yPos), (nextXPos - 3, yPos), 6)
@@ -69,6 +88,17 @@ def createPlot(data, teamname):
     bottomText = font.render(f"{teamname} Powerscore Over Time", True, (255,255,255))
     bottomRect = [windowSize[0]/2 - bottomText.get_rect()[2]/2, windowSize[1] - 40, bottomText.get_rect()[2], bottomText.get_rect()[3]]
     screen.blit(bottomText, bottomRect)
+
+    startDateText = font2.render(startDate, True, (255,255,255))
+    startDateRect = [20, windowSize[1] - 40, startDateText.get_rect()[2], startDateText.get_rect()[3]]
+    screen.blit(startDateText, startDateRect)
+
+    if longBreak:
+        endDateText = font2.render(f"Last Active ({now})", True, (255,255,255))
+    else:
+        endDateText = font2.render(f"Now ({now})", True, (255,255,255))
+    endDateRect = [windowSize[0] - endDateText.get_rect()[2] - 20, windowSize[1] - 40, endDateText.get_rect()[2], endDateText.get_rect()[3]]
+    screen.blit(endDateText, endDateRect)
     #pygame.draw.circle(screen, (255, 255, 255), (rightBound, yPos), 2)
 
     plotBytes = BytesIO()
@@ -313,6 +343,7 @@ def runAlgorithm(team):
 
     #team = str(input("Enter a Team Number: "))
     comps = apiHandler.getCompList(team)
+    startDate = comps["data"][0]["start"][:10]
     #print(comps["meta"])
     psList = []
     opsList = []
@@ -351,7 +382,7 @@ def runAlgorithm(team):
             #compSum = sum(ps[1] for ps in fullPSList)
             #compWeight = log(0.51 * (compSum ** 0.225)) ** 2
             compWeight = 1.0 + 1 * ("Signature Event" in comps["data"][comp]["name"])
-            psList.append([compPS, compWeight, getDays(comps["data"][comp]["start"][:10])])
+            psList.append([compPS, compWeight, comps["data"][comp]["start"][:10]])
             opsList.append([compOPS, compWeight, getDays(comps["data"][comp]["start"][:10])])
             dpsList.append([compDPS, compWeight, getDays(comps["data"][comp]["start"][:10])])
 
@@ -380,7 +411,7 @@ def runAlgorithm(team):
         temporalPS = summation / index
         progression.append([x[2], round((((2/(1 + exp(-0.045 * (temporalPS)))) - 1) / 2 + 0.5) * 1000) / 10])
         index += 1
-    plotBytes = createPlot(progression, teamname)
+    plotBytes = createPlot(progression, teamname, startDate)
     plotBytes.seek(0)
     if progression[0][1] < 51 and progression[len(progression) - 1][1] > 70:
         accolades.append("Glow Up")
