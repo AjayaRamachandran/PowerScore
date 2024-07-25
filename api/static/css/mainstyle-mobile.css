@@ -18,7 +18,10 @@ body {
     padding: 0;
 }
 hr {
-    width: 300px;
+    width: 299px;
+    height: 1px;
+    background-color: #ffffff;
+    border: 0px;
 }
 a {
     text-decoration: none;
