@@ -46,9 +46,9 @@ a {
     display: flex;
     justify-content: center;
     text-align: center;
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 900;
-    width: 330px;
+    width: 360px;
 }
 .title2 {
     font-family: 'Teko', sans-serif;
@@ -58,7 +58,7 @@ a {
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 900;
 }
 .title3 {
@@ -69,7 +69,7 @@ a {
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: 26px;
+    font-size: 28px;
     font-weight: 900;
 }
 .body {
@@ -93,8 +93,8 @@ a {
     justify-content: center;
     align-items: center;
     text-align: center;
-    width: 300px;
-    font-size: 14px;
+    width: 330px;
+    font-size: 15px;
     line-height: 19px;
     font-weight: 400;
 }
@@ -305,7 +305,7 @@ a {
     justify-content: left;
     font-weight: 500;
     font-size: 15px;
-    padding: 5px 8px 5px 8px;
+    padding: 3px 8px 5px 5px;
     border: 1px solid #ffffff;
     border-radius: 5px;
 }
