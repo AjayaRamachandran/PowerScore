@@ -1,8 +1,8 @@
 ending = '''
+            <div class="big-gap">
+                <div class="big-gap"></div>
+            </div>
         </div>
-    </div>
-    <div class="big-gap">
-        <div class="big-gap"></div>
     </div>
     <div class="bottom">
         © Copyright 2024 by Ajaya Ramachandran, Team 8568A 23-24

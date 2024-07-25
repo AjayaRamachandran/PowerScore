@@ -17,6 +17,9 @@ body {
     margin: 0;
     padding: 0;
 }
+hr {
+    width: 300px;
+}
 a {
     text-decoration: none;
     color: white;
@@ -114,8 +117,8 @@ a {
     display: block;
 }
 .gap-2 {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     display: block;
 }
 .v-gap {
@@ -170,14 +173,21 @@ a {
     flex-direction: column;
 }
 .top-bar-parent-container {
+    width: 300px;
     height: 100px;
     display: block;
 }
 .body-parent-container {
-    height: 150px;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    border: 1px transparent;
 }
 .body2-parent-container {
-    border-radius: 5;
+    display: flex;
+    width: 300px;
+    border-radius: 10px;
+    flex-direction: column;
 }
 .search-bars-parent-container {
     display: flex;
@@ -308,16 +318,16 @@ a {
     padding-top: 10px;
     padding-right: 20px;
     padding-bottom: -10px;
-    border-radius: 5px;
+    border-radius: 10px;
     border: 1px solid #ffffff;
     justify-content: right;
 }
 .body-container {
     display: flex;
-    height: 150px;
     width: 300px;
     border: 1px transparent;
     flex-direction: row;
+    justify-content: center;
 }
 .body2-container {
     display: flex;

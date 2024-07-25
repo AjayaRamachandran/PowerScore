@@ -1,6 +1,8 @@
 /*---------------FOR BOTTOM BAR----------------*/
 .bottom {
+    /*width: 93.5%;*/
     height: 300px;
+    position: relative;
     display: flex;
     flex-direction: column;
     background-color: #000000;
@@ -12,7 +14,6 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    /*border: 1px solid white;*/
 }
 .bottom-bottom {
     display: flex;
@@ -44,7 +45,7 @@
     font-size: 16px;
     padding: 8px;
 }
-.bigger-gap {
+.bigger-gap-2 {
     width: 70px;
     height: 70px;
     display: block;
