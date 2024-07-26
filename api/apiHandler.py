@@ -21,6 +21,11 @@ for i in range(50):
     allKeys.append(i)
 
 BASE_URL = 'https://www.robotevents.com/api/v2/'
+defaultSeason = ""
+
+def setDefaultSeason(season):
+    global defaultSeason
+    defaultSeason = season
 
 def makeRequest(endpoint, params=None):
     global requestNumber, usableKeys, allKeys, apiKeys
@@ -67,7 +72,7 @@ def getTeamInfo(params, info): # gets info of a team (test)
     return makeRequest(endpoint, params=params)['data'][0][info]
 
 def getEventList(params=None): # gets a list of all vrc over under comps that have happened so far
-    endpoint = f'events?season%5B%5D=181&start=2023-08-03&end=2024-01-06&myEvents=false&eventTypes%5B%5D=tournament&per_page=250'
+    endpoint = f'events?season%5B%5D={defaultSeason}&start=2023-08-03&end=2024-01-06&myEvents=false&eventTypes%5B%5D=tournament&per_page=250'
     pageMeta = makeRequest(endpoint, params=params)['meta']
     maxPages = pageMeta['last_page']
     compsPerPage = pageMeta['per_page']
@@ -210,5 +215,5 @@ def getCompList(team):
     "team": teamID,
     "per_page": "250"
     }
-    endpoint = f'events?season%5B%5D=181'
+    endpoint = f'events?season%5B%5D={defaultSeason}'
     return makeRequest(endpoint=endpoint, params=params)

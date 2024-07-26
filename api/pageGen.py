@@ -52,9 +52,9 @@ def generateFrom(info, sku, division = "1", excelFile = None):
 
         <div class="container">
             <form id="myForm" action="/competitions" method="GET">
-            <input type="hidden" id="sku" name="query" value="{sku}">
-            <label for="division">Division</label>
-            <select name="division" id="divs" class="dropdown">
+                <input type="hidden" id="sku" name="query" value="{sku}">
+                <label for="division">Division</label>
+                <select name="division" id="divs" class="dropdown">
 '''
     
     for divID, divName in enumerate(divisions):
@@ -66,16 +66,9 @@ def generateFrom(info, sku, division = "1", excelFile = None):
             '''
 
     dropdown = dropdown + '''
-            </select>
+                </select>
             </form>
-            <script>
-                const selectElement = document.getElementById('divs');
-                const formElement = document.getElementById('myForm');
-
-                selectElement.addEventListener('change', () => {
-                    formElement.submit();
-                });
-            </script>
+            <script src="/static/js/dropdown-div.js"></script>
         </div>
         <div class="gap-2">
             <div class="gap-2"></div>

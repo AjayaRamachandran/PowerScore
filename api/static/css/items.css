@@ -14,7 +14,7 @@
     flex: 0 0 10%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 10% */
     background-color: transparent;
     font-family: "Teko";
-    font-size: 50px;
+    font-size: 53px;
     text-align: center;
     font-weight: 700;
     color:#1b778a;
@@ -92,7 +92,7 @@
 }
 .item5-top {
     background-color: transparent;
-    font-size: 32px;
+    font-size: 34px;
     text-align: center;
     font-family: 'Teko', sans-serif;
     color: #ffffff;
@@ -101,7 +101,7 @@
 }
 .item5-bottom {
     background-color: transparent;
-    font-size: 32px;
+    font-size: 34px;
     text-align: center;
     font-family: 'Teko', sans-serif;
     color: #ffffff;
@@ -153,4 +153,10 @@
     border: 1px solid #ffffff;
     border-radius: 5px;
     padding: 5px;
+}
+.season-selector-parent {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
 }

@@ -336,8 +336,10 @@ def runComp(sku, div): # master function for computing a competition powerscore
 #runComp('RE-VRC-23-4706')
 
 #runPowerScore()
-def runAlgorithm(team):
+def runAlgorithm(team, season):
     global accolades, teamname
+
+    apiHandler.setDefaultSeason(season)
     accolades = []
     teamname = team
 

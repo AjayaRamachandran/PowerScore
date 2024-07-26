@@ -70,8 +70,9 @@ def handle_teams():
         return render_template('down.html')
     else:
         query = request.args.get("query").upper()
+        season = request.args.get("season", default="181")
         try:
-            result = main.runAlgorithm(query)
+            result = main.runAlgorithm(query, season)
         except Exception as e:
             result = None
             print(e)
