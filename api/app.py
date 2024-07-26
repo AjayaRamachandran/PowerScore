@@ -81,7 +81,7 @@ def handle_teams():
             user_agent = request.headers.get('User-Agent').lower()
             if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
                 homeButton = "Home"
-                return render_template("oops.html",
+                return render_template("oops-team.html",
                                     query = query,
                                     destination = "/teams",
                                     placeholder = "Search a Team Number",
@@ -89,12 +89,13 @@ def handle_teams():
                                     issue1 = "This team does not exist",
                                     issue2 = "This team exists but has not competed yet this season",
                                     issue3 = "RobotEvents API requests have timed out",
-                                    home = home, homeButton = homeButton,
+                                    home = home, homeButton = homeButton, name = query,
                                     mobile = [url_for('static', filename='/css/mainstyle-mobile.css'),
-                                              url_for('static', filename='/css/bottom-mobile.css')])
+                                              url_for('static', filename='/css/bottom-mobile.css'),
+                                              url_for('static', filename='/css/comps-mobile.css')])
             else:
                 homeButton = "Back to Home"
-                return render_template("oops.html",
+                return render_template("oops-team.html",
                                     query = query,
                                     destination = "/teams",
                                     placeholder = "Search a Team Number",
@@ -102,9 +103,10 @@ def handle_teams():
                                     issue1 = "This team does not exist",
                                     issue2 = "This team exists but has not competed yet this season",
                                     issue3 = "RobotEvents API requests have timed out",
-                                    home = home, homeButton = homeButton,
+                                    home = home, homeButton = homeButton, name = query,
                                     mobile = [url_for('static', filename='/css/mainstyle.css'),
-                                              url_for('static', filename='/css/bottom.css')])
+                                              url_for('static', filename='/css/bottom.css'),
+                                              url_for('static', filename='/css/comps.css')])
 
         else:
             user_agent = request.headers.get('User-Agent').lower()
