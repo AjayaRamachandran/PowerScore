@@ -5,46 +5,41 @@ mobile = open(config).read().replace("\n", "")[open(config).read().replace("\n",
 down = open(config).read().replace("\n", "")[open(config).read().replace("\n", "").index("down") - 5]
 #-------------------#
 
-from flask import Flask, request, render_template, send_file, url_for
-import random
+from flask import Flask, request, render_template, send_file, url_for, jsonify, redirect
+import json
+import dropbox
+import time
 
 if debug == "Y":
     import main
     import pageGen
     import dashboard
+    import osEmul as os
     home = "http://localhost:5000"
 else:
     from api import main
     from api import pageGen
     from api import dashboard
+    import os
     home = "https://powerscore.vercel.app"
 
-import base64
-
-###### BANNER ######
-# Read the image file
-image_data = open('Banner.jpg', 'rb').read()
-
-# Encode in base64
-data_uri = base64.b64encode(image_data).decode('utf-8')
-
-# Create an <img> tag with the base64-encoded image
-img_tag = data_uri
+###### INITIALIZE ######
+DROPBOX_KEY = os.environ.get("dropbox1")
+KUDOS_FILE_PATH = '/kudos.json'
 
 ###### WEBAPP ######
 app = Flask(__name__)
 
 @app.route("/")
 def index():
-    rand = random.randint(1, 10000000)
     if down == "Y":
         return render_template('down.html')
     else:
         user_agent = request.headers.get('User-Agent').lower()
         if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
-            return render_template('splash-mobile.html', home = home, rand = rand)
+            return render_template('splash-mobile.html')
         else:
-            return render_template("splash.html", banner = img_tag, favicon = "")
+            return render_template("splash.html")
 
 @app.route("/ranks", methods=["GET"])
 def ranks():
@@ -66,16 +61,33 @@ def ranks():
 
 @app.route("/teams", methods=["GET"])
 def handle_teams():
+    global teamName
     if down == "Y":
         return render_template('down.html')
     else:
         query = request.args.get("query").upper()
+        teamName = query
         season = request.args.get("season", default="181")
         try:
             result = main.runAlgorithm(query, season)
         except Exception as e:
             result = None
             print(e)
+
+        # retrieves kudos count
+        dbx = dropbox.Dropbox(DROPBOX_KEY)
+        try:
+            metadata, response = dbx.files_download(KUDOS_FILE_PATH)# Download the current kudos file
+            kudos_data = json.loads(response.content.decode('utf-8'))
+        except dropbox.exceptions.ApiError as err:
+            kudos_data = {"kudos": {}} # If the file doesn't exist, create a new one
+
+        # Append new kudos entry
+        try:
+            kudosCount = len(kudos_data["kudos"][query])
+        except:
+            kudosCount = 0
+
         # Process the search query (e.g., query a database, perform a search, etc.)
         if result == None:
             user_agent = request.headers.get('User-Agent').lower()
@@ -125,7 +137,7 @@ def handle_teams():
                     badgeByteString = result[9],
                     graphByteString = result[10],
                     xpLeft = result[11],
-                    barByteString = result[12],
+                    barByteString = result[12], kudosCount = kudosCount,
                     home = home, homeButton = homeButton) + dashboard.generateFrom(result[13])
             else:
                 homeButton = "Back to Home"
@@ -142,7 +154,7 @@ def handle_teams():
                     badgeByteString = result[9],
                     graphByteString = result[10],
                     xpLeft = result[11],
-                    barByteString = result[12],
+                    barByteString = result[12], kudosCount = kudosCount,
                     home = home, homeButton = homeButton) + dashboard.generateFrom(result[13])
 
 @app.route("/competitions", methods=["GET"])
@@ -200,7 +212,32 @@ def handle_competitions():
                                                                                                         url_for('static', filename='/css/bottom.css'),
                                                                                                         url_for('static', filename='/css/comps.css')]) + pageGen.generateFrom(result, query, division, "")
             return htmlFile
-    
+
+
+@app.route('/give-kudos', methods=['GET'])
+def give_kudos():
+    if down == "Y":
+        return jsonify({"success": False})
+    else:
+        team = request.args.get("team")
+        dbx = dropbox.Dropbox(DROPBOX_KEY)
+        try:
+            metadata, response = dbx.files_download(KUDOS_FILE_PATH)# Download the current kudos file
+            kudos_data = json.loads(response.content.decode('utf-8'))
+        except dropbox.exceptions.ApiError as err:
+            kudos_data = {"kudos": {}} # If the file doesn't exist, create a new one
+
+        # Append new kudos entry
+        try:
+            kudos_data["kudos"][team].append({"time": time.time()})
+        except:
+            kudos_data["kudos"][team] = []
+            kudos_data["kudos"][team].append({"time": time.time()})
+
+        # Upload the updated kudos file
+        dbx.files_upload(json.dumps(kudos_data).encode('utf-8'), KUDOS_FILE_PATH, mode = dropbox.files.WriteMode.overwrite)
+        return redirect(url_for('handle_teams', query = team))
+
 @app.route("/download", methods=["GET"])
 def download():
     if down == "Y":

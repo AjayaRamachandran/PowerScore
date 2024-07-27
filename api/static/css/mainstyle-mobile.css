@@ -129,6 +129,11 @@ a {
     height: 7px;
     display: block;
 }
+.small-v-gap {
+    width: 2px;
+    height: 2px;
+    display: block;
+}
 .v-gap-2 {
     width: 7px;
     height: 7px;

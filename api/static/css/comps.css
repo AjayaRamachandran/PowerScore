@@ -109,6 +109,32 @@
     background-color: #095d6a;
     cursor: pointer;
 }
+.kudos-button {
+    display: flex;
+    justify-self: left;
+    width: 140px;
+    height: 22px;
+    font-size: 16px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ffffff;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.3px;
+    text-align: center;
+    background-color: #ffffff;
+    color: #000000;
+    justify-content: center;
+    align-items: center;
+}
+.kudos-text {
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.3px;
+    color: #000000;
+    border: 0px transparent;
+    background: transparent;
+    cursor: pointer;
+}
 .container {
     display: flex;
     align-items: center;

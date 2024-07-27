@@ -138,32 +138,32 @@ a {
 .gap {
     width: 100px;
     height: 100px;
-    display: block;
+    display: flex;
 }
 .gap-2 {
     width: 30px;
     height: 30px;
-    display: block;
+    display: flex;
 }
 .v-gap {
     width: 10px;
     height: 10px;
-    display: block;
+    display: flex;
 }
 .v-gap-2 {
     width: 10px;
     height: 10px;
-    display: block;
+    display: flex;
 }
 .big-gap {
     width: 70px;
     height: 70px;
-    display: block;
+    display: flex;
 }
 .bigger-gap {
     width: 200px;
     height: 10px;
-    display: block;
+    display: flex;
 }
 
 
@@ -199,9 +199,7 @@ a {
     flex-direction: column;
 }
 .top-bar-parent-container {
-    width: 1000px;
-    height: 100px;
-    display: block;
+    display: flex;
 }
 .body-parent-container {
     width: 1000px;
@@ -331,15 +329,16 @@ a {
     border-radius: 5px;
 }
 .top-bar-container {
+    display: flex;
+    width: 950px;
+    height: 45px;
     font-size: 70px;
     text-align: right;
     font-family: 'Teko', sans-serif;
     color: #ffffff;
     background-color: #0e6172;
     display: flex;
-    padding-top: 10px;
-    padding-right: 20px;
-    padding-bottom: -10px;
+    padding: 10px 20px 50px 10px;
     border-radius: 5px;
     border: 1px solid #ffffff;
     justify-content: right;
