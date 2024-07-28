@@ -2,7 +2,6 @@
 
 import aiohttp
 import asyncio
-import apiHandler
 import random
 
 ###### CONTROL ######
@@ -10,8 +9,11 @@ config = "api/config.txt"
 debug = open(config).read().replace("\n", "")[open(config).read().replace("\n", "").index("debug") - 5]
 #-------------------#
 if debug == "Y":
+    import apiHandler
     import osEmul as os
+    
 else:
+    from api import apiHandler
     import os
 
 ###### INITIALIZE ######
