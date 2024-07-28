@@ -6,8 +6,6 @@ down = open(config).read().replace("\n", "")[open(config).read().replace("\n", "
 #-------------------#
 
 from flask import Flask, request, render_template, send_file, url_for, jsonify, redirect
-import json
-import dropbox
 import time
 import requests
 
