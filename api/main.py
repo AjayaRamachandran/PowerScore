@@ -6,8 +6,10 @@ mobile = open(config).read().replace("\n", "")[open(config).read().replace("\n",
 from math import *
 if debug == "Y":
     import apiHandler
+    import asyncApi
 else:
     from api import apiHandler
+    from api import asyncApi
 import os
 os.environ["SDL_VIDEODRIVER"] = "dummy"
 import pygame
@@ -352,52 +354,62 @@ def runAlgorithm(team, season):
     dpsList = []
     #print(comps["data"])
     dashboard = []
-    for comp in range(comps["meta"]["total"]):
+    #for comp in range(comps["meta"]["total"]):
         #print(comps["data"][comp]["name"])
         #print(compPS)
 
-        if len(comps["data"][comp]["divisions"]) == 1:
-            div = "1"
-        else:
+        #if len(comps["data"][comp]["divisions"]) == 1:
+            #div = "1"
+        #else:
             #print("Competition has more than one division. Please fix this issue ASAP")
-            div = findDivision(team, comps["data"][comp])
-        try:
-            compInfo = apiHandler.getCompInfo(comps["data"][comp]["id"], str(div))
-            # the new powerscore algorithm works for offensive and defensive powerscore. thus the alg is split in three pieces. overall ps is the most important still.
-            fullPSLib, fullPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="general", compInfo=compInfo)
-            newPSLib, newPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="general", compInfo=compInfo, onlyForComp=True)
-            fullOPSLib, fullOPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="offensive", compInfo=compInfo)
-            fullDPSLib, fullDPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="defensive", compInfo=compInfo)
-            #print(fullPS)
-            compPS = fullPSLib[team]
-            newPS = newPSLib[team]
-            compOPS = fullOPSLib[team]
-            compDPS = fullDPSLib[team]
-            #print(compPS)
-            ### ACCOLADES ###
-            if round((((2/(1 + exp(-0.045 * (compPS)))) - 1) / 2 + 0.5) * 1000) / 10 >= 90 and not "First Class" in accolades:
-                accolades.append("First Class")
-            if round((((2/(1 + exp(-0.045 * (compPS)))) - 1) / 2 + 0.5) * 1000) / 10 >= 90 and ("Signature Event" in comps["data"][comp]["name"]) and not "World Class" in accolades:
-                accolades.append("World Class")
-            if fullPSList.index([team, compPS]) == 0 and not "Top Fragger" in accolades:
-                accolades.append("Top Fragger")
-            #compSum = sum(ps[1] for ps in fullPSList)
-            #compWeight = log(0.51 * (compSum ** 0.225)) ** 2
-            compWeight = 1.0 + 1 * ("Signature Event" in comps["data"][comp]["name"])
-            psList.append([compPS, compWeight, comps["data"][comp]["start"][:10]])
-            opsList.append([compOPS, compWeight, getDays(comps["data"][comp]["start"][:10])])
-            dpsList.append([compDPS, compWeight, getDays(comps["data"][comp]["start"][:10])])
+            #div = findDivision(team, comps["data"][comp])
+        #compInfo = apiHandler.getCompInfo(comps["data"][comp]["id"], str(div))
+    compiledList = asyncApi.getCompiledDataList(team, comps, season)
+    #print(len(compiledList))
+    for comp in range(len(compiledList)):
+        division = compiledList[comp]
+        #print(division)
+        # the new powerscore algorithm works for offensive and defensive powerscore. thus the alg is split in three pieces. overall ps is the most important still.
+        fullPSLib, fullPSList = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=division)
+        newPSLib, newPSList = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=division, onlyForComp=True)
+        fullOPSLib, fullOPSList = runPowerScore(None, None, div=None, typeOfPowerscore="offensive", compInfo=division)
+        fullDPSLib, fullDPSList = runPowerScore(None, None, div=None, typeOfPowerscore="defensive", compInfo=division)
+    
+        #fullPSLib, fullPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="general", compInfo=compInfo)
+        #newPSLib, newPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="general", compInfo=compInfo, onlyForComp=True)
+        #fullOPSLib, fullOPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="offensive", compInfo=compInfo)
+        #fullDPSLib, fullDPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="defensive", compInfo=compInfo)
+        #print(fullPS)
+        print(fullPSLib)
+        compPS = fullPSLib[team]
+        newPS = newPSLib[team]
+        compOPS = fullOPSLib[team]
+        compDPS = fullDPSLib[team]
+        #print(compPS)
+        ### ACCOLADES ###
+        if round((((2/(1 + exp(-0.045 * (compPS)))) - 1) / 2 + 0.5) * 1000) / 10 >= 90 and not "First Class" in accolades:
+            accolades.append("First Class")
+        if round((((2/(1 + exp(-0.045 * (compPS)))) - 1) / 2 + 0.5) * 1000) / 10 >= 90 and ("Signature Event" in comps["data"][comp]["name"]) and not "World Class" in accolades:
+            accolades.append("World Class")
+        if fullPSList.index([team, compPS]) == 0 and not "Top Fragger" in accolades:
+            accolades.append("Top Fragger")
+        #compSum = sum(ps[1] for ps in fullPSList)
+        #compWeight = log(0.51 * (compSum ** 0.225)) ** 2
+        compWeight = 1.0 + 1 * ("Signature Event" in comps["data"][comp]["name"])
+        psList.append([compPS, compWeight, comps["data"][comp]["start"][:10]])
+        opsList.append([compOPS, compWeight, getDays(comps["data"][comp]["start"][:10])])
+        dpsList.append([compDPS, compWeight, getDays(comps["data"][comp]["start"][:10])])
 
-            thisComp = {}
-            thisComp['name'] = comps["data"][comp]["name"]
-            thisComp['date'] = comps["data"][comp]["start"][:10]
-            thisComp['sku'] = comps["data"][comp]["sku"]
-            thisComp['score'] = round(newPS)
+        thisComp = {}
+        thisComp['name'] = comps["data"][comp]["name"]
+        thisComp['date'] = comps["data"][comp]["start"][:10]
+        thisComp['sku'] = comps["data"][comp]["sku"]
+        thisComp['score'] = round(newPS)
 
-            dashboard.append(thisComp)
-            #print([compPS, compSum, log(0.51 * (compSum ** 0.225)) ** 2])
-        except:
-            print("This team deregistered from a comp") # if the team's name cannot be found at the comp, we know they did not attend / deregistered
+        dashboard.append(thisComp)
+    #print([compPS, compSum, log(0.51 * (compSum ** 0.225)) ** 2])
+    #except:
+        #print("This team deregistered from a comp") # if the team's name cannot be found at the comp, we know they did not attend / deregistered
 
     #matchPower = (2/(1 + exp(-0.05 * (matchDiff - allianceDiffs[index] + opponentDiffs[index])))) - 1 # performs sigmoid calculation based on the 3 factors
     

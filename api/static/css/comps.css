@@ -83,6 +83,7 @@
     border-radius: 5px;
     padding: 5px;
     font-size: 20px;
+    cursor: pointer;
 }
 .download-button {
     display: flex;
@@ -125,6 +126,9 @@
     color: #000000;
     justify-content: center;
     align-items: center;
+}
+.kudos-button:hover {
+    background-color: #dbdbdb;
 }
 .kudos-text {
     font-size: 16px;

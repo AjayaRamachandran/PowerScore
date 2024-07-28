@@ -155,8 +155,9 @@ def getCompInfoBySKU(sku, div):
 
 def getMatchList(compName, matchData):
     matchList = []
-
+    #print(matchData)
     for matchNum in range(len(matchData)):
+        #print(matchData[matchNum])
         alliances = matchData[matchNum]['alliances']
         blueScore = alliances[0]['score']
         redScore = alliances[1]['score']
