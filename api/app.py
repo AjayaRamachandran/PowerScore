@@ -9,6 +9,7 @@ from flask import Flask, request, render_template, send_file, url_for, jsonify, 
 import json
 import dropbox
 import time
+import requests
 
 if debug == "Y":
     import main
@@ -24,8 +25,24 @@ else:
     home = "https://powerscore.vercel.app"
 
 ###### INITIALIZE ######
-DROPBOX_KEY = os.environ.get("dropbox1")
-KUDOS_FILE_PATH = '/kudos.json'
+PANTRY_KEY = os.environ.get("pantry")
+#KUDOS_FILE_PATH = '/kudos.json'
+
+def apiAction(action, endpoint = "", params = None, data = None):
+        headers = {
+            'Content-Type': 'application/json'
+        }
+
+        BASE_URL = f'https://getpantry.cloud/apiv1/pantry/{PANTRY_KEY}/basket/powerscore'
+
+        if action == "get":
+            response = requests.get(f'{BASE_URL}{endpoint}', headers=headers, params=params)
+            print(response)
+            return response.json()
+        elif action == "post":
+            requests.post(f'{BASE_URL}{endpoint}', json=data)
+
+
 
 ###### WEBAPP ######
 app = Flask(__name__)
@@ -75,12 +92,7 @@ def handle_teams():
             print(e)
 
         # retrieves kudos count
-        dbx = dropbox.Dropbox(DROPBOX_KEY)
-        try:
-            metadata, response = dbx.files_download(KUDOS_FILE_PATH)# Download the current kudos file
-            kudos_data = json.loads(response.content.decode('utf-8'))
-        except dropbox.exceptions.ApiError as err:
-            kudos_data = {"kudos": {}} # If the file doesn't exist, create a new one
+        kudos_data = apiAction("get")
 
         # Append new kudos entry
         try:
@@ -220,13 +232,7 @@ def give_kudos():
         return jsonify({"success": False})
     else:
         team = request.args.get("team")
-        dbx = dropbox.Dropbox(DROPBOX_KEY)
-        try:
-            metadata, response = dbx.files_download(KUDOS_FILE_PATH)# Download the current kudos file
-            kudos_data = json.loads(response.content.decode('utf-8'))
-        except dropbox.exceptions.ApiError as err:
-            kudos_data = {"kudos": {}} # If the file doesn't exist, create a new one
-
+        kudos_data = apiAction("get")
         # Append new kudos entry
         try:
             kudos_data["kudos"][team].append({"time": time.time()})
@@ -235,7 +241,7 @@ def give_kudos():
             kudos_data["kudos"][team].append({"time": time.time()})
 
         # Upload the updated kudos file
-        dbx.files_upload(json.dumps(kudos_data).encode('utf-8'), KUDOS_FILE_PATH, mode = dropbox.files.WriteMode.overwrite)
+        apiAction("post", data=kudos_data)
         return redirect(url_for('handle_teams', query = team))
 
 @app.route("/download", methods=["GET"])

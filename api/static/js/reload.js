@@ -1,4 +1,4 @@
-function reloadCSS() {
+/*function reloadCSS() {
     var links = document.getElementsByTagName("link");
     for (var i = 0; i < links.length; i++) {
         var link = links[i];
@@ -7,5 +7,5 @@ function reloadCSS() {
         }
     }
 }
-reloadCSS();
+reloadCSS();*/
 // alert("JavaScript is linked properly!");
