@@ -130,6 +130,7 @@
     color: #000000;
     border: 0px transparent;
     background: transparent;
+    font-weight: 400;
     cursor: pointer;
 }
 .container {
