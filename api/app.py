@@ -224,12 +224,12 @@ def handle_competitions():
             return htmlFile
 
 
-@app.route('/give-kudos', methods=['GET'])
+@app.route('/give-kudos', methods=['POST'])
 def give_kudos():
     if down == "Y":
         return jsonify({"success": False})
     else:
-        team = request.args.get("team")
+        team = request.json['team']
         kudos_data = apiAction("get")
         # Append new kudos entry
         try:
@@ -240,7 +240,7 @@ def give_kudos():
 
         # Upload the updated kudos file
         apiAction("post", data=kudos_data)
-        return redirect(url_for('handle_teams', query = team))
+        return jsonify({"success": True})
 
 @app.route("/download", methods=["GET"])
 def download():
