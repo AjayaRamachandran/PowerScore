@@ -109,11 +109,16 @@ async def getCompListAsync(name, compList): # function to asynchronously retriev
 
 ###### PROCESSING FUNCTIONS ######
 
-def getCompiledDataList(team, compList, season): # master function to return a full list of competitions' data in one request.
+def getCompiledDataList(team, comps, season): # master function to return a full list of competitions' data in one request.
     apiHandler.setDefaultSeason(season)
     team_name_to_find = team
 
-    compList = asyncio.run(getCompListAsync(team_name_to_find, compList))
+    #print(comps['data'])
+    #comp = comps['data']
+    #print(comp)
+
+    compList = asyncio.run(getCompListAsync(team_name_to_find, comps))
+    #print(len(compList))
     divisionsToRemove = []
     for index in range(len(compList)):
         divisionData = compList[index]['data']
@@ -132,7 +137,9 @@ def getCompiledDataList(team, compList, season): # master function to return a f
 
     for division in divisionsToRemove:
         compList.pop(division)
+        #comp.pop(division)
         
         for divisionIndex in range(len(divisionsToRemove)):
             divisionsToRemove[divisionIndex] -= 1
+    #print(compList)
     return compList
