@@ -23,7 +23,7 @@ else:
     home = "https://powerscore.vercel.app"
 
 ###### INITIALIZE ######
-PANTRY_KEY = os.environ.get("pantry")
+PANTRY_KEY = os.environ.get("db")
 #KUDOS_FILE_PATH = '/kudos.json'
 
 def apiAction(action, endpoint = "", params = None, data = None):
@@ -31,7 +31,7 @@ def apiAction(action, endpoint = "", params = None, data = None):
             'Content-Type': 'application/json'
         }
 
-        BASE_URL = f'https://getpantry.cloud/apiv1/pantry/{PANTRY_KEY}/basket/powerscore'
+        BASE_URL = f'{PANTRY_KEY}'
 
         if action == "get":
             response = requests.get(f'{BASE_URL}{endpoint}', headers=headers, params=params)
@@ -83,11 +83,11 @@ def handle_teams():
         query = request.args.get("query").upper()
         teamName = query
         season = request.args.get("season", default="181")
-        #try:
-        result = main.runAlgorithm(query, season)
-        #except Exception as e:
-            #result = None
-            #print(e)
+        try:
+            result = main.runAlgorithm(query, season)
+        except Exception as e:
+            result = None
+            print(e)
 
         # retrieves kudos count
         kudos_data = apiAction("get")

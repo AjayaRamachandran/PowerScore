@@ -92,6 +92,10 @@ a {
     font-size: 40px;
     font-weight: 900;
 }
+.text {
+    color: #ffffff;
+    letter-spacing: 0.3px;
+}
 .body {
     font-family: 'Inter', sans-serif;
     border: 0px transparent;

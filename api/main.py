@@ -134,7 +134,8 @@ ranking = [
 
     ["Ethereal I", 91],
     ["Ethereal II", 94],
-    ["Ethereal III", 98],
+    ["Ethereal III", 97],
+    ["Upper Limit", 100]
 ]
 
 def giveRanking(value): # function to get the rank given a powerscore
@@ -380,18 +381,18 @@ def runAlgorithm(team, season):
         #fullOPSLib, fullOPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="offensive", compInfo=compInfo)
         #fullDPSLib, fullDPSList = runPowerScore(comps["data"][comp]["name"], comps["data"][comp]["id"], div, typeOfPowerscore="defensive", compInfo=compInfo)
         #print(fullPS)
-        print(fullPSLib)
+        #print(fullPSLib)
         compPS = fullPSLib[team]
         newPS = newPSLib[team]
         compOPS = fullOPSLib[team]
         compDPS = fullDPSLib[team]
         #print(compPS)
         ### ACCOLADES ###
-        if round((((2/(1 + exp(-0.045 * (compPS)))) - 1) / 2 + 0.5) * 1000) / 10 >= 90 and not "First Class" in accolades:
+        if round(newPS) >= 90 and not "First Class" in accolades:
             accolades.append("First Class")
-        if round((((2/(1 + exp(-0.045 * (compPS)))) - 1) / 2 + 0.5) * 1000) / 10 >= 90 and ("Signature Event" in comps["data"][comp]["name"]) and not "World Class" in accolades:
+        if round(newPS) >= 90 and ("Signature Event" in comps["data"][comp]["name"]) and not "World Class" in accolades:
             accolades.append("World Class")
-        if fullPSList.index([team, compPS]) == 0 and not "Top Fragger" in accolades:
+        if newPSList.index([team, newPS]) == 0 and not "Top Fragger" in accolades:
             accolades.append("Top Fragger")
         #compSum = sum(ps[1] for ps in fullPSList)
         #compWeight = log(0.51 * (compSum ** 0.225)) ** 2
@@ -491,7 +492,7 @@ def runAlgorithm(team, season):
     elif careerOPS - careerDPS < -5:
         title = "Sentinel"
     else:
-        title = "Neutral"
+        title = "All-Rounder"
 
     #if "World Class" in accolades:
         #accolades.remove("First Class")
