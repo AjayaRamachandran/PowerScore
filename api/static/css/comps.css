@@ -113,7 +113,6 @@
 .kudos-button {
     display: flex;
     justify-self: left;
-    width: 140px;
     height: 22px;
     font-size: 16px;
     padding: 5px;
