@@ -1,1 +1,0 @@
-{PANTRY_KEY}'
