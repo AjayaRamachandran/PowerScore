@@ -17,6 +17,9 @@ body {
     margin: 0;
     padding: 0;
 }
+input { 
+    height: 0px;
+}
 hr {
     width: 299px;
     height: 1px;
