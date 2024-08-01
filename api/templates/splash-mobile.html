@@ -13,6 +13,18 @@
     <!--Other-->
     <link rel="icon" type="image/x-icon" href="https://www.dropbox.com/scl/fi/jgpvl6s9otkgc6uqg5pmt/favicon.ico?rlkey=nb39qqv34ppoyk6k3b2qd1yl0&st=lgn1ldkn&raw=1">
 </head>
+<script>
+    function reloadCSS() {
+    var links = document.getElementsByTagName("link");
+    for (var i = 0; i < links.length; i++) {
+        var link = links[i];
+        if (link.rel === "stylesheet" && link.id != "freeze") {
+            link.href = link.href.split("?")[0] + "?reload=" + new Date().getTime();
+        }
+    }
+}
+reloadCSS();
+</script>
 <body>
     <input hidden value="{{debug}}" id="debug">
     <input hidden value="N" id="panel">
