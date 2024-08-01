@@ -382,3 +382,23 @@ a {
     background-image: none;
     display: none;
 }
+.team-list {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+}
+.starred-team {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    display: flex;
+    border: 0px transparent #ffffff;
+    background-color: #000000;
+    text-align: center;
+    border-radius: 7px;
+    margin: 10px 5px 10px 5px;
+    padding: 10px 10px 5px 10px;
+}
+.starred-list-button {
+    display: none;
+}

@@ -110,7 +110,7 @@
 }
 .kudos-button {
     display: flex;
-    width: 290px;
+    width: 230px;
     font-size: 20px;
     padding: 5px;
     border-radius: 7.5px;
@@ -132,6 +132,35 @@
     background: transparent;
     font-weight: 400;
     cursor: pointer;
+}
+.star {
+    display: flex;
+    justify-self: left;
+    font-size: 16px;
+    padding: 7.5px;
+    border-radius: 7.5px;
+    border: 1px solid #ffffff;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.3px;
+    text-align: center;
+    background-color: #ffffff;
+    color: #000000;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.star:hover {
+    background-color: #dbdbdb;
+}
+.gold {
+    color: #ffbb00
+}
+.functions-container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    border: 0px transparent #000000;
+    padding-left: 5px;
 }
 .container {
     display: flex;

@@ -12,9 +12,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='/css/bottom.css') }}">
     <!--Other-->
     <link rel="icon" type="image/x-icon" href="https://www.dropbox.com/scl/fi/jgpvl6s9otkgc6uqg5pmt/favicon.ico?rlkey=nb39qqv34ppoyk6k3b2qd1yl0&st=lgn1ldkn&raw=1">
-    <script src="/static/js/reload.js"></script>
 </head>
 <body>
+    <input hidden value="{{debug}}" id="debug">
     <div class="banner">VRC-Tracker</div>
     <div class="total-parent-container">
         <div class="input-parent-container">
@@ -36,9 +36,15 @@
             </div>
             <!--<img src="data:plot/png;base64,{{ banner }}" alt="Banner">-->
         </div>
-        <div class="gap-2">
-            <div class="gap-2"></div>
+        <div class="v-gap">
+            <div class="v-gap"></div>
         </div>
+        <input hidden value="{{name}}" id="team-code">
+        <input hidden value="splash" id="page">
+        <div class="team-list">
+            <div class="team-list" id="team-list"></div>
+        </div>
+        <script src="/static/js/starred-teams.js"></script>
         <div class="title3">Choose your fighter.</div>
         <div class="gap-2">
             <div class="gap-2"></div>

@@ -52,9 +52,9 @@ def index():
     else:
         user_agent = request.headers.get('User-Agent').lower()
         if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
-            return render_template('splash-mobile.html')
+            return render_template('splash-mobile.html', debug = debug)
         else:
-            return render_template("splash.html")
+            return render_template("splash.html", debug = debug)
 
 @app.route("/ranks", methods=["GET"])
 def ranks():
@@ -64,12 +64,12 @@ def ranks():
         user_agent = request.headers.get('User-Agent').lower()
         if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
             homeButton = "Home"
-            return render_template("ranks.html", home = home, homeButton = homeButton, mobile = [url_for('static', filename='/css/mainstyle-mobile.css'),
+            return render_template("ranks.html", debug = debug, home = home, homeButton = homeButton, mobile = [url_for('static', filename='/css/mainstyle-mobile.css'),
                                                                                                  url_for('static', filename='/css/bottom-mobile.css'),
                                                                                                  url_for('static', filename='/css/ranks-mobile.css')])
         else:
             homeButton = "Back to Home"
-            return render_template("ranks.html", home = home, homeButton = homeButton, mobile = [url_for('static', filename='/css/mainstyle.css'),
+            return render_template("ranks.html", debug = debug, home = home, homeButton = homeButton, mobile = [url_for('static', filename='/css/mainstyle.css'),
                                                                                                  url_for('static', filename='/css/bottom.css'),
                                                                                                  url_for('static', filename='/css/ranks.css')])
 
@@ -103,7 +103,7 @@ def handle_teams():
             user_agent = request.headers.get('User-Agent').lower()
             if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
                 homeButton = "Home"
-                return render_template("oops-team.html",
+                return render_template("oops-team.html", debug = debug, 
                                     query = query,
                                     destination = "/teams",
                                     placeholder = "Search a Team Number",
@@ -118,7 +118,7 @@ def handle_teams():
             else:
                 homeButton = "Back to Home"
                 return render_template("oops-team.html",
-                                    query = query,
+                                    query = query, debug = debug, 
                                     destination = "/teams",
                                     placeholder = "Search a Team Number",
                                     type = "team with the number",
@@ -147,7 +147,7 @@ def handle_teams():
                     badgeByteString = result[9],
                     graphByteString = result[10],
                     xpLeft = result[11],
-                    barByteString = result[12], kudosCount = kudosCount,
+                    barByteString = result[12], kudosCount = kudosCount, debug = debug, 
                     home = home, homeButton = homeButton) + dashboard.generateFrom(result[13])
             else:
                 homeButton = "Back to Home"
@@ -164,7 +164,7 @@ def handle_teams():
                     badgeByteString = result[9],
                     graphByteString = result[10],
                     xpLeft = result[11],
-                    barByteString = result[12], kudosCount = kudosCount,
+                    barByteString = result[12], kudosCount = kudosCount, debug = debug, 
                     home = home, homeButton = homeButton) + dashboard.generateFrom(result[13])
 
 @app.route("/competitions", methods=["GET"])
@@ -186,7 +186,7 @@ def handle_competitions():
             if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
                 homeButton = "Home"
                 return render_template("oops.html",
-                                    query = query,
+                                    query = query, debug = debug, 
                                     destination = "/competitions",
                                     placeholder = "Enter a Competition SKU (ex: RE-VRC-XX-XXXX)",
                                     type = "competition with the SKU",
@@ -199,7 +199,7 @@ def handle_competitions():
             else:
                 homeButton = "Back to Home"
                 return render_template("oops.html",
-                                    query = query,
+                                    query = query, debug = debug, 
                                     destination = "/competitions",
                                     placeholder = "Enter a Competition SKU (ex: RE-VRC-XX-XXXX)",
                                     type = "competition with the SKU",
@@ -213,12 +213,12 @@ def handle_competitions():
             user_agent = request.headers.get('User-Agent').lower()
             if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
                 homeButton = "Home"
-                htmlFile = render_template("comp.html", home = home, homeButton = homeButton, mobile = [url_for('static', filename='/css/mainstyle-mobile.css'),
+                htmlFile = render_template("comp.html", debug = debug, home = home, homeButton = homeButton, mobile = [url_for('static', filename='/css/mainstyle-mobile.css'),
                                                                                                         url_for('static', filename='/css/bottom-mobile.css'),
                                                                                                         url_for('static', filename='/css/comps-mobile.css')]) + pageGen.generateFrom(result, query, division, "")
             else:
                 homeButton = "Back to Home"
-                htmlFile = render_template("comp.html", home = home, homeButton = homeButton, mobile = [url_for('static', filename='/css/mainstyle.css'),
+                htmlFile = render_template("comp.html", debug = debug, home = home, homeButton = homeButton, mobile = [url_for('static', filename='/css/mainstyle.css'),
                                                                                                         url_for('static', filename='/css/bottom.css'),
                                                                                                         url_for('static', filename='/css/comps.css')]) + pageGen.generateFrom(result, query, division, "")
             return htmlFile

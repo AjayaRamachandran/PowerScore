@@ -306,7 +306,7 @@ a {
     background-image: url("https://www.dropbox.com/scl/fi/peqq4w3n1rzsmtul2kdvu/BannerSmall.jpg?rlkey=q1gz8ytrnayimgfofqfcghj42&st=0tovckvh&raw=1");
 }
 .home-button {
-    background-color: black;
+    background-color: rgb(34, 34, 34);
     position: fixed; /* Keeps it at the top even when scrolling */
     top: 22px;
     left: 22px;
@@ -314,8 +314,22 @@ a {
     font-weight: 500;
     font-size: 15px;
     padding: 3px 8px 5px 5px;
-    border: 1px solid #ffffff;
+    /*border: 1px solid #ffffff;*/
     border-radius: 5px;
+}
+.starred-list-button {
+    background-color: black;
+    color: #ffffff;
+    position: fixed; /* Keeps it at the top even when scrolling */
+    top: 22px;
+    right: 22px;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 15px;
+    padding: 0px;
+    border: 0px transparent;
+    border-radius: 5px;
+    cursor: pointer;
 }
 .top-bar-container {
     font-size: 70px;
@@ -366,4 +380,28 @@ a {
     background-color: #084d5a;
     background-image: none;
     display: none;
+}
+.team-list {
+    position: fixed;
+    right: 0px;
+    top: 70px;
+    width: 250px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    display: none;
+    flex-direction: column;
+    background-color: #000000;
+    padding: 8px 10px 8px 10px;
+    border-radius: 15px;
+}
+.starred-team {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    display: flex;
+    border: 0px transparent #ffffff;
+    background-color: #202020;
+    text-align: center;
+    border-radius: 7px;
+    margin: 7px 4px 7px 4px;
+    padding: 10px 10px 2px 10px;
 }
