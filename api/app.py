@@ -83,11 +83,11 @@ def handle_teams():
         query = request.args.get("query").upper()
         teamName = query
         season = request.args.get("season", default="181")
-        #try:
-        result = main.runAlgorithm(query, season)
-        #except Exception as e:
-            #result = None
-            #print(e)
+        try:
+            result = main.runAlgorithm(query, season)
+        except Exception as e:
+            result = None
+            print(e)
 
         # retrieves kudos count
         kudos_data = apiAction("get")
