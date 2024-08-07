@@ -1,0 +1,4 @@
+PowerScore was 65.87677725118483% accurate for the Arts Division.
+PowerScore was 60.396039603960396% accurate for the Opportunity Division.
+PowerScore was 62.89592760180995% accurate for the Research Division.
+PowerScore was 63.96396396396396% accurate for the Innovate Division.

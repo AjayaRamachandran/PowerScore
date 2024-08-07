@@ -285,20 +285,6 @@ def runPowerScore(compName, compID, div, typeOfPowerscore, compInfo, onlyForComp
     #print("Output has been saved to output.txt")
     #io.showOutput("output.txt")
 
-def findDivision(name, comp): # function to search through a competition and find the division a team was in
-    numDivs = len(comp["divisions"])
-    for div in range(1, numDivs):
-        endpoint = "events/" + str(comp["id"]) + f"/divisions/{div}/rankings"
-        params = {"per_page": "250"}
-        data = apiHandler.makeRequest(endpoint=endpoint, params=params)["data"]
-        print("Checking division " + data[0]["division"]["name"] + " at the " + data[0]["event"]["name"])
-        roster = []
-        for team in data:
-            roster.append(team["team"]["name"])
-        if name in roster:
-            return div
-    return 1 # catch case
-
 def runComp(sku, div): # master function for computing a competition powerscore
     name, compInfos, divs = apiHandler.getCompInfoBySKU(sku, div) # an api module function that gets the competition info for a comp and division
     print(divs)

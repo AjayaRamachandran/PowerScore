@@ -45,8 +45,14 @@ async def fetch_division(session, comp_id, div): # pair test function with findD
     endpoint = f"{BASE_URL}events/{comp_id}/divisions/{div}/rankings"
     params = {"per_page": "250"}
     async with session.get(endpoint, params=params, headers=headers) as response:
-        data = await response.json() # this await line is what makes sure the task is only considered as complete when the data returns
-        return data
+        data = await response # this await line is what makes sure the task is only considered as complete when the data returns
+        if response.status_code == 200:
+            print("Received result")
+            return data.json()
+        else:
+            print(f"Request failed with status code {data.status_code}")
+            raise NameError
+        #return data
 
 async def fetch_comp(session, comp_id, div): # pair function with getCompListAsync(), retrieves a list of competition data using the RobotEvents API
     global requestNumber, usableKeys, allKeys, apiKeys

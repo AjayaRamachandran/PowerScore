@@ -36,7 +36,7 @@ def makeRequest(endpoint, params=None):
         usableKeys.remove(requestNumber)
     headers = {
         'Authorization': f'Bearer {apiKeys[requestNumber]}',
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
     }
 
     print(f"Sent request for {BASE_URL}{endpoint}, params:{params}")
@@ -158,16 +158,20 @@ def getMatchList(compName, matchData):
     #print(matchData)
     for matchNum in range(len(matchData)):
         #print(matchData[matchNum])
-        alliances = matchData[matchNum]['alliances']
-        blueScore = alliances[0]['score']
-        redScore = alliances[1]['score']
+        try:
+            alliances = matchData[matchNum]['alliances']
+            blueScore = alliances[0]['score']
+            redScore = alliances[1]['score']
 
-        blueTeam1 = alliances[0]['teams'][0]['team']['name']
-        blueTeam2 = alliances[0]['teams'][1]['team']['name']
-        redTeam1 = alliances[1]['teams'][0]['team']['name']
-        redTeam2 = alliances[1]['teams'][1]['team']['name']
+            blueTeam1 = alliances[0]['teams'][0]['team']['name']
+            blueTeam2 = alliances[0]['teams'][1]['team']['name']
+            redTeam1 = alliances[1]['teams'][0]['team']['name']
+            redTeam2 = alliances[1]['teams'][1]['team']['name']
 
-        matchList.append([redTeam1, redTeam2, blueTeam1, blueTeam2, redScore, blueScore])
+            matchList.append([redTeam1, redTeam2, blueTeam1, blueTeam2, redScore, blueScore])
+        except:
+            print(matchData[matchNum])
+            print("Team had a invalid match.")
 
     return matchList
 
