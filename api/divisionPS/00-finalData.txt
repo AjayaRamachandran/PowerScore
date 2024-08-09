@@ -1,4 +1,10 @@
-PowerScore was 65.87677725118483% accurate for the Arts Division.
-PowerScore was 60.396039603960396% accurate for the Opportunity Division.
-PowerScore was 62.89592760180995% accurate for the Research Division.
-PowerScore was 63.96396396396396% accurate for the Innovate Division.
+PowerScore was 65.84158415841584% accurate for the Opportunity Division.
+PowerScore was 68.77828054298642% accurate for the Research Division.
+PowerScore was 72.07207207207207% accurate for the Innovate Division.
+PowerScore was 61.43497757847533% accurate for the Spirit Division.
+PowerScore was 64.92146596858639% accurate for the Design Division.
+PowerScore was 64.53201970443350% accurate for the Math Division.
+PowerScore was 66.06334841628959% accurate for the Engineering Division.
+PowerScore was 67.42081447963801% accurate for the Technology Division.
+PowerScore was 60.52631578947369% accurate for the Science Division.
+PowerScore was 70.14218009478674% accurate for the Arts Division.

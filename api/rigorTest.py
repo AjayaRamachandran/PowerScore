@@ -258,7 +258,7 @@ def getData(div):
         except:
             None
     print(listOfPS)
-#getData(3)
+#getData(9)
 
 def openPowerScoreFile(filename):
     file = open(filename, 'r')
@@ -287,18 +287,31 @@ def getPS(team, psList):
 
 
 def getDivAccuracy(compID, div):
+    divisions = [
+        "",
+        "Opportunity",
+        "Research",
+        "Innovate",
+        "Spirit",
+        "Design",
+        "Math",
+        "Engineering",
+        "Technology",
+        "Science",
+        "Arts"
+    ]
     endpoint = "events/" + compID + f"/divisions/{div}/matches"
     params = {"per_page": "250"}
     data = apiHandler.makeRequest(endpoint=endpoint, params=params)["data"]
     matchList = apiHandler.getMatchList("Worlds", data)
-    psList = openPowerScoreFile('api/divisionPS/innovateDiv.txt')
+    psList = openPowerScoreFile(f'api/divisionPS/{divisions[int(div)]}Div.txt')
 
     successes = []
     for match in matchList:
         print(match)
         try:
-            redSum = getPS(match[0], psList) + getPS(match[1], psList)
-            blueSum = getPS(match[2], psList) + getPS(match[3], psList)
+            redSum = (float(getPS(match[0], psList))) + (float(getPS(match[1], psList)))
+            blueSum = (float(getPS(match[2], psList))) + (float(getPS(match[3], psList)))
 
             predictedRedWin = redSum > blueSum
             actualRedWin = match[4] > match[5]
@@ -307,7 +320,8 @@ def getDivAccuracy(compID, div):
                 successes.append(True)
             else:
                 successes.append(False)
-        except:
+        except Exception as e:
+            print(e)
             None
         
     numSuccesses = 0
@@ -316,9 +330,9 @@ def getDivAccuracy(compID, div):
             numSuccesses += 1
     
     percentageSuccesses = numSuccesses / len(successes)
-    print(f"PowerScore was {percentageSuccesses * 100}% accurate for the Innovate Division.")
+    print(f"PowerScore was {percentageSuccesses * 100}% accurate for the {divisions[int(div)]} Division.")
 
-getDivAccuracy('53690', '3')
+getDivAccuracy('53690', '9')
 
 
 
