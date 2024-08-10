@@ -12,7 +12,7 @@
 <b>[VRC-Tracker](https://powerscore.vercel.app/)</b> is a serverless deployment on Vercel, built with the P-J-H stack (Python, JavaScript, HTML). Python is interfaced with the frontend using the [Flask WSGI](https://flask.palletsprojects.com/en/3.0.x/), which internally uses [Werkzeug](https://werkzeug.palletsprojects.com/en/3.0.x/) and [Jinja](https://jinja.palletsprojects.com/en/3.1.x/). The application is designed to work without the need for server-side file storage, so that it may be deployed on any service. To download and run it locally, download this repository, change "Debug" to "Y" in `config.txt` and run `app.py` on your local machine; the application will be available on your localhost.
 
 ### Server-side requirements (for running locally)
-VRC-Tracker makes frequent requests to the <b>[RobotEvents API](https://www.robotevents.com/api/v2)</b>. This means you will need a stable internet connection. If you are planning on running the program locally, go to the RobotEvents API site and get a set of API keys to use. Create a file called "osEmul.py" setup as shown below:
+VRC-Tracker makes frequent requests to the <b>[RobotEvents API](https://www.robotevents.com/api/v2)</b>. This means you will need a stable internet connection. If you are planning on running the program locally, go to the RobotEvents API site and get a set of API keys to use. Create a file in the `api` folder called "osEmul.py" setup as shown below:
 ```python
 class environ():
     def get(key):
