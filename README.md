@@ -13,11 +13,12 @@
 
 ### Server-side requirements (for running locally)
 VRC-Tracker makes frequent requests to the <b>[RobotEvents API](https://www.robotevents.com/api/v2)</b>. This means you will need a stable internet connection. If you are planning on running the program locally, go to the RobotEvents API site and get a set of API keys to use. Create a file called "osEmul.py" setup as shown below:
-```
+```python
 class environ():
     def get(key):
         apiKeys = {
             "API_KEY1" : "Enter Key Here!"
+            # add more api keys here
             }
         return apiKeys[key]
 ```
