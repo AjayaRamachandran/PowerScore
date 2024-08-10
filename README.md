@@ -9,11 +9,18 @@
 
 ## VRC-Tracker: A Flask Web Application on Vercel
 
-<b>[VRC-Tracker](https://powerscore.vercel.app/)</b> is a serverless deployment on Vercel, built with the P-J-H stack (Python, JavaScript, HTML). Python is interfaced with the frontend using the [Flask WSGI](https://flask.palletsprojects.com/en/3.0.x/), which internally uses [Werkzeug](https://werkzeug.palletsprojects.com/en/3.0.x/) and [Jinja](https://jinja.palletsprojects.com/en/3.1.x/). The application is designed to work without the need for server-side file storage, so that it may be deployed on any service. To download and run it locally, download this repository and run `app.py` on your local machine and the application will be available on your localhost.
+<b>[VRC-Tracker](https://powerscore.vercel.app/)</b> is a serverless deployment on Vercel, built with the P-J-H stack (Python, JavaScript, HTML). Python is interfaced with the frontend using the [Flask WSGI](https://flask.palletsprojects.com/en/3.0.x/), which internally uses [Werkzeug](https://werkzeug.palletsprojects.com/en/3.0.x/) and [Jinja](https://jinja.palletsprojects.com/en/3.1.x/). The application is designed to work without the need for server-side file storage, so that it may be deployed on any service. To download and run it locally, download this repository, change "Debug" to "Y" in `config.txt` and run `app.py` on your local machine; the application will be available on your localhost.
 
 ### Server-side requirements (for running locally)
-VRC-Tracker makes frequent requests to the <b>[RobotEvents API](https://www.robotevents.com/api/v2)</b>. This means you will need a stable internet connection. It is recommended that if you are planning on running the program locally that you take the time to go to the RobotEvents API site and get your own API keys to keep traffic moving on the live public release, as well as to keep slowdowns on the live version from affecting your experience. API keys can be added/changed at the top of `apiHandler.py`.
-
+VRC-Tracker makes frequent requests to the <b>[RobotEvents API](https://www.robotevents.com/api/v2)</b>. This means you will need a stable internet connection. If you are planning on running the program locally, go to the RobotEvents API site and get a set of API keys to use. Create a file called "osEmul.py" setup as shown below:
+```
+class environ():
+    def get(key):
+        apiKeys = {
+            "API_KEY1" : "Enter Key Here!"
+            }
+        return apiKeys[key]
+```
 ---
 ### What is the PowerScore Algorithm?
 In VEX Robotics, teams play to compete for high points while trying to keep their opponents from doing the same thing. Games are set up by "alliances", which are randomly assigned pairs of teams that oppose a different pair of teams. Since individual statistics of a team in a match are not tracked in VEX Robotics, it can be difficult to determine how one team contributes to the outcome of their game. This knowledge is important for picking the correct partner in the elimination phase of the tournament. Thus, algorithms like OPR/DPR/CCWM, AdamScore, TrueSkill, and others have tried to calculate this "individual contribution", but each one has its own drawbacks. Powerscore has been rated the most accurate to a team's actual skill by numerous VEX robotics participants. Here's how it works.
