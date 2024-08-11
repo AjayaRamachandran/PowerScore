@@ -15,8 +15,11 @@
 VRC-Tracker makes frequent requests to the <b>[RobotEvents API](https://www.robotevents.com/api/v2)</b>. This means you will need a stable internet connection. If you are planning on running the program locally, go to the RobotEvents API site and get a set of API keys to use. Create a file in the `api` folder called "osEmul.py" setup as shown below:
 ```python
 class environ():
+    def __init__():
+        None
     def get(key):
         apiKeys = {
+            "db" : "Link to Your Database",
             "API_KEY1" : "Enter Key Here!"
             # add more api keys here
             }
