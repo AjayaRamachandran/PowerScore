@@ -303,10 +303,10 @@ a {
     text-align: center;
     font-size: 50px;
     font-weight: 900;
-    width: 470px;
+    width: 100%;
     background-size: cover;
     background-position: center center;
-    background-image: url("https://www.dropbox.com/scl/fi/peqq4w3n1rzsmtul2kdvu/BannerSmall.jpg?rlkey=q1gz8ytrnayimgfofqfcghj42&st=0tovckvh&raw=1");
+    background-image: url("https://www.dropbox.com/scl/fi/yyv9k0uioi9zl257a5b2q/BannerSmall.jpg?rlkey=3impriimd1o978vwa8fk9p4t7&st=tf1wkncf&raw=1");
 }
 .home-button {
     background-color: rgb(34, 34, 34);

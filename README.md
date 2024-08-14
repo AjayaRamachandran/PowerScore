@@ -9,11 +9,22 @@
 
 ## VRC-Tracker: A Flask Web Application on Vercel
 
-<b>[VRC-Tracker](https://powerscore.vercel.app/)</b> is a serverless deployment on Vercel, built with the P-J-H stack (Python, JavaScript, HTML). Python is interfaced with the frontend using the [Flask WSGI](https://flask.palletsprojects.com/en/3.0.x/), which internally uses [Werkzeug](https://werkzeug.palletsprojects.com/en/3.0.x/) and [Jinja](https://jinja.palletsprojects.com/en/3.1.x/). The application is designed to work without the need for server-side file storage, so that it may be deployed on any service. To download and run it locally, download this repository and run `app.py` on your local machine and the application will be available on your localhost.
+<b>[VRC-Tracker](https://powerscore.vercel.app/)</b> is a serverless deployment on Vercel, built with the P-J-H stack (Python, JavaScript, HTML). Python is interfaced with the frontend using the [Flask WSGI](https://flask.palletsprojects.com/en/3.0.x/), which internally uses [Werkzeug](https://werkzeug.palletsprojects.com/en/3.0.x/) and [Jinja](https://jinja.palletsprojects.com/en/3.1.x/). The application is designed to work without the need for server-side file storage, so that it may be deployed on any service. To download and run it locally, download this repository, change "Debug" to "Y" in `config.txt` and run `app.py` on your local machine; the application will be available on your localhost.
 
 ### Server-side requirements (for running locally)
-VRC-Tracker makes frequent requests to the <b>[RobotEvents API](https://www.robotevents.com/api/v2)</b>. This means you will need a stable internet connection. It is recommended that if you are planning on running the program locally that you take the time to go to the RobotEvents API site and get your own API keys to keep traffic moving on the live public release, as well as to keep slowdowns on the live version from affecting your experience. API keys can be added/changed at the top of `apiHandler.py`.
-
+VRC-Tracker makes frequent requests to the <b>[RobotEvents API](https://www.robotevents.com/api/v2)</b>. This means you will need a stable internet connection. If you are planning on running the program locally, go to the RobotEvents API site and get a set of API keys to use. Create a file in the `api` folder called "osEmul.py" setup as shown below:
+```python
+class environ():
+    def __init__():
+        None
+    def get(key):
+        apiKeys = {
+            "db" : "Link to Your Database",
+            "API_KEY1" : "Enter Key Here!"
+            # add more api keys here
+            }
+        return apiKeys[key]
+```
 ---
 ### What is the PowerScore Algorithm?
 In VEX Robotics, teams play to compete for high points while trying to keep their opponents from doing the same thing. Games are set up by "alliances", which are randomly assigned pairs of teams that oppose a different pair of teams. Since individual statistics of a team in a match are not tracked in VEX Robotics, it can be difficult to determine how one team contributes to the outcome of their game. This knowledge is important for picking the correct partner in the elimination phase of the tournament. Thus, algorithms like OPR/DPR/CCWM, AdamScore, TrueSkill, and others have tried to calculate this "individual contribution", but each one has its own drawbacks. Powerscore has been rated the most accurate to a team's actual skill by numerous VEX robotics participants. Here's how it works.
@@ -25,13 +36,13 @@ Powerscore makes frequent use of the value named `matchDiff`. Put simply, it is 
 
 A team may average a match diff of `+30` across all their games. In other words, on average they win by 30 points. If in one randomly selected match they lose by, say, 20 points (having a match diff of `-20`), we can reasonably assume one of three things has occured.
 
-##### 1. The team's alliance partner was significantly worse than the average alliance partner for our team.
-##### 2. The team's opponent was significantly better than the average opponent for our team.
-##### 3. By random chance, our team had a rough match that time around.
+> 1. The team's alliance partner was significantly worse than the average alliance partner for our team.
+> 2. The team's opponent was significantly better than the average opponent for our team.
+> 3. By random chance, our team had a rough match that time around.
 
 However, we accept the fact that upon playing several games, and upon the alliance partners and opponents playing several games as well, the third option becomes less and less relevant. Thus we have now boiled down the reason for the wildly varying match diff down to two reasons that we know with relative certainty. This is incredibly powerful, and is the essence of the algorithm (but perhaps one could say, executed in reverse).
 
-##### Let's call the difference between the match diff of a match and a team's average match diff, the `deviation`.
+> Let's call the difference between the match diff of a match and a team's average match diff, the `deviation`.
 
 In the above example we looked at a random match diff of a team compared to that team's average. But let's try something else: for a given match, calculate how much the match diff varied from the average for *everyone else in the match* but our team in question. It's easier with numbers: let's say the opponents were normally losing by 10 points (md = `-10`) and the alliance partner was normally losing by 30 (md = `-30`). If we take the previous example where our team loses by 20 points, then the deviation for the opponents is **`+30`** (`20 - (-10)`). That means our team was ineffective at preventing the opponent teams from getting points, since they were able to get more points than they got on average. But on the alliance partner side, the deviation is **`+10`** (`(-20) - (-30)`). This tells us that our team displayed a positive influence on the alliance partner's average point scoring ability. Averaging the deviations of our opponents across all of our matches is analogous to, but not equal to, the **Offensive Powerscore**. Likewise, averaging the deviations of our alliance partners across all of our matches is analogous to, but not equal to, the **Defensive Powerscore**. A mixture of these two is the actual **Powerscore**.
 
