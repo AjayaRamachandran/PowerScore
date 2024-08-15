@@ -16,12 +16,14 @@ if debug == "Y":
     import dashboard
     import osEmul as os
     home = "http://localhost:5000"
+    previews = "api/previews.json"
 else:
     from api import main
     from api import pageGen
     from api import dashboard
     import os
     home = "https://powerscore.vercel.app"
+    previews = "previews.json"
 
 ###### INITIALIZE ######
 PANTRY_KEY = os.environ.get("db")
@@ -89,7 +91,7 @@ def handle_teams():
         except Exception as e:
             result = None
             print(e)
-        IMAGE_URL = json.load("previews.json")["previews"][str(round(result[1]))]
+        IMAGE_URL = json.load(open(previews))["links"][str(round(result[1]))]
         # retrieves kudos count
         kudos_data = apiAction("get")
 
