@@ -8,6 +8,7 @@ down = open(config).read().replace("\n", "")[open(config).read().replace("\n", "
 from flask import Flask, request, render_template, send_file, url_for, jsonify, redirect
 import time
 import requests
+import json
 
 if debug == "Y":
     import main
@@ -85,6 +86,7 @@ def handle_teams():
         season = request.args.get("season", default="181")
         try:
             result = main.runAlgorithm(query, season)
+            IMAGE_URL = json.load("previews.json")["previews"][str(round(result[1]))]
         except Exception as e:
             result = None
             print(e)
@@ -147,7 +149,7 @@ def handle_teams():
                     badgeByteString = result[9],
                     graphByteString = result[10],
                     xpLeft = result[11],
-                    barByteString = result[12], kudosCount = kudosCount, debug = debug, 
+                    barByteString = result[12], kudosCount = kudosCount, debug = debug, imageURL = IMAGE_URL,
                     home = home, homeButton = homeButton) + dashboard.generateFrom(result[13])
             else:
                 homeButton = "Back to Home"
@@ -164,7 +166,7 @@ def handle_teams():
                     badgeByteString = result[9],
                     graphByteString = result[10],
                     xpLeft = result[11],
-                    barByteString = result[12], kudosCount = kudosCount, debug = debug, 
+                    barByteString = result[12], kudosCount = kudosCount, debug = debug, imageURL = IMAGE_URL,
                     home = home, homeButton = homeButton) + dashboard.generateFrom(result[13])
 
 @app.route("/competitions", methods=["GET"])
