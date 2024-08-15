@@ -23,7 +23,7 @@ else:
     from api import dashboard
     import os
     home = "https://powerscore.vercel.app"
-    previews = "previews.json"
+    previews = "api/previews.json"
 
 ###### INITIALIZE ######
 PANTRY_KEY = os.environ.get("db")
