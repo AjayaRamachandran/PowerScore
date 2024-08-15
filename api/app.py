@@ -88,10 +88,10 @@ def handle_teams():
         season = request.args.get("season", default="181")
         try:
             result = main.runAlgorithm(query, season)
+            IMAGE_URL = json.load(open(previews))["links"][str(round(result[1]))]
         except Exception as e:
             result = None
             print(e)
-        IMAGE_URL = json.load(open(previews))["links"][str(round(result[1]))]
         # retrieves kudos count
         kudos_data = apiAction("get")
 
