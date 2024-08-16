@@ -40,7 +40,7 @@ def createImage(num):
     textRect = [textCenter[0] - text.get_rect()[2]/2, textCenter[1] - text.get_rect()[3]/2, text.get_rect()[2], text.get_rect()[3]]
     screen.blit(text, textRect)
 
-    rank = giveRanking(num)
+    rank = giveRanking(num + 0.5)
     rankCopy = rank.replace(" ", "")
     badgeFileDir = "newbadges/" + rankCopy + ".png"
 
@@ -96,5 +96,5 @@ def giveRanking(value): # function to get the rank given a powerscore
 ###### MAIN ######
 
 for i in range(1, 101):
-    #createImage(i)
-    print('{"' + str(i) + '" : ""},')
+    createImage(i)
+    #print('{"' + str(i) + '" : ""},')
