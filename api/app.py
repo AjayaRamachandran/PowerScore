@@ -76,6 +76,22 @@ def ranks():
                                                                                                  url_for('static', filename='/css/bottom.css'),
                                                                                                  url_for('static', filename='/css/ranks.css')])
 
+@app.route("/preferences", methods=["GET"])
+def preferences():
+    if down == "Y":
+        return render_template('down.html')
+    else:
+        user_agent = request.headers.get('User-Agent').lower()
+        if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
+            homeButton = "Home"
+            return render_template("preferences.html", debug = debug, home = home, homeButton = homeButton, mobile = [url_for('static', filename='/css/mainstyle-mobile.css'),
+                                                                                                 url_for('static', filename='/css/bottom-mobile.css'),
+                                                                                                 url_for('static', filename='/css/ranks-mobile.css')])
+        else:
+            homeButton = "Back to Home"
+            return render_template("preferences.html", debug = debug, home = home, homeButton = homeButton, mobile = [url_for('static', filename='/css/mainstyle.css'),
+                                                                                                 url_for('static', filename='/css/bottom.css'),
+                                                                                                 url_for('static', filename='/css/ranks.css')])
 
 @app.route("/teams", methods=["GET"])
 def handle_teams():

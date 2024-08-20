@@ -298,7 +298,7 @@ a {
     position: fixed; /* Keeps it at the top even when scrolling */
     top: 0;
     left: 0;
-    font-weight: 500;
+    font-weight: 900;
     letter-spacing: -1px;
     font-size: 30px;
     padding-top: 20px;
@@ -321,7 +321,7 @@ a {
     background-image: url("https://www.dropbox.com/scl/fi/ow60jy47mb2pvcm2ml398/Banner.jpg?rlkey=2qbd6fvnp7l96jn95rmv4k9ru&st=yv1f4as0&raw=1");
 }
 .home-button {
-    background-color: black;
+    background-color: rgb(34, 34, 34);
     position: fixed; /* Keeps it at the top even when scrolling */
     top: 22px;
     left: 22px;
@@ -329,7 +329,7 @@ a {
     font-weight: 500;
     font-size: 15px;
     padding: 3px 8px 5px 5px;
-    border: 1px solid #ffffff;
+    /*border: 1px solid #ffffff;*/
     border-radius: 5px;
 }
 .top-bar-container {
@@ -401,4 +401,21 @@ a {
 }
 .starred-list-button {
     display: none;
+}
+.preferences-button:hover {
+    background-color: #222222;
+}
+.preferences-button {
+    background-color: black;
+    position: fixed; /* Keeps it at the top even when scrolling */
+    top: 15px;
+    right: 22px;
+    justify-content: right;
+    font-weight: 500;
+    font-size: 15px;
+    padding: 7px 7px 3px 7px;
+    color: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    cursor: pointer;
 }

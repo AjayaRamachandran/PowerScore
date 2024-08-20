@@ -4,20 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="VRC Tracker" />
-    <meta property="og:description" content="A powerful algorithmic tool for VEX Robotics." />
+    <meta property="og:site_name" content="VRC Tracker" />
+    <meta property="og:title" content="Ranks" />
     <meta property="og:image" content="https://www.dropbox.com/scl/fi/ru77h5dv0lgkyr32ev1pj/Preview1.jpg?rlkey=zp1yfw7ywrlk6raxgt683ozsf&st=19o9czir&raw=1" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image">
     <!--Basic Info-->
-    <title>Oops!</title>
+    <title>Preferences</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" id="freeze">
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap" rel="stylesheet" id="freeze">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" id="freeze">
     <!--Inner CSS Styles-->
     <link rel="stylesheet" href="{{ mobile[0] }}">
     <link rel="stylesheet" href="{{ mobile[1] }}">
+    <link rel="stylesheet" href="{{ mobile[2] }}">
     <!--Other-->
     <link rel="icon" type="image/x-icon" href="https://www.dropbox.com/scl/fi/jgpvl6s9otkgc6uqg5pmt/favicon.ico?rlkey=nb39qqv34ppoyk6k3b2qd1yl0&st=lgn1ldkn&raw=1">
 </head>
@@ -38,54 +39,17 @@ reloadCSS();
     <input hidden value="N" id="panel">
     <div class="banner"><i>VRC TRACKER</i></div>
     <div class="home-button"><a href="{{ home }}"><svg width="18" height="18" viewBox="-3 -3 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="14,4 4,12 14,20" fill="currentColor"/></svg> {{ homeButton }} </a></div>
-    <button class="starred-list-button" onclick="openPanel()">
+    <button class="switch" onclick="openPanel()">
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" style="display:flex;" id="expand" class="bi bi-bookmark-star" viewBox="0 0 16 16"><path d="M7.84 4.1a.178.178 0 0 1 .32 0l.634 1.285a.18.18 0 0 0 .134.098l1.42.206c.145.021.204.2.098.303L9.42 6.993a.18.18 0 0 0-.051.158l.242 1.414a.178.178 0 0 1-.258.187l-1.27-.668a.18.18 0 0 0-.165 0l-1.27.668a.178.178 0 0 1-.257-.187l.242-1.414a.18.18 0 0 0-.05-.158l-1.03-1.001a.178.178 0 0 1 .098-.303l1.42-.206a.18.18 0 0 0 .134-.098z"/><path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/></svg>
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" style="display:none;" id="retract" class="bi bi-bookmark-star" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg>
     </button>
     <div class="total-parent-container">
+        <!--CONTENT-->
         <div class="gap">
             <div class="gap"></div>
         </div>
-        <div class="gap-2">
-            <div class="gap-2"></div>
-        </div>
-        <div class="input-parent-container">
-            <div class="input-container">
-                <form action="{{ destination }}" method="GET" class="input-container">
-                    <input type="text" name="query" placeholder="{{ placeholder }}">
-                    <button type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
-            </div>
-        </div>
-        <div class="gap">
-            <div class="gap"></div>
-        </div>
-        <input hidden value="{{name}}" id="team-code">
-        <input hidden value="index-mobile" id="page">
+        <div class="title">Preferences</div>
 
-        <div class="team-list" id="team-list"></div>
-
-        <script src="/static/js/starred-teams.js"></script>
-        <title>Oops!</title>
-        <div class="gap-2">
-            <div class="gap-2"></div>
-        </div>
-        <body>We couldn't find a {{ type }} "{{ query }}".</body>
-        <div class="gap-2">
-            <div class="gap-2"></div>
-        </div>
-        <div class="body2">The issue could be:</div>
-        <div class="body2">1. {{ issue1 }}</div>
-        <div class="body2">2. {{ issue2 }}</div>
-        <div class="body2">3. {{ issue3 }}</div>
-        <div class="big-gap">
-            <div class="big-gap"></div>
-        </div>
-        <div class="big-gap">
-            <div class="big-gap"></div>
-        </div>
     </div>
     <div class="bottom">
         © Copyright 2024 by Ajaya Ramachandran, Team 8568A 23-24
