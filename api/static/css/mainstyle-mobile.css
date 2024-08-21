@@ -286,7 +286,7 @@ a {
     position: fixed; /* Keeps it at the top even when scrolling */
     top: 0;
     left: 0;
-    font-weight: 500;
+    font-weight: 900;
     letter-spacing: -1px;
     font-size: 30px;
     padding-top: 20px;
