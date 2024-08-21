@@ -65,6 +65,12 @@ function handleAppearance() {
                 tint.style.backgroundColor = '#333333';
                 console.log("3")
         }
+        const shades = document.querySelectorAll('[visual="shade"]');
+        for (const shade of shades) {
+            if (preference === "Dark")
+                shade.style.backgroundColor = '#000000';
+                console.log("4")
+        }
     });
 }
 

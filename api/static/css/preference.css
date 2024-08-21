@@ -1,0 +1,45 @@
+/* CONTAINERS */
+.preferences-parent-container {
+    width: 1000px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.preferences-subcontainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+
+/* ELEMENTS */
+.preferences-button:hover {
+    background-color: #222222;
+}
+.preferences-button {
+    background-color: black;
+    position: fixed; /* Keeps it at the top even when scrolling */
+    top: 15px;
+    right: 22px;
+    justify-content: right;
+    font-weight: 500;
+    font-size: 15px;
+    padding: 7px 7px 3px 7px;
+    color: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.preference-name {
+    font-weight: 600;
+    font-size: 24px;
+    display: flex;
+    flex-direction: column;
+}
+.preference-description {
+    font-weight: 400;
+    font-size: 15px;
+    letter-spacing: 0px;
+}

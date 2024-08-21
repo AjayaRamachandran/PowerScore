@@ -145,7 +145,7 @@
 }
 .item23 {
     flex: 0 0 61%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 15% */
-    background-color: #0e6172;
+    background-color: rgb(8, 36, 42);
     font-family: "Teko";
     font-size: 20px;
     text-align: center;

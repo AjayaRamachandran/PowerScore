@@ -42,7 +42,8 @@ def createPlot(data, teamname, startDate):
     font = pygame.font.Font("Teko-Regular.ttf", 22)
     font2 = pygame.font.Font("Teko-Regular.ttf", 18)
 
-    screen.fill((14, 97, 114))
+    #screen.fill((14, 97, 114))
+    screen.fill((8, 36, 42))
     topMargin = 25
     bottomMargin = 50
     chartDimensions = [windowSize[0] - 50, windowSize[1] - (topMargin + bottomMargin)]

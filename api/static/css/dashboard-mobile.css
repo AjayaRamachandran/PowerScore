@@ -27,7 +27,7 @@
     text-align: left;
 }
 .dashboard-left-link {
-    background-color: #0e6172;
+    background: transparent;
     font-family: "Inter";
     font-size: 16px;
     text-align: left;
@@ -40,7 +40,6 @@
     padding-bottom: 3px;
 }
 .dashboard-left-text-title {
-    background-color: #0e6172;
     font-family: "Inter";
     font-size: 20px;
     text-align: left;
@@ -52,7 +51,6 @@
     border: 0px transparent;
 }
 .dashboard-left-text-body {
-    background-color: #0e6172;
     font-family: "Inter";
     font-size: 14px;
     text-align: left;
@@ -62,14 +60,12 @@
     font-weight: 400;
 }
 .dashboard-right {
-    background-color: #0e6172;
     font-family: "Inter";
     font-size: 20px;
     text-align: right;
     color:#ffffff;
 }
 .dashboard-right-text-title {
-    background-color: #0e6172;
     font-family: "Teko";
     font-size: 45px;
     text-align: right;
