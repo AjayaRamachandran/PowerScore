@@ -34,7 +34,8 @@
 }
 reloadCSS();
 </script>
-<body>
+<script src="/static/js/preferences.js"></script>
+<body visual="bg">
     <input hidden value="{{debug}}" id="debug">
     <input hidden value="N" id="panel">
     <div class="banner"><i>VRC TRACKER</i></div>
@@ -49,7 +50,51 @@ reloadCSS();
             <div class="gap"></div>
         </div>
         <div class="title">Preferences</div>
-
+        <div class="gap-2">
+            <div class="gap-2"></div>
+        </div>
+        <div class="v-gap">
+            <div class="v-gap"></div>
+        </div>
+        <div class="v-gap">
+            <div class="v-gap"></div>
+        </div>
+        <div class="preferences-parent-container">
+            <div class="preferences-subcontainer">
+                <div id="defaultSeason" class="preference-name">
+                    Default Season
+                    <div class="preference-description">
+                        Sets the season that is shown by default when searching for a team's page.
+                    </div>
+                </div>
+                <div id="preference1" class="preferences-subcontainer"></div>
+            </div>
+            <div class="preferences-subcontainer">
+                <div id="defaultSeason" class="preference-name">
+                    Link Preview Default Season
+                    <div class="preference-description">
+                        Sets the season that is used when generating link previews, if no season is specified in the URL.
+                    </div>
+                </div>
+                <div class="preferences-subcontainer">VRC 23-24: Over Under</div>
+            </div>
+            <div class="preferences-subcontainer">
+                <div id="defaultSeason" class="preference-name">
+                    Appearance
+                    <div class="preference-description">
+                        Choose how you want VRC-Tracker to look.
+                    </div>
+                </div>
+                <div id="preference2" class="preferences-subcontainer"></div>
+            </div>
+        </div>
+        <div class="gap-2">
+            <div class="gap-2"></div>
+        </div>
+        <script>
+            getDefaultSeason("preference1");
+            getDefaultSeason("preference2");
+        </script>
     </div>
     <div class="bottom">
         © Copyright 2024 by Ajaya Ramachandran, Team 8568A 23-24

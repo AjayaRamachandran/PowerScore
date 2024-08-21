@@ -35,7 +35,8 @@
 }
 reloadCSS();
 </script>
-<body>
+<script src="/static/js/preferences.js"></script>
+<body visual="bg">
     <input hidden value="{{debug}}" id="debug">
     <div class="banner"><i>VRC TRACKER</i></div>
     <div class="home-button"><a href="{{ home }}"><svg width="18" height="18" viewBox="-3 -3 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="14,4 4,12 14,20" fill="currentColor"/></svg> {{ homeButton }} </a></div>
@@ -72,7 +73,7 @@ reloadCSS();
                 <form id="myForm" action="/teams" method="GET">
                     <input type="hidden" id="team" name="query" value="{{ name }}">
                     <label for="division">Season</label>
-                    <select name="season" id="seasons" class="dropdown">
+                    <select name="season" id="seasons" class="dropdown" visual="bg">
                         <option value="190" >V5RC 24-25: High Stakes</option>
                         <option value="181" >VRC 23-24: Over Under</option>
                         <option value="173" >VRC 22-23: Spin Up</option>
@@ -84,7 +85,7 @@ reloadCSS();
             </div>
         </div>
         <div class="top-bar-parent-container">
-            <div class="top-bar-container">
+            <div class="top-bar-container" visual="tint">
                 <div class="functions-container">
                     <div class="kudos-button" id="kudos-button" team="{{name}}" kudos="{{kudosCount}}"><button class="kudos-text">Give Kudos <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="IconChangeColor" height="16" width="16"><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" id="mainIconPathAttribute"></path></svg> <b>{{ kudosCount }}</b></button></div>
                     <script src="/static/js/kudos-ajax.js"></script>
@@ -105,22 +106,22 @@ reloadCSS();
             <div class="body-container">
                 <div class="item1">{{ powerscore }}</div>
                 <div class="item2"><small><small><small>Prev</small></small></small> {{ old_powerscore }}</div>
-                <div class="item3">
+                <div class="item3" visual="tint">
                     <img src="data:plot/png;base64,{{ badgeByteString }}" alt="Generated Image" width="100%" height="100%">
                 </div>
-                <div class="item4">
-                    <div class="item4-top">Rank: <b>{{ rank }}</b></div>
+                <div class="item4" visual="tint">
+                    <div class="item4-top" visual="tint">Rank: <b>{{ rank }}</b></div>
 
                     <form action="/ranks" method="GET">
-                        <button class="body" type="submit"><u>Show All Ranks <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-arrow-up-right-square" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm5.854 8.803a.5.5 0 1 1-.708-.707L9.243 6H6.475a.5.5 0 1 1 0-1h3.975a.5.5 0 0 1 .5.5v3.975a.5.5 0 1 1-1 0V6.707z"/></svg></u></button>
+                        <button class="body" type="submit" visual="tint"><u>Show All Ranks <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-arrow-up-right-square" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm5.854 8.803a.5.5 0 1 1-.708-.707L9.243 6H6.475a.5.5 0 1 1 0-1h3.975a.5.5 0 0 1 .5.5v3.975a.5.5 0 1 1-1 0V6.707z"/></svg></u></button>
                     </form>
                     
-                    <div class="item4-middle">
+                    <div class="item4-middle" visual="tint">
                         <img src="data:plot/png;base64,{{ barByteString }}" alt="badge" width="100%" height="100%">
                     </div>
                     
-                    <div class="item4-bmiddle"></div>
-                    <div class="item4-bottom">RR to Next Rank: <i><b>{{ xpLeft }}</b></i></div>
+                    <div class="item4-bmiddle" visual="tint"></div>
+                    <div class="item4-bottom" visual="tint">RR to Next Rank: <i><b>{{ xpLeft }}</b></i></div>
                 </div>
                 <div class="item5">
                     <div class="item5-top">
@@ -137,7 +138,7 @@ reloadCSS();
         </div>
         <div class="body2-parent-container">
             <div class="body2-container">
-                <div class="item21">
+                <div class="item21" visual="tint">
                     <div class="item21-high">
                         <div class="text"><small>Title</small></div>
                         <div class="text"><b><i>{{ title }}</i></b></div>

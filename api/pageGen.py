@@ -54,7 +54,7 @@ def generateFrom(info, sku, division = "1", excelFile = None):
             <form id="myForm" action="/competitions" method="GET">
                 <input type="hidden" id="sku" name="query" value="{sku}">
                 <label for="division">Division</label>
-                <select name="division" id="divs" class="dropdown">
+                <select name="division" id="divs" class="dropdown" visual="bg">
 '''
     
     for divID, divName in enumerate(divisions):
@@ -73,13 +73,13 @@ def generateFrom(info, sku, division = "1", excelFile = None):
         <div class="gap-2">
             <div class="gap-2"></div>
         </div>
-        <form action="/download" method="GET" class="download-button"><button type="submit" class="download-text">Download XLSX</button></form>
+        <form action="/download" method="GET" class="download-button" visual="tint"><button visual="tint" type="submit" class="download-text">Download XLSX</button></form>
     </div>
     <div class="gap-2">
         <div class="gap-2"></div>
     </div>
         ''' + '''
-    <div class="body-container-top">
+    <div class="body-container-top" visual="tint">
         <div class="body-contained-5">Rank</div>
         <div class="body-contained-5">Team Name</div>
         <div class="body-contained-5">Powerscore</div>

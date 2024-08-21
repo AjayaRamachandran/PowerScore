@@ -74,17 +74,6 @@
     align-self: center;
     font-size: 16px;
 }
-.dropdown {
-    font-family: 'Inter', sans-serif;
-    display: flex;
-    color: #ffffff;
-    border: 1px solid #ffffff;
-    background-color: #084d5a;
-    border-radius: 5px;
-    padding: 5px;
-    font-size: 20px;
-    cursor: pointer;
-}
 .download-button {
     display: flex;
     width: 140px;

@@ -39,7 +39,7 @@ def generateFrom(list):
         sku = item['sku']
 
         data = data + f'''
-            <div class="dashboard">
+            <div class="dashboard" visual="tint">
                 <div class="dashboard-left">
                     <div class="dashboard-left-text-title">{name}</div>
                     <div class="dashboard-left-text-body">{date}</div>
