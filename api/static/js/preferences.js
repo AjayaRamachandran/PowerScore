@@ -1,8 +1,6 @@
-// js for the preferences page
+// js for the preferences
+
 function getDefaultSeason(prefName) {
-    //localStorage.clear();
-    //console.log(localStorage)
-    // console.log(preference);
 
     const parentDiv = document.getElementById(prefName);
     var preference = ""
@@ -13,8 +11,8 @@ function getDefaultSeason(prefName) {
         var data = ["190", "181", "173", "154"];
     } else if (prefName === "preference2") {
         preference = localStorage.getItem(prefName) || "Natural";
-        var values = ["Dark", "Natural"];
-        var data = ["0", "1"];
+        values = ["Dark", "Natural"];
+        data = ["0", "1"];
     }
     var select = document.createElement("select");
     select.className = "dropdown";
@@ -36,9 +34,6 @@ function getDefaultSeason(prefName) {
         localStorage.setItem(prefName, newPreference);
     });
     
-    //var label = document.createElement("label");
-    //label.innerHTML = "Choose your pets: ";
-    //label.htmlFor = "seasons";
     parentDiv.appendChild(select);//.appendChild(select);
 
     return preference;
@@ -74,4 +69,16 @@ function handleAppearance() {
     });
 }
 
+function sendSpecifiedSeason() {
+    document.addEventListener('DOMContentLoaded', function() {
+        var values = ["V5RC 24-25: High Stakes", "VRC 23-24: Over Under", "VRC 22-23: Spin Up", "VRC 21-22: Tipping Point"];
+        var data = ["190", "181", "173", "154"];
+        
+        var element = document.getElementById("season");
+        element.setAttribute("value", (data[values.indexOf(localStorage.getItem("preference1"))] || "181"));
+        console.log((data[values.indexOf(localStorage.getItem("preference1"))] || "181"))
+    });
+}
+
+sendSpecifiedSeason();
 handleAppearance();
