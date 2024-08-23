@@ -76,9 +76,9 @@ function sendSpecifiedSeason() {
         
         var element = document.getElementById("season");
         element.setAttribute("value", (data[values.indexOf(localStorage.getItem("preference1"))] || "181"));
-        console.log((data[values.indexOf(localStorage.getItem("preference1"))] || "181"))
+        console.log(data[values.indexOf(localStorage.getItem("preference1"))] || "181");
     });
 }
-
+// sendSpecifiedSeason ensures that the season parameter in the URL is set to the correct one
 sendSpecifiedSeason();
 handleAppearance();
