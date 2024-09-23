@@ -324,7 +324,7 @@ def runAlgorithm(team, season):
         "164" : 0.96,
         "173" : 0.93,
         "181" : 1,
-        "190" : 1.8
+        "190" : 2.3
     }
 
     apiHandler.setDefaultSeason(season)
