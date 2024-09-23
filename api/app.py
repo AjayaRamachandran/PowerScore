@@ -123,7 +123,8 @@ def handle_teams():
         # Append new kudos entry
         try:
             kudosCount = len(kudos_data["kudos"][query])
-        except:
+        except Exception as e:
+            print(e)
             kudosCount = 0
 
         # Process the search query (e.g., query a database, perform a search, etc.)
@@ -262,7 +263,8 @@ def give_kudos():
         # Append new kudos entry
         try:
             kudos_data["kudos"][team].append({"time": time.time()})
-        except:
+        except Exception as e:
+            print(e)
             kudos_data["kudos"][team] = []
             kudos_data["kudos"][team].append({"time": time.time()})
 

@@ -170,7 +170,8 @@ def getMatchList(compName, matchData):
             redTeam2 = alliances[1]['teams'][1]['team']['name']
 
             matchList.append([redTeam1, redTeam2, blueTeam1, blueTeam2, redScore, blueScore])
-        except:
+        except Exception as e:
+            print(e)
             print(matchData[matchNum])
             print("Team had a invalid match.")
 
