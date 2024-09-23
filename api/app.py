@@ -37,11 +37,18 @@ def apiAction(action, endpoint = "", params = None, data = None):
         BASE_URL = f'{PANTRY_KEY}'
 
         if action == "get":
-            response = requests.get(f'{BASE_URL}{endpoint}', headers=headers, params=params)
+            try:
+                response = requests.get(f'{BASE_URL}{endpoint}', headers=headers, params=params)
+            except Exception as e:
+                print(e)
+                response = 0
             print(response)
             return response.json()
         elif action == "post":
-            requests.post(f'{BASE_URL}{endpoint}', json=data)
+            try:
+                requests.post(f'{BASE_URL}{endpoint}', json=data)
+            except Exception as e:
+                print(e)
 
 
 
