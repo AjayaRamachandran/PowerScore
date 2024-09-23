@@ -214,8 +214,8 @@ def askUserForComp():
 
 
 def getCompList(team):
-    teamID = makeRequest(endpoint=f"teams?number%5B%5D={team}&grade%5B%5D=High%20School&myTeams=false",params={})["data"][0]["id"]
-
+    teamID = makeRequest(endpoint=f"teams?number%5B%5D={team}&myTeams=false",params={})["data"][0]["id"]
+    #teamID = makeRequest(endpoint=f"teams?number%5B%5D={team}&grade%5B%5D=High%20School&myTeams=false",params={})["data"][0]["id"]
     params = {
     "team": teamID,
     "per_page": "250"
