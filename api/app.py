@@ -39,11 +39,11 @@ def apiAction(action, endpoint = "", params = None, data = None):
         if action == "get":
             try:
                 response = requests.get(f'{BASE_URL}{endpoint}', headers=headers, params=params)
+                print(response)
+                return response.json()
             except Exception as e:
                 print(e)
                 return None
-            print(response)
-            return response.json()
         elif action == "post":
             try:
                 requests.post(f'{BASE_URL}{endpoint}', json=data)
