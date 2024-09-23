@@ -150,8 +150,9 @@ def getCompInfoBySKU(sku, div):
     }
     endpoint = f"events/{ID}/divisions/{div+1}/matches"
     divisionsData.append(makeRequest(endpoint=endpoint, params=params)['data'])
+    season = data['season']['id']
 
-    return name, divisionsData, divisionNames
+    return name, divisionsData, divisionNames, season
 
 def getMatchList(compName, matchData):
     matchList = []

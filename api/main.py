@@ -287,12 +287,18 @@ def runPowerScore(compName, compID, div, typeOfPowerscore, compInfo, onlyForComp
     #io.showOutput("output.txt")
 
 def runComp(sku, div): # master function for computing a competition powerscore
-    name, compInfos, divs = apiHandler.getCompInfoBySKU(sku, div) # an api module function that gets the competition info for a comp and division
+    name, compInfos, divs, season = apiHandler.getCompInfoBySKU(sku, div) # an api module function that gets the competition info for a comp and division
     print(divs)
+    scales = {
+        "164" : 0.97,
+        "173" : 0.94,
+        "181" : 1,
+        "190" : 3.2
+    }
     for i in range(len(compInfos)):
-        fullPSLib, fullPSList = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=compInfos[i], onlyForComp=True)
-        fullOPSLib, fullOPSList = runPowerScore(None, None, div=None, typeOfPowerscore="offensive", compInfo=compInfos[i], onlyForComp=True)
-        fullDPSLib, fullDPSList = runPowerScore(None, None, div=None, typeOfPowerscore="defensive", compInfo=compInfos[i], onlyForComp=True)
+        fullPSLib, fullPSList = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=compInfos[i], onlyForComp=True, scalingFactor=scales[season])
+        fullOPSLib, fullOPSList = runPowerScore(None, None, div=None, typeOfPowerscore="offensive", compInfo=compInfos[i], onlyForComp=True, scalingFactor=scales[season])
+        fullDPSLib, fullDPSList = runPowerScore(None, None, div=None, typeOfPowerscore="defensive", compInfo=compInfos[i], onlyForComp=True, scalingFactor=scales[season])
 
     wb = Workbook() # initializes a new spreadsheet to write the values in for downloading
     ws = wb.active
