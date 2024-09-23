@@ -148,7 +148,7 @@ def giveRanking(value): # function to get the rank given a powerscore
 
 ###### ALGORITHM ######
 
-def runPowerScore(compName, compID, div, typeOfPowerscore, compInfo, onlyForComp=False):
+def runPowerScore(compName, compID, div, typeOfPowerscore, compInfo, onlyForComp=False, scalingFactor=1):
     #output = open("output.txt", "w")
 
     def generateTeamsListFromComp(fileList): # uses the match list to generate a list of teams that attended a comp, so that a second teamList is unnecessary
@@ -197,7 +197,7 @@ def runPowerScore(compName, compID, div, typeOfPowerscore, compInfo, onlyForComp
                 scoreDiff = int(match[4]) - int(match[5])
             else:
                 scoreDiff = int(match[5]) - int(match[4])
-            scoreDiffs.append(scoreDiff)
+            scoreDiffs.append(scoreDiff * scalingFactor)
         
         return scoreDiffs
         
@@ -320,6 +320,12 @@ def runComp(sku, div): # master function for computing a competition powerscore
 
 def runAlgorithm(team, season):
     global accolades, teamname
+    scales = {
+        "164" : 0.96,
+        "173" : 0.93,
+        "181" : 1,
+        "190" : 1.8
+    }
 
     apiHandler.setDefaultSeason(season)
     accolades = []
@@ -347,10 +353,10 @@ def runAlgorithm(team, season):
                 date = comps[competition]["start"][:10]
 
         # the new powerscore algorithm works for offensive and defensive powerscore. thus the alg is split in three pieces. overall ps is the most important still.
-        fullPSLib, fullPSList = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=division)
-        newPSLib, newPSList = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=division, onlyForComp=True)
-        fullOPSLib, fullOPSList = runPowerScore(None, None, div=None, typeOfPowerscore="offensive", compInfo=division)
-        fullDPSLib, fullDPSList = runPowerScore(None, None, div=None, typeOfPowerscore="defensive", compInfo=division)
+        fullPSLib, fullPSList = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=division, scalingFactor=scales[season])
+        newPSLib, newPSList = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=division, onlyForComp=True, scalingFactor=scales[season])
+        fullOPSLib, fullOPSList = runPowerScore(None, None, div=None, typeOfPowerscore="offensive", compInfo=division, scalingFactor=scales[season])
+        fullDPSLib, fullDPSList = runPowerScore(None, None, div=None, typeOfPowerscore="defensive", compInfo=division, scalingFactor=scales[season])
     
         compPS = fullPSLib[team]
         newPS = newPSLib[team]
