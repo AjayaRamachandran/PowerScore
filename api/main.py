@@ -293,7 +293,7 @@ def runComp(sku, div): # master function for computing a competition powerscore
         164 : 0.97,
         173 : 0.94,
         181 : 1,
-        190 : 3.2
+        190 : 3.35
     }
     for i in range(len(compInfos)):
         fullPSLib, fullPSList = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=compInfos[i], onlyForComp=True, scalingFactor=scales[season])
@@ -330,7 +330,7 @@ def runAlgorithm(team, season):
         "164" : 0.97,
         "173" : 0.94,
         "181" : 1,
-        "190" : 3.2
+        "190" : 3.35
     }
 
     apiHandler.setDefaultSeason(season)
