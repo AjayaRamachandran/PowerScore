@@ -204,12 +204,12 @@ def handle_competitions():
         global excelFile, name, division
         query = request.args.get("query")
         division = request.args.get("division")
-        #try:
-        result, excelFile = main.runComp(query, int(division) - 1)
-        name = result[0]
-        #except Exception as e:
-            #result = None
-            #print(e)
+        try:
+            result, excelFile = main.runComp(query, int(division) - 1)
+            name = result[0]
+        except Exception as e:
+            result = None
+            print(e)
         if result == None:
             user_agent = request.headers.get('User-Agent').lower()
             if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
