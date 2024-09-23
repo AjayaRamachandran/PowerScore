@@ -110,7 +110,7 @@ def handle_teams():
     else:
         query = request.args.get("query").upper()
         teamName = query
-        season = request.args.get("season", default="181")
+        season = request.args.get("season", default="190")
         try:
             result = main.runAlgorithm(query, season)
             IMAGE_URL = json.load(open(previews))["links"][str(round(result[1]))]
