@@ -321,10 +321,10 @@ def runComp(sku, div): # master function for computing a competition powerscore
 def runAlgorithm(team, season):
     global accolades, teamname
     scales = {
-        "164" : 0.96,
-        "173" : 0.93,
+        "164" : 0.97,
+        "173" : 0.94,
         "181" : 1,
-        "190" : 2.3
+        "190" : 3.2
     }
 
     apiHandler.setDefaultSeason(season)
