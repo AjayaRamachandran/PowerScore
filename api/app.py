@@ -176,7 +176,8 @@ def handle_teams():
                     badgeByteString = result[9],
                     graphByteString = result[10],
                     xpLeft = result[11],
-                    barByteString = result[12], kudosCount = kudosCount, debug = debug, imageURL = IMAGE_URL,
+                    barByteString = result[12], arrowColor = result[14], arrowSvg = result[15],
+                    kudosCount = kudosCount, debug = debug, imageURL = IMAGE_URL,
                     home = home, homeButton = homeButton) + dashboard.generateFrom(result[13])
             else:
                 homeButton = "Back to Home"
@@ -193,7 +194,8 @@ def handle_teams():
                     badgeByteString = result[9],
                     graphByteString = result[10],
                     xpLeft = result[11],
-                    barByteString = result[12], kudosCount = kudosCount, debug = debug, imageURL = IMAGE_URL,
+                    barByteString = result[12], arrowColor = result[14], arrowSvg = result[15],
+                    kudosCount = kudosCount, debug = debug, imageURL = IMAGE_URL,
                     home = home, homeButton = homeButton) + dashboard.generateFrom(result[13])
 
 @app.route("/competitions", methods=["GET"])

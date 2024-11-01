@@ -106,7 +106,11 @@ reloadCSS();
         <div class="body-parent-container">
             <div class="body-container">
                 <div class="item1">{{ powerscore }}</div>
-                <div class="item2"><small><small><small>Prev</small></small></small> {{ old_powerscore }}</div>
+                <div class="item2" style="color: {{ arrowColor }};"><!--<small><small><small>Prev</small></small></small> {{ old_powerscore }}</div>-->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="69" height="90" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="{{ arrowSvg }}"/>
+                    </svg>
+                </div>
                 <div class="item3" visual="tint">
                     <img src="data:plot/png;base64,{{ badgeByteString }}" alt="Generated Image" width="100%" height="100%">
                 </div>
