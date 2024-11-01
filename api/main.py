@@ -340,6 +340,7 @@ def runAlgorithm(team, season):
     comps = apiHandler.getCompList(team)
 
     psList = []
+    nonNormalpsList = []
     opsList = []
     dpsList = []
 
@@ -360,10 +361,10 @@ def runAlgorithm(team, season):
                 date = comps[competition]["start"][:10]
 
         # the new powerscore algorithm works for offensive and defensive powerscore. thus the alg is split in three pieces. overall ps is the most important still.
-        fullPSLib, fullPSList = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=division, scalingFactor=scales[season])
+        fullPSLib, fullPSList = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=division, onlyForComp=False, scalingFactor=scales[season])
         newPSLib, newPSList = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=division, onlyForComp=True, scalingFactor=scales[season])
-        fullOPSLib, fullOPSList = runPowerScore(None, None, div=None, typeOfPowerscore="offensive", compInfo=division, scalingFactor=scales[season])
-        fullDPSLib, fullDPSList = runPowerScore(None, None, div=None, typeOfPowerscore="defensive", compInfo=division, scalingFactor=scales[season])
+        fullOPSLib, fullOPSList = runPowerScore(None, None, div=None, typeOfPowerscore="offensive", compInfo=division, onlyForComp=False, scalingFactor=scales[season])
+        fullDPSLib, fullDPSList = runPowerScore(None, None, div=None, typeOfPowerscore="defensive", compInfo=division, onlyForComp=False, scalingFactor=scales[season])
     
         compPS = fullPSLib[team]
         newPS = newPSLib[team]
@@ -379,8 +380,10 @@ def runAlgorithm(team, season):
             accolades.append("Top Fragger")
 
         #print(compiledList[comp][0])
-        compWeight = 1.0 + 1 * ("Signature Event" in compiledList[comp][0]['event']['name'])
+        compWeight = 1.0 + 0.2 * ("Signature Event" in compiledList[comp][0]['event']['name'])
+        print(f"{compiledList[comp][0]['event']['name']}, weighted with: {compWeight}")
         psList.append([compPS, compWeight, date])
+        nonNormalpsList.append([newPS, compWeight, date])
         opsList.append([compOPS, compWeight, getDays(date)])
         dpsList.append([compDPS, compWeight, getDays(date)])
 
@@ -395,15 +398,20 @@ def runAlgorithm(team, season):
     
     ### GENERAL POWERSCORE ###
     summation = 0
+    nonNormalSummation = 0
     index = 1
     progression = []
-    oldTemporalPS = 0
+    nonNormalProgression = []
+    nonNormalPS = 0
     temporalPS = 0
     for x in psList:
-        summation += x[0] * x[1]
-        oldTemporalPS = temporalPS
+        summation += (x[0] + 100) * x[1] - 100
+        #nonNormalSummation += (nonNormalpsList[index - 1][0]) * nonNormalpsList[index - 1][1]
+        #print(nonNormalpsList[index - 1][0])
+        #nonNormalPS = nonNormalSummation / index
         temporalPS = summation / index
         progression.append([x[2], round((((2/(1 + exp(-0.045 * (temporalPS)))) - 1) / 2 + 0.5) * 1000) / 10])
+        #progression.append([x[2], temporalPS])
         index += 1
     plotBytes = createPlot(progression, teamname, startDate)
     plotBytes.seek(0)
@@ -413,9 +421,12 @@ def runAlgorithm(team, season):
     if sortedProgression[0][1] > 80 and progression[len(progression) - 1][1] < 71:
         accolades.append("Fall from Grace")
     careerPS = round((((2/(1 + exp(-0.045 * temporalPS))) - 1) / 2 + 0.5) * 10000) / 100
+    #careerPS = round(nonNormalPS)
     #print(careerPS)
-    oldCareerPS = round((((2/(1 + exp(-0.045 * oldTemporalPS))) - 1) / 2 + 0.5) * 100)
-
+    #oldCareerPS = round((((2/(1 + exp(-0.045 * oldTemporalPS))) - 1) / 2 + 0.5) * 100)
+    oldCareerPS = round(progression[-2][1])
+    print(f"Career PS: {careerPS}, Old Career PS: {oldCareerPS}")
+    print(psList)
     nextRank = 0
     prevRank = 0
     for rank in reversed(ranking): # finds the previous and next rank of the player to calculate the xp to next rank
