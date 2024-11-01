@@ -290,7 +290,7 @@ def runComp(sku, div): # master function for computing a competition powerscore
     name, compInfos, divs, season = apiHandler.getCompInfoBySKU(sku, div) # an api module function that gets the competition info for a comp and division
     print(divs)
     scales = {
-        164 : 0.97,
+        154 : 0.97,
         173 : 0.94,
         181 : 1,
         190 : 3.35
@@ -327,7 +327,7 @@ def runComp(sku, div): # master function for computing a competition powerscore
 def runAlgorithm(team, season):
     global accolades, teamname
     scales = {
-        "164" : 0.97,
+        "154" : 0.97,
         "173" : 0.94,
         "181" : 1,
         "190" : 3.35
