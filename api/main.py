@@ -246,17 +246,17 @@ def runPowerScore(compName, compID, div, typeOfPowerscore, compInfo, onlyForComp
         for index, matchDiff in enumerate(matchDiffs):
             if typeOfPowerscore == "offensive":
                 if onlyForComp:
-                    matchPower = (2/(1 + exp(-0.05 * (matchDiff + opponentDiffs[index])))) - 1 # performs sigmoid calculation based on the 2 factors
+                    matchPower = (2/(1 + exp(-0.045 * (matchDiff + opponentDiffs[index])))) - 1 # performs sigmoid calculation based on the 2 factors
                 else:
                     matchPower = matchDiff + opponentDiffs[index] # performs summation of 2 factors
             if typeOfPowerscore == "defensive":
                 if onlyForComp:
-                    matchPower = (2/(1 + exp(-0.05 * (matchDiff - allianceDiffs[index])))) - 1 # performs sigmoid calculation based on the 2 factors
+                    matchPower = (2/(1 + exp(-0.045 * (matchDiff - allianceDiffs[index])))) - 1 # performs sigmoid calculation based on the 2 factors
                 else:
                     matchPower = matchDiff - allianceDiffs[index] # performs summation of 2 factors
             if typeOfPowerscore == "general":
                 if onlyForComp:
-                    matchPower = (2/(1 + exp(-0.05 * (matchDiff - allianceDiffs[index] + opponentDiffs[index])))) - 1 # performs sigmoid calculation based on the 3 factors
+                    matchPower = (2/(1 + exp(-0.045 * (matchDiff - allianceDiffs[index] + opponentDiffs[index])))) - 1 # performs sigmoid calculation based on the 3 factors
                 else:
                     matchPower = matchDiff - allianceDiffs[index] + opponentDiffs[index] # performs summation of 3 factors
             matchPowers.append(matchPower)
