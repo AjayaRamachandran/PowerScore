@@ -39,7 +39,7 @@ def apiAction(action, endpoint = "", params = None, data = None):
         if action == "get":
             try:
                 response = requests.get(f'{BASE_URL}{endpoint}', headers=headers, params=params)
-                print(response)
+                print(f"Kudos: {response}")
                 return response.json()
             except Exception as e:
                 print(e)
@@ -111,12 +111,12 @@ def handle_teams():
         query = request.args.get("query").upper()
         teamName = query
         season = request.args.get("season", default="190")
-        try:
-            result = main.runAlgorithm(query, season)
-            IMAGE_URL = json.load(open(previews))["links"][str(round(result[1]))]
-        except Exception as e:
-            result = None
-            print(e)
+        #try:
+        result = main.runAlgorithm(query, season)
+        IMAGE_URL = json.load(open(previews))["links"][str(round(result[1]))]
+        #except Exception as e:
+            #result = None
+            #print(e)
         # retrieves kudos count
         kudos_data = apiAction("get")
 

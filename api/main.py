@@ -346,6 +346,7 @@ def runAlgorithm(team, season):
     dashboard = []
     compiledList = asyncApi.getCompiledDataList(team, comps, season)
     comps = comps['data']
+    print(comps)
     startDate = comps[0]["start"][:10]
 
     print(compiledList[0][0])
