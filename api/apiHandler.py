@@ -121,7 +121,6 @@ def getCompInfoBySKU(sku, div):
     params = {
         "per_page": "250"
     }
-
     endpoint = f"events?sku%5B%5D={sku}&myEvents=false"
     data = makeRequest(endpoint=endpoint, params=params)['data'][0]
     name = data['name']

@@ -6,6 +6,9 @@ down = open(config).read().replace("\n", "")[open(config).read().replace("\n", "
 #-------------------#
 
 from flask import Flask, request, render_template, send_file, url_for, jsonify, redirect
+import firebase_admin
+from firebase_admin import credentials, firestore
+
 import time
 import requests
 import json
@@ -17,6 +20,7 @@ if debug == "Y":
     import osEmul as os
     home = "http://localhost:5000"
     previews = "api/previews.json"
+    cred = credentials.Certificate("api/static/db/kudos-26dd0-firebase-adminsdk-3fckw-8cbe81a827.json")
 else:
     from api import main
     from api import pageGen
@@ -24,33 +28,44 @@ else:
     import os
     home = "https://powerscore.vercel.app"
     previews = "api/previews.json"
+    cred = credentials.Certificate(os.environ.get('db'))
 
 ###### INITIALIZE ######
-PANTRY_KEY = os.environ.get("db")
-#KUDOS_FILE_PATH = '/kudos.json'
 
-def apiAction(action, endpoint = "", params = None, data = None):
-        headers = {
-            'Content-Type': 'application/json'
-        }
+firebase_admin.initialize_app(cred)
+db = firestore.client()
+teamsDocRef = db.collection('kudos').document('Yks2O0WWw2RDM7sPCdZm')
 
-        BASE_URL = f'{PANTRY_KEY}'
+def getKudos(teamID):
+    """Fetches the kudos (timestamps) array for a specific team ID."""
+    doc = teamsDocRef.get()
+    if doc.exists:
+        data = doc.to_dict()
+        print(f"Getting kudos count for team '{teamID}'.")
+        return len(data.get(teamID, []))  # Return length of team's time strings array or empty if not present
+    else:
+        return TypeError
 
-        if action == "get":
-            try:
-                response = requests.get(f'{BASE_URL}{endpoint}', headers=headers, params=params)
-                print(f"Kudos: {response}")
-                return response.json()
-            except Exception as e:
-                print(e)
-                return None
-        elif action == "post":
-            try:
-                requests.post(f'{BASE_URL}{endpoint}', json=data)
-            except Exception as e:
-                print(e)
-
-
+def addKudos(teamId, timeStamp):
+    """Adds a kudos timestamp to a specific team ID in a Firestore document."""
+    # Define the transaction update function using @firestore.transactional decorator
+    @firestore.transactional
+    def transactionUpdate(transaction):
+        doc = teamsDocRef.get(transaction=transaction)
+        if doc.exists:
+            data = doc.to_dict()
+            teamTimes = data.get(teamId, [])
+            teamTimes.append(timeStamp)  # Add new timestamp to team's array
+            transaction.update(teamsDocRef, {teamId: teamTimes})
+        else:
+            # If document doesn't exist, create it with the new team entry
+            transaction.set(teamsDocRef, {teamId: [timeStamp]})
+    
+    try:
+        transactionUpdate(db.transaction())  # Execute the transaction with the decorator
+        print(f"Added kudos timestamp '{timeStamp}' for team '{teamId}'.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 ###### WEBAPP ######
 app = Flask(__name__)
@@ -117,15 +132,8 @@ def handle_teams():
         except Exception as e:
             result = None
             print(e)
-        # retrieves kudos count
-        kudos_data = apiAction("get")
 
-        # Append new kudos entry
-        try:
-            kudosCount = len(kudos_data["kudos"][query])
-        except Exception as e:
-            print(e)
-            kudosCount = 0
+        kudosCount = 0
 
         # Process the search query (e.g., query a database, perform a search, etc.)
         if result == None:
@@ -205,7 +213,15 @@ def handle_competitions():
     else:
         global excelFile, name, division
         query = request.args.get("query")
+        if "RE-V5RC" in query:
+            query = query[query.index("RE-V5RC-"):query.index("RE-V5RC-") + 15]
+        else:
+            query = query[query.index("RE-VRC-"):query.index("RE-VRC-") + 14]
         division = request.args.get("division")
+
+        if request.args.get("query") != query:
+            return redirect(url_for("handle_competitions", query=query, division=division))
+
         try:
             result, excelFile = main.runComp(query, int(division) - 1)
             name = result[0]
@@ -244,42 +260,44 @@ def handle_competitions():
             user_agent = request.headers.get('User-Agent').lower()
             if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
                 homeButton = "Home"
-                htmlFile = render_template("comp.html", debug = debug, home = home, homeButton = homeButton, name = result[0], mobile = [url_for('static', filename='/css/mainstyle-mobile.css'),
+                htmlFile = render_template("comp.html", query = query, debug = debug, home = home, homeButton = homeButton, name = result[0], mobile = [url_for('static', filename='/css/mainstyle-mobile.css'),
                                                                                                         url_for('static', filename='/css/bottom-mobile.css'),
                                                                                                         url_for('static', filename='/css/comps-mobile.css')]) + pageGen.generateFrom(result, query, division, "")
             else:
                 homeButton = "Back to Home"
-                htmlFile = render_template("comp.html", debug = debug, home = home, homeButton = homeButton, name = result[0], mobile = [url_for('static', filename='/css/mainstyle.css'),
+                htmlFile = render_template("comp.html", query = query, debug = debug, home = home, homeButton = homeButton, name = result[0], mobile = [url_for('static', filename='/css/mainstyle.css'),
                                                                                                         url_for('static', filename='/css/bottom.css'),
                                                                                                         url_for('static', filename='/css/comps.css')]) + pageGen.generateFrom(result, query, division, "")
             return htmlFile
 
 
-@app.route('/give-kudos', methods=['POST'])
+@app.route('/add-kudos', methods=['POST'])
 def give_kudos():
     if down == "Y":
         return jsonify({"success": False})
     else:
         team = request.json['team']
-        kudos_data = apiAction("get")
-        # Append new kudos entry
-        try:
-            kudos_data["kudos"][team].append({"time": time.time()})
-        except Exception as e:
-            print(e)
-            kudos_data["kudos"][team] = []
-            kudos_data["kudos"][team].append({"time": time.time()})
+        addKudos(team, time.time())
 
-        # Upload the updated kudos file
-        apiAction("post", data=kudos_data)
         return jsonify({"success": True})
 
+@app.route('/get-kudos', methods=['POST'])
+def get_kudos():
+    if down == "Y":
+        return jsonify({"success": False})
+    else:
+        team = request.json['team']
+        kudos = getKudos(team)
+
+        return jsonify({"success": True, "kudos": kudos})
+        
 @app.route("/download", methods=["GET"])
 def download():
     if down == "Y":
         return render_template('down.html')
     else:
         return send_file(excelFile, as_attachment=True, download_name= name + "-division" + division + '.xlsx', mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
 
 if __name__ == "__main__":
     app.run(debug=True)

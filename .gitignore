@@ -19,3 +19,4 @@ env.bak/
 venv.bak/
 osEmul.py
 previews
+api/static/db
