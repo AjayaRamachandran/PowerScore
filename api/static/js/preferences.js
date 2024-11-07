@@ -38,33 +38,40 @@ function getDefaultSeason(prefName) {
 
     return preference;
 }
-
+// color: #98c8d1;
 function handleAppearance() {
     preference = localStorage.getItem("preference2") || "Natural";
     document.addEventListener('DOMContentLoaded', function() {
         const bgElements = document.querySelectorAll('[visual="bg"]');
         for (const bgElement of bgElements) {
-            if (preference === "Dark")
+            if (preference === "Dark") {
                 bgElement.style.backgroundColor = '#171717';
                 console.log("1")
+            }
         }
         const subtitles = document.querySelectorAll('[visual="sub"]');
         for (const sub of subtitles) {
-            if (preference === "Dark")
+            if (preference === "Dark") {
                 sub.style.color = '#aaaaaa';
                 console.log("2")
+            } else {
+                sub.style.color = '#b6cdd1';
+                console.log("2")
+            }
         }
         const tints = document.querySelectorAll('[visual="tint"]');
         for (const tint of tints) {
-            if (preference === "Dark")
+            if (preference === "Dark") {
                 tint.style.backgroundColor = '#333333';
                 console.log("3")
+            }
         }
         const shades = document.querySelectorAll('[visual="shade"]');
         for (const shade of shades) {
-            if (preference === "Dark")
+            if (preference === "Dark") {
                 shade.style.backgroundColor = '#000000';
                 console.log("4")
+            }
         }
     });
 }

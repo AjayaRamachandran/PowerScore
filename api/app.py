@@ -213,16 +213,17 @@ def handle_competitions():
     else:
         global excelFile, name, division
         query = request.args.get("query")
-        if "RE-V5RC" in query:
-            query = query[query.index("RE-V5RC-"):query.index("RE-V5RC-") + 15]
-        else:
-            query = query[query.index("RE-VRC-"):query.index("RE-VRC-") + 14]
-        division = request.args.get("division")
-
-        if request.args.get("query") != query:
-            return redirect(url_for("handle_competitions", query=query, division=division))
+        division = request.args.get("division") or 1
 
         try:
+            if "RE-V5RC" in query:
+                query = query[query.index("RE-V5RC-"):query.index("RE-V5RC-") + 15]
+            else:
+                query = query[query.index("RE-VRC-"):query.index("RE-VRC-") + 14]
+            
+            if request.args.get("query") != query:
+                return redirect(url_for("handle_competitions", query=query, division=division))
+            
             result, excelFile = main.runComp(query, int(division) - 1)
             name = result[0]
         except Exception as e:
