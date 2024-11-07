@@ -28,7 +28,7 @@ else:
     import os
     home = "https://powerscore.vercel.app"
     previews = "api/previews.json"
-    cred = credentials.Certificate(os.environ.get('db'))
+    cred = credentials.Certificate(json.loads(os.environ.get('db')))
 
 ###### INITIALIZE ######
 
