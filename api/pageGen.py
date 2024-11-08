@@ -1,3 +1,8 @@
+###### CONTROL ######
+config = "api/config.txt"
+debug = open(config).read().replace("\n", "")[open(config).read().replace("\n", "").index("debug") - 5]
+mobile = open(config).read().replace("\n", "")[open(config).read().replace("\n", "").index("mobile") - 5]
+#-------------------#
 ending = '''
         <div class="gap-2">
             <div class="gap-2"></div>
@@ -92,7 +97,7 @@ def generateFrom(info, sku, division = "1", excelFile = None):
         bodyList = bodyList + f'''
     <div class="body-container1">
         <div class="body-contained-4"><b>{str(team + 1) + ". "}</b></div>
-        <div class="body-contained-2"><b>{powerscores[team][0]}</b></div>
+        <div class="body-contained-2"><b><a href={"http://localhost:5000" if debug else "https://powerscore.vercel.app"}/teams?query={powerscores[team][0]} style="text-decoration: underline;">{powerscores[team][0]}</a></b></div>
         <div class="body-contained-1">{powerscores[team][1]}</div>
         <div class="body-contained-3">{offensive[team][1]}</div>
         <div class="body-contained-4">{defensive[team][1]}</div>
