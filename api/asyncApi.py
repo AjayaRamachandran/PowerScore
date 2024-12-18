@@ -21,7 +21,7 @@ else:
 apiKeys = []
 allKeys = []
 usableKeys = []
-for i in range(50):
+for i in range(60):
     apiKeys.append(os.environ.get(f'API_KEY{i + 1}'))
     usableKeys.append(i)
     allKeys.append(i)
