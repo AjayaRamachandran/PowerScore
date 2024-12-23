@@ -338,6 +338,7 @@ def runAlgorithm(team, season):
     teamname = team
 
     comps = apiHandler.getCompList(team)
+    print(f"Initial Comps : {comps}")
 
     psList = []
     opsList = []
@@ -346,10 +347,10 @@ def runAlgorithm(team, season):
     dashboard = []
     compiledList = asyncApi.getCompiledDataList(team, comps, season)
     comps = comps['data']
-    print(comps)
+    #print(comps)
     startDate = comps[0]["start"][:10]
 
-    print(compiledList[0][0])
+    #print(compiledList[0][0])
     for comp in range(len(compiledList)):
         division = compiledList[comp]
 

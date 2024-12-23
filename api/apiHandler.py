@@ -171,7 +171,7 @@ def getMatchList(compName, matchData):
             matchList.append([redTeam1, redTeam2, blueTeam1, blueTeam2, redScore, blueScore])
         except Exception as e:
             print(e)
-            print(matchData[matchNum])
+            print(matchData)
             print("Team had a invalid match.")
 
     return matchList

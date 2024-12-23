@@ -32,7 +32,6 @@ else:
 
 ###### INITIALIZE ######
 
-firebase_admin.initialize_app(cred)
 db = firestore.client()
 teamsDocRef = db.collection('kudos').document('Yks2O0WWw2RDM7sPCdZm')
 
