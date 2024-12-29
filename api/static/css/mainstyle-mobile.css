@@ -293,6 +293,7 @@ a {
     padding-top: 25px;
     padding-bottom: 19px;
     text-align: center;
+    z-index: 5;
 }
 .notcl {
     backdrop-filter: blur(16px);
@@ -322,6 +323,7 @@ a {
     padding: 8px;
     /*border: 1px solid #ffffff;*/
     border-radius: 5px;
+    z-index: 6;
 }
 .starred-list-button {
     background-color: #ffffff22;
@@ -334,6 +336,7 @@ a {
     padding: 8px;
     border: 0px transparent;
     border-radius: 5px;
+    z-index: 6;
 }
 .top-bar-container {
     font-size: 70px;
@@ -391,13 +394,17 @@ a {
     width: 250px;
     font-family: 'Inter', sans-serif;
     font-weight: 500;
-    display: none;
+    display: flex;
+    height: 0;
     flex-direction: column;
     background-color: #000000bb;
     backdrop-filter: blur(16px);
     padding: 8px 10px 8px 10px;
     border-radius: 15px;
     box-shadow: 0px 8px 12px #00000055;
+    opacity: 0%;
+    transition: opacity 0.5s cubic-bezier(1, 0, 0, 1), height 0.5s cubic-bezier(1, 0, 0, 1);
+    z-index: 7;
 }
 .starred-team {
     font-family: 'Inter', sans-serif;
@@ -408,8 +415,9 @@ a {
     text-align: center;
     height: fit-content;
     border-radius: 7px;
-    margin: 7px 4px 7px 4px;
+    margin: 7px 7px 14px 7px;
     padding: 10px 10px 2px 10px;
+    z-index: 8;
     }
     .none {
         padding: 10px 10px 10px 10px;
@@ -426,6 +434,7 @@ a {
     border: 0px transparent;
     border-radius: 5px;
     height: 40px;
+    z-index: 6;
 }
 .dropdown {
     font-family: 'Inter', sans-serif;
@@ -440,4 +449,48 @@ a {
 }
 .fit {
     width: 220px;
+}
+.star-container {
+    position: relative;
+    width: 100px; /* Adjust as needed */
+    height: 25px; /* Adjust as needed */
+    overflow: hidden; /* Ensures no overflow is visible */
+  }
+  .star-text, .unstar-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex; /* For centering content */
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+  }
+
+
+.toggle {
+    transition: transform 0.5s cubic-bezier(1, 0, 0, 1), opacity 0.5s cubic-bezier(1, 0, 0, 1), filter 0.5s cubic-bezier(1, 0, 0, 1);
+    transform-origin: center; /* Transform from the center */
+    position: fixed;
+    top: 27px;
+}
+#retract {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.toggle2 {
+    transition: transform 0.5s cubic-bezier(.29, 1.61, .34, 1.01);
+    transform-origin: center; /* Transform from the center */
+    width: 24px;
+    height: 24px;
+    display: block;
+    scale: 100%;
+    z-index: 1;
+}
+.toggle3 {
+    transition: transform 0.5s cubic-bezier(1, 0, 0, 1), opacity 0.5s cubic-bezier(1, 0, 0, 1), filter 0.5s cubic-bezier(1, 0, 0, 1);
+    transform-origin: center; /* Transform from the center */
+    z-index: 1;
 }

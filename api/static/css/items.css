@@ -26,7 +26,7 @@
     border-radius: 10px;
     background-color: #0e6172;
     padding: 0%;
-    border-radius: 20px 0 0 20px;
+    border-radius: 15px 0 0 15px;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -38,34 +38,43 @@
     display: flex;
     flex-direction: column;
     padding: 10px;
-    border-radius: 0 20px 20px 0;
+    border-radius: 0 15px 15px 0;
     align-items: center;
     justify-content: center;
     background-color: #0e6172;
 }
 .item4-top {
-    height: 73px;
     width: 300px;
+    padding-top: 30px;
+    padding-bottom: 16px;
     background-color: #0e6172;
     text-align: center;
     font-family: "Teko";
     font-size: 40px;
-}
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    }
+    .rank-indicator {
+        color: #bbebf5;
+        margin-right: 10px;
+        font-size: 30px;
+    }
 .item4-middle {
     flex: 0 0 4%;
-    height: 15px;
     width: 300px;
     background-color: #0e6172;
     text-align: center;
     font-family: "Teko";
     font-size: 20px;
-    align-items: center;
     flex-direction: column;
 }
 .item4-bmiddle {
     height: 15px;
     width: 300px;
-    background-color: #0e6172;
+    background: transparent;
     text-align: center;
     font-family: "Teko";
     font-size: 20px;
@@ -74,12 +83,13 @@
 }
 .item4-bottom {
     flex: 0 0 25%;
-    height: 30px;
+    height: 15px;
     width: 300px;
     background-color: #0e6172;
     text-align: center;
     font-family: "Teko";
-    font-size: 20px;
+    font-size: 14px;
+    letter-spacing: 0.1px;
     align-items: center;
 }
 .item5 {
@@ -113,9 +123,10 @@
     display: flex;
     flex-direction: column;
     background-color: #0e6172;
-    border: 1px solid #ffffff;
-    border-radius: 5px;
+    border: 1px solid #ffffff3f;
+    border-radius: 15px;
     padding-top: 15px;
+    padding-bottom: 0px;
 }
 .item21-high {
     font-family: "Teko";
@@ -130,8 +141,26 @@
     line-height: 120%;
     text-align: left;
     color:#ffffff;
-    padding-top: -10px;
-    padding-left: 15px;
+}
+.head {
+    margin-top: 0px;
+    font-weight: 800;
+}
+.acc {
+    height: 18px;
+    font-family: "Teko";
+    font-weight: 500;
+    font-size: 16px;
+    color: #66b1c0;
+}
+.accolade {
+    background-color: #17788b;
+    padding: 0 10px 10px 10px;
+    border-radius: 8px;
+    margin: 10px 10px;
+    height: 60px;
+    overflow: hidden;
+    box-shadow: 0 2px 2px #00000011;
 }
 .head {
     margin-top: 15px;
@@ -153,8 +182,8 @@
     font-size: 20px;
     text-align: center;
     color:#ffffff;
-    border: 1px solid #ffffff;
-    border-radius: 5px;
+    border: 1px solid #ffffff3f;
+    border-radius: 15px;
     padding: 5px;
 }
 .season-selector-parent {

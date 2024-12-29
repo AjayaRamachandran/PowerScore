@@ -17,8 +17,8 @@
     background-color: #0e6172;
     display: flex;
     padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ffffff;
+    border-radius: 15px;
+    border: 1px solid #ffffff3f;
     justify-content: space-between;
     flex-direction: row;
 }
@@ -27,17 +27,19 @@
     text-align: left;
 }
 .dashboard-left-link {
+    background: transparent;
     font-family: "Inter";
     font-size: 14px;
+    font-weight: 700;
     text-align: left;
-    color:#ffffff;
-    font-weight: 400;
+    background-color: #228194;
+    color:#aed9e2;
     border: 0px transparent;
+    border-radius: 5px;
     cursor: pointer;
-    padding-left: 0px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    background: transparent;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    padding: 5px;
 }
 .dashboard-left-text-title {
     font-family: "Inter";

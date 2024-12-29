@@ -8,7 +8,8 @@ function openPanel() {
     const teamList = document.getElementById('team-list');
     const starredTeams = JSON.parse(localStorage.getItem('starredTeams')) || [];
 
-    teamList.style.display = "flex"
+    teamList.style.display = "block"
+    teamList.style.opacity = '100%';
     
     console.log(panel)
     if (panel === "Y") {
@@ -22,14 +23,24 @@ function openPanel() {
     const retract = document.getElementById('retract');
 
     if (panel === "Y") {
-        expand.style.display = 'none';
-        retract.style.display = 'flex';
+        expand.style.transform = 'scale(0%)';
+        expand.style.opacity = '0%';
+        expand.style.filter = 'blur(13px)';
+        retract.style.transform = 'scale(100%)';
+        retract.style.opacity = '100%';
+        retract.style.filter = 'blur(0px)';
+        
     } else {
-        retract.style.display = 'none';
-        expand.style.display = 'flex';
+        retract.style.transform = 'scale(0%)';
+        retract.style.opacity = '0%';
+        retract.style.filter = 'blur(13px)';
+        expand.style.transform = 'scale(100%)';
+        expand.style.opacity = '100%';
+        expand.style.filter = 'blur(0px)';
     }
 
     teamList.innerHTML = '';
+    teamList.style.height = `${(starredTeams.length === 0) ? ('54') : (starredTeams.length * 54)}px`;
     if (panel === "Y") {
         if (starredTeams.length === 0) {
             const title = document.createElement('div');
@@ -39,6 +50,7 @@ function openPanel() {
             title.style.color = "#5bacbd";
             teamList.appendChild(title);
         } else {
+            /*
             if (page === "splash" && starredTeams.length > 0) {
                 const title = document.createElement('div');
                 title.className = "starred-team";
@@ -46,7 +58,7 @@ function openPanel() {
                 title.style.fontWeight = "900";
                 title.style.color = "#5bacbd";
                 teamList.appendChild(title);
-            }
+            }*/
 
             starredTeams.forEach(team => {
                 const teamItem = document.createElement('div');
@@ -81,7 +93,8 @@ function openPanel() {
             });
         }
     } else {
-        teamList.style.display = "none"
+        teamList.style.opacity = "0%"
+        teamList.style.height = "0px"
     }
 }
 
@@ -142,28 +155,45 @@ function loadStarredTeams() {
 // Function to display the correct star version on page load
 function loadStar() {
     let starText = document.getElementById('star-text');
+    let unstarText = document.getElementById('unstar-text');
     const emptyStar = document.getElementById('empty-star');
     const filledStar = document.getElementById('filled-star');
     let starredTeams = JSON.parse(localStorage.getItem('starredTeams')) || [];
 
+
+
     const teamCode = document.getElementById('team-code').value;
     if (starredTeams.includes(teamCode)) {
-        starText.textContent = 'Unstar';
-        starText.style.fontWeight = '400';
-        starText.style.color = '#666666';
+        starText.style.transform = 'scale(0%)';
+        starText.style.opacity = '0%';
+        starText.style.filter = 'blur(13px)';
+        unstarText.style.transform = 'scale(100%)';
+        unstarText.style.opacity = '100%';
+        unstarText.style.filter = 'blur(0px)';
     } else {
-        starText.textContent = 'Star'
-        starText.style.fontWeight = '400';
-        starText.style.color = '#000000';
+        starText.style.transform = 'scale(100%)';
+        starText.style.opacity = '100%';
+        starText.style.filter = 'blur(0px)';
+        unstarText.style.transform = 'scale(0%)';
+        unstarText.style.opacity = '0%';
+        unstarText.style.filter = 'blur(13px)';
     }
 
     
     if (starredTeams.includes(teamCode)) {
-        emptyStar.style.display = 'none';
-        filledStar.style.display = 'block';
+        emptyStar.style.opacity = '0%';
+        emptyStar.style.transform = 'scale(1.2)';
+        emptyStar.style.position = "fixed"
+        filledStar.style.opacity = '100%';
+        filledStar.style.transform = 'scale(1.2)'
+        filledStar.style.position = "relative"
     } else {
-        emptyStar.style.display = 'block';
-        filledStar.style.display = 'none';
+        emptyStar.style.opacity = '100%';
+        emptyStar.style.transform = 'scale(1)'
+        emptyStar.style.position = "relative"
+        filledStar.style.opacity = '0%';
+        filledStar.style.transform = 'scale(0.8)'
+        filledStar.style.position = "fixed"
     }
 }
 

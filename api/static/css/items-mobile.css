@@ -58,7 +58,7 @@
     font-family: "Teko";
     font-size: 48px;
     }
-    .item4-top-small {
+    .rank-indicator {
         display: flex;
         font-size: 22px;
         height: 10px;
@@ -162,6 +162,7 @@
     margin: 10px 10px;
     height: max-content;
     overflow: hidden;
+    box-shadow: 0 2px 2px #00000011;
 }
 .item22 {
     flex: 0 0 2%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 15% */
