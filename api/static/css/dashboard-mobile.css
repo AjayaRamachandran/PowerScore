@@ -17,7 +17,7 @@
     background-color: #0e6172;
     display: flex;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 15px;
     border: 1px solid #ffffff3f;
     justify-content: space-between;
     flex-direction: row;
@@ -33,7 +33,7 @@
     font-weight: 700;
     text-align: left;
     background-color: #228194;
-    color:#96d3df;
+    color:#aed9e2;
     border: 0px transparent;
     border-radius: 5px;
     cursor: pointer;

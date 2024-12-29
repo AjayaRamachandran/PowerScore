@@ -9,6 +9,8 @@
     padding: 10px;
     justify-content: center;
     align-items: center;
+    background-color: #0e6172;
+    border: 1px solid #ffffff3f;
 }
 .body-container1 {
     display: flex;
@@ -19,6 +21,7 @@
     padding: 10px;
     justify-content: center;
     align-items: center;
+    border: 1px solid #ffffff3f;
 }
 .body-container2 {
     display: flex;
@@ -26,9 +29,10 @@
     flex-direction: row;
     border: 1px transparent #ffffff;
     border-radius: 5px;
-    padding: 10px;
-    justify-content: space-between;
+    padding: 10px 0px;
     align-items: last baseline;
+    justify-content: space-between;
+    
 }
 .body-contained-1 {
     display: flex;
@@ -38,16 +42,26 @@
     align-self: center;
     font-size: 16px;
     width: 50px;
+    
 }
 .body-contained-2 {
     display: flex;
+    width: fit-content;
     border: 1px transparent #ffffff;
     border-radius: 5px;
-    padding: 5px 5px 5px 15px;
-    align-self: center;
+    padding: 0px 3px 0px 3px;
+    margin-right: 10px;
+    justify-content: center;
+    text-align: center;
     font-size: 16px;
     width: 80px;
-}
+    }
+    .backlink {
+        padding: 5px 8px;
+        background-color: #1d616e;
+        color: #aedbe4;
+        border-radius: 5px;
+    }
 .body-contained-3 {
     display: flex;
     border: 1px transparent #ffffff;
@@ -76,15 +90,16 @@
 }
 .download-button {
     display: flex;
-    width: 140px;
+    width: 40px;
+    height: 40px;
     font-size: 16px;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ffffff;
+    padding: 7px 5px 3px 5px;
+    border-radius: 40px;
+    border: 1px solid #ffffff22;
+    background-color: #1f6877;
     font-family: 'Inter', sans-serif;
     letter-spacing: -0.3px;
     text-align: center;
-    background-color: #095d6a;
     color: #ffffff;
     justify-content: center;
     align-items: center;
@@ -92,10 +107,9 @@
 .download-text {
     font-size: 16px;
     font-family: 'Inter', sans-serif;
-    letter-spacing: -0.3px;
     color: #ffffff;
     border: 0px transparent;
-    background-color: #095d6a;
+    background: transparent;
     cursor: pointer;
 }
 .kudos-button {
