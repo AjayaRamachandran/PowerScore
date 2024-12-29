@@ -25,6 +25,7 @@ class environ():
         return apiKeys[key]
 ```
 Keep in mind that the `kudos` functionality will not be available by default on your local machine. If no action is taken, all `kudos` counts will simply display as 0 - if you wish, you may connect a Firebase Firestore database to your installation by placing your authentication .JSON file inside of `Root > api > static > db`
+
 ---
 ### What is the PowerScore Algorithm?
 In VEX Robotics, teams play to compete for high points while trying to keep their opponents from doing the same thing. Games are set up by "alliances", which are randomly assigned pairs of teams that oppose a different pair of teams. Since individual statistics of a team in a match are not tracked in VEX Robotics, it can be difficult to determine how one team contributes to the outcome of their game. This knowledge is important for picking the correct partner in the elimination phase of the tournament. Thus, algorithms like OPR/DPR/CCWM, AdamScore, TrueSkill, and others have tried to calculate this "individual contribution", but each one has its own drawbacks. Powerscore has been rated the most accurate to a team's actual skill by numerous VEX robotics participants, and places amongst the very best algoriths after using the [Forward Predictive Test](https://en.wikipedia.org/wiki/Validity_(statistics)#:~:text=on%20performance%20reviews.-,Predictive%20validity,-%5Bedit%5D). Here's how it works.
