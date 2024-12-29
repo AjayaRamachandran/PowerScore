@@ -432,7 +432,7 @@ def runAlgorithm(team, season):
         if careerPS > rank[1]:
             prevRank = rank[1]
     
-    xpToNext = round(((nextRank - careerPS) * careerPS) * 0.05) * 100
+    xpToNext = ceil(((nextRank - careerPS) * careerPS) * 0.05) * 100
 
     percentageXP = round(((careerPS - prevRank) / (nextRank - prevRank)) * 100) / 100
 

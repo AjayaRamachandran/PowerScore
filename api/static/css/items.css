@@ -133,6 +133,9 @@
     padding-top: -10px;
     padding-left: 15px;
 }
+.head {
+    margin-top: 15px;
+}
 .item22 {
     flex: 0 0 2%; /* Flex-grow: 0, Flex-shrink: 0, Flex-basis: 15% */
     background-color: transparent;

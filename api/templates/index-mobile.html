@@ -39,11 +39,13 @@ reloadCSS();
 <body visual="bg">
     <input hidden value="{{debug}}" id="debug">
     <input hidden value="N" id="panel">
-    <div class="banner"><i>VRC TRACKER</i></div>
-    <div class="home-button"><a href="{{ home }}"><svg width="18" height="18" viewBox="-3 -3 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="14,4 4,12 14,20" fill="currentColor"/></svg> {{ homeButton }} </a></div>
+    <div class="banner notcl" style="color:#c43488; padding-top: 28px;"><i>VRC TRACKER</i></div>
+    <div class="banner" style="color:#1f8188; padding-top: 25px; background: transparent;"><i>VRC TRACKER</i></div>
+    <div class="banner" style="color:#ffffff; padding-top: 22px; background: transparent;"><i>VRC TRACKER</i></div>
+    <div class="home-button"><a href="{{ home }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" style="margin:0; display: flex; align-items: center; justify-content: center;" class="bi bi-house" viewBox="0 0 16 16"><path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/></svg></a></div>
     <button class="starred-list-button" onclick="openPanel()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" style="display:flex;" id="expand" class="bi bi-bookmark-star" viewBox="0 0 16 16"><path d="M7.84 4.1a.178.178 0 0 1 .32 0l.634 1.285a.18.18 0 0 0 .134.098l1.42.206c.145.021.204.2.098.303L9.42 6.993a.18.18 0 0 0-.051.158l.242 1.414a.178.178 0 0 1-.258.187l-1.27-.668a.18.18 0 0 0-.165 0l-1.27.668a.178.178 0 0 1-.257-.187l.242-1.414a.18.18 0 0 0-.05-.158l-1.03-1.001a.178.178 0 0 1 .098-.303l1.42-.206a.18.18 0 0 0 .134-.098z"/><path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" style="display:none;" id="retract" class="bi bi-bookmark-star" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" style="display:flex;" id="expand" class="bi bi-bookmark-star" viewBox="0 0 16 16"><path d="M7.84 4.1a.178.178 0 0 1 .32 0l.634 1.285a.18.18 0 0 0 .134.098l1.42.206c.145.021.204.2.098.303L9.42 6.993a.18.18 0 0 0-.051.158l.242 1.414a.178.178 0 0 1-.258.187l-1.27-.668a.18.18 0 0 0-.165 0l-1.27.668a.178.178 0 0 1-.257-.187l.242-1.414a.18.18 0 0 0-.05-.158l-1.03-1.001a.178.178 0 0 1 .098-.303l1.42-.206a.18.18 0 0 0 .134-.098z"/><path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" style="display:none;" id="retract" class="bi bi-bookmark-star" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg>
     </button>
     
     <div class="total-parent-container">
@@ -107,9 +109,9 @@ reloadCSS();
             <script src="/static/js/kudos-ajax.js"></script>
             <div class="v-gap"><div class="v-gap"></div></div>
             <div class="v-gap"><div class="v-gap"></div></div>
-            <button class='star' onclick="starTeam()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" id="empty-star" style="display:block;" fill="currentColor" viewBox="0 0 16 16"><path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="gold" id="filled-star" style="display:none;" fill="currentColor" viewBox="0 0 16 16"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/></svg>
+            <button class='star' onclick="starTeam()"> <div id="star-text" class="star-text">Star</div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" id="empty-star" style="display:block; margin-left: 10px;" fill="currentColor" viewBox="0 0 16 16"><path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" class="gold" id="filled-star" style="display:none; margin-left: 10px;" fill="currentColor" viewBox="0 0 16 16"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/></svg>
             </button>
         </div>
         <div class="v-gap">
@@ -147,15 +149,16 @@ reloadCSS();
                 <div class="gap-2"></div>
             </div>
             <div class="item3" visual="tint">
-                <img src="data:plot/png;base64,{{ badgeByteString }}" alt="Generated Image" width="100%" height="100%">
+                <img src="data:plot/png;base64,{{ badgeByteString }}" alt="Generated Image" width="70%" height="50%" style="margin-top: 10px; overflow: hidden;">
             </div>
             <div class="item4" visual="tint">
-                <div class="item4-top" visual="tint">Rank: <b>{{ rank }}</b></div>
+                <div class="item4-top item4-top-small" visual="tint">RANK</div>
+                <div class="item4-top" visual="tint"><b>{{ rank }}</b></div>
                 <form action="/ranks" method="GET">
-                    <button class="body" type="submit" visual="tint"><u>Show All Ranks <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-arrow-up-right-square" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm5.854 8.803a.5.5 0 1 1-.708-.707L9.243 6H6.475a.5.5 0 1 1 0-1h3.975a.5.5 0 0 1 .5.5v3.975a.5.5 0 1 1-1 0V6.707z"/></svg></u></button>
+                    <button class="body" type="submit" visual="tint">Show All Ranks <svg xmlns="http://www.w3.org/2000/svg" style="margin-left: 5px" width="12" height="12" fill="currentColor" class="bi bi-arrow-up-right-square" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm5.854 8.803a.5.5 0 1 1-.708-.707L9.243 6H6.475a.5.5 0 1 1 0-1h3.975a.5.5 0 0 1 .5.5v3.975a.5.5 0 1 1-1 0V6.707z"/></svg></button>
                 </form>
-                <div class="item4-middle" visual="tint">
-                    <img src="data:plot/png;base64,{{ barByteString }}" alt="badge" width="100%" height="100%">
+                <div class="item4-middle" visual="tint" style="overflow: hidden; height: max-content; width: max-content; padding: 0">
+                    <img src="data:plot/png;base64,{{ barByteString }}" alt="badge" style="border-radius: 5px; padding: 0; margin: 0; overflow: hidden; height: 13px; width: 250px;" ></img>
                 </div>
                 <div class="item4-bmiddle" visual="tint"></div>
                 <div class="item4-bottom" visual="tint">RR to Next Rank: <i><b>{{ xpLeft }}</b></i></div>
@@ -174,18 +177,21 @@ reloadCSS();
                         <div class="text"><small>Accolades</small></div>
                     </div>
                     <div class="item21-low">
-                        <div class="text"><b>{{ accolade1[0] }}</b></div>
-                        <div class="text"><small>{{ accolade1[1] }}</small></div>
-                        <div class="text"><b>{{ accolade2[0] }}</b></div>
-                        <div class="text"><small>{{ accolade2[1] }}</small></div>
+                        <div class="accolade">
+                            <div class="text head">{{ accolade1[0] }}</div>
+                            <div class="text acc">{{ accolade1[1] }}</div>
+                        </div>
+                        <div class="accolade">
+                            <div class="text head">{{ accolade2[0] }}</div>
+                            <div class="text acc">{{ accolade2[1] }}</div>
+                        </div>
                     </div>
                 </div>
-                <div class="item22"></div>
                 <div class="gap-2">
                     <div class="gap-2"></div>
                 </div>
                 <div class="item23">
-                    <img src="data:plot/png;base64,{{ graphByteString }}" alt="Generated Image" width="100%" height="100%">
+                    <img src="data:plot/png;base64,{{ graphByteString }}" alt="Generated Image" width="100%" height="100%" />
                 </div>
             </div>
             <div class="gap">
@@ -196,6 +202,9 @@ reloadCSS();
             </div>
             <div class="gap">
                 <div class="gap"></div>
+            </div>
+            <div class="gap-2">
+                <div class="gap-2"></div>
             </div>
             <hr>
             <div class="dashboard-title">Competitions</div>

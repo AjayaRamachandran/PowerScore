@@ -18,7 +18,7 @@
     display: flex;
     padding: 10px;
     border-radius: 10px;
-    border: 1px solid #ffffff;
+    border: 1px solid #ffffff3f;
     justify-content: space-between;
     flex-direction: row;
 }
@@ -29,15 +29,17 @@
 .dashboard-left-link {
     background: transparent;
     font-family: "Inter";
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: 700;
     text-align: left;
-    color:#ffffff;
-    font-weight: 400;
+    background-color: #228194;
+    color:#96d3df;
     border: 0px transparent;
+    border-radius: 5px;
     cursor: pointer;
-    padding-left: 0px;
-    padding-top: 3px;
-    padding-bottom: 3px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    padding: 5px;
 }
 .dashboard-left-text-title {
     font-family: "Inter";
@@ -58,6 +60,7 @@
     flex-direction: column;
     align-items: flex-end;
     font-weight: 400;
+    margin: 7px 0px;
 }
 .dashboard-right {
     font-family: "Inter";

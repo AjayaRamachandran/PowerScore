@@ -33,7 +33,7 @@ function openPanel() {
     if (panel === "Y") {
         if (starredTeams.length === 0) {
             const title = document.createElement('div');
-            title.className = "starred-team";
+            title.className = "starred-team none";
             title.textContent = "You have no starred teams.";
             title.style.fontWeight = "500";
             title.style.color = "#5bacbd";
@@ -141,11 +141,23 @@ function loadStarredTeams() {
 
 // Function to display the correct star version on page load
 function loadStar() {
+    let starText = document.getElementById('star-text');
     const emptyStar = document.getElementById('empty-star');
     const filledStar = document.getElementById('filled-star');
     let starredTeams = JSON.parse(localStorage.getItem('starredTeams')) || [];
 
     const teamCode = document.getElementById('team-code').value;
+    if (starredTeams.includes(teamCode)) {
+        starText.textContent = 'Unstar';
+        starText.style.fontWeight = '400';
+        starText.style.color = '#666666';
+    } else {
+        starText.textContent = 'Star'
+        starText.style.fontWeight = '400';
+        starText.style.color = '#000000';
+    }
+
+    
     if (starredTeams.includes(teamCode)) {
         emptyStar.style.display = 'none';
         filledStar.style.display = 'block';

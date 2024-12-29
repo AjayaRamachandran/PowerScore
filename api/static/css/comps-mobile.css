@@ -100,10 +100,10 @@
 }
 .kudos-button {
     display: flex;
-    width: 230px;
+    width: 165px;
     font-size: 20px;
     padding: 5px;
-    border-radius: 7.5px;
+    border-radius: 10px;
     border: 1px solid #ffffff;
     font-family: 'Inter', sans-serif;
     letter-spacing: -0.3px;
@@ -112,6 +112,7 @@
     color: #000000;
     justify-content: center;
     align-items: center;
+    margin-left:0;
 }
 .kudos-text {
     font-size: 19px;
@@ -126,31 +127,34 @@
 .star {
     display: flex;
     justify-self: left;
-    font-size: 16px;
-    padding: 7.5px;
-    border-radius: 7.5px;
-    border: 1px solid #ffffff;
+    font-size: 19px;
+    width: 110px;
+    padding: 5px 12px;
+    border-radius: 10px;
+    border: 1px solid #fff1d7;
     font-family: 'Inter', sans-serif;
+    font-weight: 400;
     letter-spacing: -0.3px;
-    text-align: center;
-    background-color: #ffffff;
+    text-align: right;
+    background-color: #fff1d7;
     color: #000000;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
     cursor: pointer;
 }
-.star:hover {
-    background-color: #dbdbdb;
+.star-text {
+    width: 100%;
+    text-align: center;
 }
 .gold {
-    color: #ffbb00
+    color: #ffbb00;
+    /*filter: drop-shadow(0 0px 3px #ffffffad);*/
 }
 .functions-container {
     display: flex;
     align-items: center;
     flex-direction: row;
     border: 0px transparent #000000;
-    padding-left: 5px;
 }
 .container {
     display: flex;

@@ -44,7 +44,7 @@ def generateFrom(list):
                     <div class="dashboard-left-text-title">{name}</div>
                     <div class="dashboard-left-text-body">{date}</div>
                     <form action="/competitions" method="GET">                 
-                        <button class="dashboard-left-link"><u>Show Competition</u></button>
+                        <button class="dashboard-left-link">Show Competition</button>
                         <input type="hidden" name="query" value="{sku}">
                         <input type="hidden" name="division" value="1">
                     </form>

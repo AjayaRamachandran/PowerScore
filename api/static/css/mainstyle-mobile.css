@@ -80,15 +80,17 @@ a {
 .body {
     font-family: 'Inter', sans-serif;
     border: 0px transparent;
+    border-radius: 5px;
     color: #a8d7e0;
-    background-color: #0e6172;
+    background-color: #187c91;
     font-size: 12px;
     display: flex;
     text-align: center;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    padding: 0 0 5px 0;
+    padding: 5px;
+    margin-bottom: 12px;
     font-weight: 700;
 }
 .body2 {
@@ -225,11 +227,11 @@ a {
     justify-content: center;
 }
 .input-container input {
-    width: 280px;
+    width: 250px;
     height: 15px;
     font-size: 15px;
     padding: 10px;
-    border-radius: 5px 0 0 5px;
+    border-radius: 10px 0 0 10px;
     border: 1px solid #ffffff;
     font-family: 'Inter', sans-serif;
     letter-spacing: -0.3px;
@@ -238,11 +240,11 @@ a {
     color: #ffffff;
 }
 .input-container2 input {
-    width: 280px;
+    width: 250px;
     height: 15px;
     font-size: 15px;
     padding: 10px;
-    border-radius: 5px 0 0 5px;
+    border-radius: 10px 0 0 10px;
     border: 1px solid #ffffff;
     font-family: 'Inter', sans-serif;
     letter-spacing: -0.3px;
@@ -251,11 +253,11 @@ a {
     color: #ffffff;
 }
 .input-container3 input {
-    width: 280px;
+    width: 250px;
     height: 15px;
     font-size: 15px;
     padding: 10px;
-    border-radius: 5px 0 0 5px;
+    border-radius: 10px 0 0 10px;
     border: 1px solid #ffffff;
     font-family: 'Inter', sans-serif;
     letter-spacing: -0.3px;
@@ -269,7 +271,7 @@ a {
     border: 1px solid #ffffff;
     border-left: none;
     background: transparent;
-    border-radius: 0 5px 5px 0;
+    border-radius: 0 10px 10px 0;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -280,18 +282,21 @@ a {
     font-size: 15px;
 }
 .banner {
-    background-color: black;
+    background-color: #00000099;
     width: 100%;
     position: fixed; /* Keeps it at the top even when scrolling */
     top: 0;
     left: 0;
     font-weight: 900;
     letter-spacing: -1px;
-    font-size: 30px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    font-size: 25px;
+    padding-top: 25px;
+    padding-bottom: 19px;
     text-align: center;
 }
+.notcl {
+    backdrop-filter: blur(16px);
+    }
 .banner2 {
     background-color: #23212b;
     font-family: 'Inter', sans-serif;
@@ -308,43 +313,40 @@ a {
     background-image: url("https://www.dropbox.com/scl/fi/yyv9k0uioi9zl257a5b2q/BannerSmall.jpg?rlkey=3impriimd1o978vwa8fk9p4t7&st=tf1wkncf&raw=1");
 }
 .home-button {
-    background-color: rgb(34, 34, 34);
+    background-color: #ffffff22;
     position: fixed; /* Keeps it at the top even when scrolling */
-    top: 22px;
-    left: 22px;
-    justify-content: left;
+    top: 18px;
+    left: 18px;
     font-weight: 500;
     font-size: 15px;
-    padding: 3px 8px 5px 5px;
+    padding: 8px;
     /*border: 1px solid #ffffff;*/
     border-radius: 5px;
 }
 .starred-list-button {
-    background-color: black;
+    background-color: #ffffff22;
     color: #ffffff;
     position: fixed; /* Keeps it at the top even when scrolling */
-    top: 22px;
-    right: 22px;
-    justify-content: center;
+    top: 18px;
+    right: 18px;
     font-weight: 500;
     font-size: 15px;
-    padding: 0px;
+    padding: 8px;
     border: 0px transparent;
     border-radius: 5px;
-    cursor: pointer;
 }
 .top-bar-container {
     font-size: 70px;
     text-align: right;
     font-family: 'Teko', sans-serif;
     color: #ffffff;
-    background-color: #0e6172;
+    background: linear-gradient(to right, #0e6172, #0e6172);
     display: flex;
     padding-top: 10px;
     padding-right: 20px;
     padding-bottom: -10px;
-    border-radius: 10px;
-    border: 1px solid #ffffff;
+    border-radius: 15px;
+    border: 1px solid #ffffff22;
     justify-content: right;
 }
 .body-container {
@@ -394,6 +396,7 @@ a {
     background-color: #000000;
     padding: 8px 10px 8px 10px;
     border-radius: 15px;
+    box-shadow: 0px 8px 12px #00000055;
 }
 .starred-team {
     font-family: 'Inter', sans-serif;
@@ -402,10 +405,14 @@ a {
     border: 0px transparent #ffffff;
     background-color: #202020;
     text-align: center;
+    height: fit-content;
     border-radius: 7px;
     margin: 7px 4px 7px 4px;
     padding: 10px 10px 2px 10px;
-}
+    }
+    .none {
+        padding: 10px 10px 10px 10px;
+    }
 .preferences-button:hover {
     background-color: #222222;
 }
@@ -425,11 +432,12 @@ a {
 }
 .dropdown {
     font-family: 'Inter', sans-serif;
+    width: 290px;
     display: flex;
     color: #ffffff;
-    border: 1px solid #ffffff;
-    background-color: #084d5a;
-    border-radius: 5px;
+    border: 1px solid #ffffff22;
+    background-color: #1f6877;
+    border-radius: 10px;
     padding: 5px;
     font-size: 20px;
 }
