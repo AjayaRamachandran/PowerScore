@@ -18,7 +18,7 @@ if debug == "Y":
     import apiHandler
     import osEmul as os
     home = "http://localhost:5000"
-    cred = credentials.Certificate("api/static/db/kudos-26dd0-firebase-adminsdk-3fckw-8cbe81a827.json")
+    cred = credentials.Certificate("api/static/db/dbcache-507cd-firebase-adminsdk-srwcd-309135930e.json")
     
 else:
     from api import apiHandler
@@ -151,7 +151,7 @@ def checkTeamExistsInDivData(team, divData):
 
 firebase_admin.initialize_app(cred)
 db = firestore.client()
-teamsDocRef = db.collection('dbcache').document('XWoDWO2JzLHTedtwYEZl')
+teamsDocRef = db.collection('dbcache').document('OT5bu8pJ4yvZ05a2xJD3')
 
 def updateDB(competitionData):
     """
@@ -175,7 +175,7 @@ def updateDB(competitionData):
         yesterday = datetime.now() - timedelta(days=1)
 
         if endDate <= yesterday:
-            teamsDocRef = db.collection('dbcache').document('XWoDWO2JzLHTedtwYEZl')
+            teamsDocRef = db.collection('dbcache').document('OT5bu8pJ4yvZ05a2xJD3')
 
             # Define the transaction update function
             @firestore.transactional

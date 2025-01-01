@@ -20,7 +20,7 @@ if debug == "Y":
     import osEmul as os
     home = "http://localhost:5000"
     previews = "api/previews.json"
-    cred = credentials.Certificate("api/static/db/kudos-26dd0-firebase-adminsdk-3fckw-8cbe81a827.json")
+    cred = credentials.Certificate("api/static/db/dbcache-507cd-firebase-adminsdk-srwcd-309135930e.json")
 else:
     from api import main
     from api import pageGen
@@ -33,7 +33,7 @@ else:
 ###### INITIALIZE ######
 
 db = firestore.client()
-teamsDocRef = db.collection('kudos').document('Yks2O0WWw2RDM7sPCdZm')
+teamsDocRef = db.collection('kudos').document('ft1sudZqNNZhXjN9i7zO')
 
 def getKudos(teamID):
     """Fetches the kudos (timestamps) array for a specific team ID."""
