@@ -131,19 +131,21 @@ async def getCompListAsync(name, compList): # function to asynchronously retriev
 ###### PROCESSING FUNCTIONS ######
 
 def checkTeamExistsInDivData(team, divData):
-    divisionData = divData
+    divisionData = divData['ps']
+    return team in divisionData
+    #print(divisionData)
 
     #compList[index] = divisionData
-    inDivision = False
-    matchList = apiHandler.getMatchList("", divisionData)
+    #inDivision = False
+    #matchList = apiHandler.getMatchList("", divisionData)
 
-    for match in matchList:
-        if team in match[:4]:
-            return True
+    #for match in matchList:
+        #if team in match[:4]:
+            #return True
             #inDivision = True
             #break
-    if inDivision == False:
-        return False
+    #if inDivision == False:
+        #return False
         #print(f"Team is not in competition {divisionData[0]['event']['name']}, division {divisionData[0]['division']['name']}.")
         #divisionsToRemove.append(index)
 
@@ -151,16 +153,21 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 teamsDocRef = db.collection('dbcache').document('XWoDWO2JzLHTedtwYEZl')
 
-def updateDB(competitionData, teamId, ends):
+def updateDB(competitionData):
     """
     Updates the Firestore DB to have all `locked` competition data.
     """
+    global updateEnds
+    ends = updateEnds
 
     for compNum in range(len(competitionData)):
         #print(competitionData[compNum])
-        sku = competitionData[compNum][0]['event']['code'].replace("-", "")
-        div = competitionData[compNum][0]['division']['id']
-        endDate = ends[compNum][:10]
+        sku = competitionData[compNum]['sku']
+        name = competitionData[compNum]['name']
+        skuformatted = competitionData[compNum]['sku'].replace("-", "")
+        div = competitionData[compNum]['data'][0]['div']
+        print(ends)
+        endDate = ends[sku][:10]
 
         # Parse the endDate and check if the competition is locked
         print(endDate)
@@ -177,7 +184,7 @@ def updateDB(competitionData, teamId, ends):
                 if doc.exists:
                     #data = doc.to_dict()
                     
-                    transaction.update(teamsDocRef, {sku : json.dumps([{"1" : competitionData[compNum]}])})
+                    transaction.update(teamsDocRef, {skuformatted : json.dumps({"sku" : sku, "name" : name, "data" : [competitionData[compNum]["data"][0]]})})
                 else:
                     print("DocError")
         
@@ -198,31 +205,35 @@ def checkDB(competitionSKU, team):
         `nonExistingSKUs (list)`: A list of SKUs that do not exist in the Firestore DB for the team.
     """
 
-    @firestore.transactional
-    def transactionUpdate(transaction):
-        doc = teamsDocRef.get(transaction=transaction)
-        if doc.exists:
-            data = doc.to_dict()
-            #print(str(data)[:100])
-            #print(competitionSKU.replace("-", ""))
-            if competitionSKU in str(data):
-                #print(str(data.get(competitionSKU.replace("-", "")))[:100])
-                divisionsInSKU = json.loads(data.get(competitionSKU.replace("-", "")))
-                print(str(divisionsInSKU[0]["1"])[:100])
-                for div in divisionsInSKU:
-                    status = checkTeamExistsInDivData(team, div["1"])
-                    if status:
-                        print("200: Data was found in the DB.")
-                        return div["1"]
-                print("404||DIV-ERR: Data was NOT FOUND in the DB.")
-                return "DivErr"
+    try:
+        @firestore.transactional
+        def transactionUpdate(transaction):
+            doc = teamsDocRef.get(transaction=transaction)
+            if doc.exists:
+                data = doc.to_dict()
+                #print(str(data)[:100])
+                #print(competitionSKU.replace("-", ""))
+                if competitionSKU in str(data):
+                    #print(str(data.get(competitionSKU.replace("-", "")))[:100])
+                    #print()
+                    divisionsInSKU = json.loads(data.get(competitionSKU.replace("-", "")))['data']
+                    print(f'There is/are {len(divisionsInSKU)} division(s) in {json.loads(data.get(competitionSKU.replace("-", "")))["sku"]}.')
+                    for div in divisionsInSKU:
+                        status = checkTeamExistsInDivData(team, div)
+                        if status:
+                            print("200: Data was found in the DB.")
+                            return {"sku": json.loads(data.get(competitionSKU.replace("-", "")))["sku"], "name" : json.loads(data.get(competitionSKU.replace("-", "")))["name"], "data" : [div]}
+                    print("404 > DIV-ERR: Data was NOT FOUND in the DB.")
+                    return "DivErr"
+                else:
+                    print("404 > COMP-ERR: Data was NOT FOUND in the DB.")
+                    return "CompErr"
             else:
-                print("404||COMP-ERR: Data was NOT FOUND in the DB.")
-                return "CompErr"
-        else:
-            print("666: Document Error")
-            return "DocErr"
-    return transactionUpdate(db.transaction())
+                print("666 > DOC-ERR: Document Error")
+                return "DocErr"
+        return transactionUpdate(db.transaction())
+    except:
+        return "DBFULL"
 
 
 def getCompiledDataList(team, comps, season): # master function to return a full list of competitions' data in one request.
@@ -238,23 +249,31 @@ def getCompiledDataList(team, comps, season): # master function to return a full
     print(f"OnlyCompSKUs: {onlyCompSKUs}")
 
     compList = []
-    neededAPIComps = deepcopy(comp)
+    neededAPIComps = deepcopy(comp) # neededAPIComps preserves a copy of the TOTAL list of competitions (in generic format)
 
     yesterday = datetime.now() - timedelta(days=1)
     for compNum in range(len(comp)):
         if datetime.strptime(compSKUs[compNum]['end'][:10], "%Y-%m-%d") < yesterday:
             inDB = checkDB(compSKUs[compNum]['sku'], team)
-            if not (inDB in ["DocErr","CompErr","DivErr","OtherErr"]):
+            if not (inDB in ["DocErr","CompErr","DivErr","OtherErr","DBFULL"]):
                 divData = inDB
                 compList.append(divData)
     
     #print(f"Database has helped with: {compList}")
-    print(str(comp))
+    #print(str(comp)) # comp now has a list of powerscore datas
+    #for compN in range(len(neededAPIComps)):
+        #for compM in range(len(compList)):
+            #if compList[compM][0]['event']['code'] == neededAPIComps[compN]['sku']:
+                #neededAPIComps[compN] = "delete"
+                #break
     for compN in range(len(neededAPIComps)):
         for compM in range(len(compList)):
-            if compList[compM][0]['event']['code'] == neededAPIComps[compN]['sku']:
+            #print(compList[compM])
+            #print(neededAPIComps[compN]['sku'])
+            if compList[compM]['sku'] == neededAPIComps[compN]['sku']:
                 neededAPIComps[compN] = "delete"
                 break
+
 
         #if neededAPIComps[compN]['sku'] in onlyCompSKUs:
             #neededAPIComps[compN] = "delete"
@@ -262,11 +281,12 @@ def getCompiledDataList(team, comps, season): # master function to return a full
     while "delete" in neededAPIComps and iter < 100:
         neededAPIComps.remove("delete")
         iter += 1
-    print(neededAPIComps)
+    #print(neededAPIComps)
 
     compListAppend = asyncio.run(getCompListAsync(teamNameToFind, neededAPIComps))
 
-    updateEnds = []
+    global updateEnds
+    updateEnds = {}
 
     iter = 0
     while [] in compListAppend and iter < 100:
@@ -279,26 +299,26 @@ def getCompiledDataList(team, comps, season): # master function to return a full
             for sku in compSKUs:
                 #print(f"ELEMENT: {element}")
                 if element[0]['event']['code'] == sku['sku']:
-                    updateEnds.append(sku['end'])
+                    updateEnds[sku['sku']] = sku['end']
                     break
-
-    updateDB(compListAppend, team, updateEnds)
+    
     #print(len(compList))
     divisionsToRemove = []
     for index in range(len(compList)):
-        divisionData = compList[index]
+        if type(compList[index]) == list:
+            divisionData = compList[index]
 
-        compList[index] = divisionData
-        inDivision = False
-        matchList = apiHandler.getMatchList("", divisionData)
+            compList[index] = divisionData
+            inDivision = False
+            matchList = apiHandler.getMatchList("", divisionData)
 
-        for match in matchList:
-            if teamNameToFind in match[:4]:
-                inDivision = True
-                break
-        if inDivision == False:
-            #print(f"Team is not in competition {divisionData[0]['event']['name']}, division {divisionData[0]['division']['name']}.")
-            divisionsToRemove.append(index)
+            for match in matchList:
+                if teamNameToFind in match[:4]:
+                    inDivision = True
+                    break
+            if inDivision == False:
+                #print(f"Team is not in competition {divisionData[0]['event']['name']}, division {divisionData[0]['division']['name']}.")
+                divisionsToRemove.append(index)
 
     for division in divisionsToRemove:
         compList.pop(division)

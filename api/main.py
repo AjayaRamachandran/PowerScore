@@ -278,6 +278,7 @@ def runPowerScore(compName, compID, div, typeOfPowerscore, compInfo, onlyForComp
     teamList.sort(key=lambda x: x[1], reverse=True) # sorts the list based on powerScore from largest to smallest
     teamLibrary = {}
     for team in teamList:
+        print(team)
         if team[0][0] != "#":
             #output.write(f"{team[0]} \t {str(team[1])} \n") # writes output to a .txt file
             teamLibrary[team[0]] = team[1]
@@ -337,7 +338,7 @@ def runAlgorithm(team, season):
     accolades = []
     teamname = team
 
-    comps = apiHandler.getCompList(team)
+    comps = apiHandler.getCompList(team) # gets a list of the competitions that a team has been to in the "generic" format (no matches)
     print(f"Initial Comps : {comps}")
 
     psList = []
@@ -345,27 +346,55 @@ def runAlgorithm(team, season):
     dpsList = []
 
     dashboard = []
-    compiledList = asyncApi.getCompiledDataList(team, comps, season)
+    compiledList = asyncApi.getCompiledDataList(team, comps, season) # gets a list of the competitions in "detailed" format (all the matches, very big)
     comps = comps['data']
     #print(comps)
     startDate = comps[0]["start"][:10]
 
+    dbDataList = [] # a list of all the ps data of all the competition, stored as a list of dicts.
     #print(compiledList[0][0])
     for comp in range(len(compiledList)):
         division = compiledList[comp]
+        print(str(compiledList[comp])[:200])
+        if type(compiledList[comp]) == dict:
+            date = "Error Fetching Date"
+            for competition in range(len(comps)):
+                if comps[competition]["sku"] == compiledList[comp]['sku']:
+                    date = comps[competition]["start"][:10]
 
-        date = "Error Fetching Date"
-        sku = "Error Fetching SKU"
-        for competition in range(len(comps)):
-            if comps[competition]["sku"] == compiledList[comp][0]['event']['code']:
-                date = comps[competition]["start"][:10]
+            fullPSLib = compiledList[comp]['data'][0]['ps']
+            newPSLib = compiledList[comp]['data'][0]['newps']
+            fullOPSLib = compiledList[comp]['data'][0]['ops']
+            fullDPSLib = compiledList[comp]['data'][0]['dps']
+        else:
+            dbData = {}
+            
+            date = "Error Fetching Date"
+            #sku = "Error Fetching SKU"
+            for competition in range(len(comps)):
+                if comps[competition]["sku"] == compiledList[comp][0]['event']['code']:
+                    date = comps[competition]["start"][:10]
+                    dbData['sku'] = comps[competition]["sku"]
 
-        # the new powerscore algorithm works for offensive and defensive powerscore. thus the alg is split in three pieces. overall ps is the most important still.
-        fullPSLib, fullPSList = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=division, scalingFactor=scales[season])
-        newPSLib, newPSList = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=division, onlyForComp=True, scalingFactor=scales[season])
-        fullOPSLib, fullOPSList = runPowerScore(None, None, div=None, typeOfPowerscore="offensive", compInfo=division, scalingFactor=scales[season])
-        fullDPSLib, fullDPSList = runPowerScore(None, None, div=None, typeOfPowerscore="defensive", compInfo=division, scalingFactor=scales[season])
-    
+            # the new powerscore algorithm works for offensive and defensive powerscore. thus the alg is split in three pieces. overall ps is the most important still.
+            fullPSLib, fullPSList = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=division, scalingFactor=scales[season])
+            newPSLib, newPSListObs = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=division, onlyForComp=True, scalingFactor=scales[season])
+            fullOPSLib, fullOPSList = runPowerScore(None, None, div=None, typeOfPowerscore="offensive", compInfo=division, scalingFactor=scales[season])
+            fullDPSLib, fullDPSList = runPowerScore(None, None, div=None, typeOfPowerscore="defensive", compInfo=division, scalingFactor=scales[season])
+            #print(compiledList[comp][0]['division'])
+            dbData['data'] = [{"div" : compiledList[comp][0]['division']['id'],
+                               "ps" : fullPSLib,
+                               "newps" : newPSLib,
+                               "ops" : fullOPSLib,
+                               "dps" : fullDPSLib}]
+        # takes in a lib of key value pairs and converts it into a list of tuples, sorted by the second item in each tuple
+        def generateListFromLib(lib : dict):
+            unsortedList = [[key, value] for key, value in lib.items()]
+            sortedList = sorted(unsortedList, key=lambda x: x[1], reverse=True) # sorts the list based on powerScore from largest to smallest
+            return sortedList
+
+        newPSList = generateListFromLib(newPSLib)
+
         compPS = fullPSLib[team]
         newPS = newPSLib[team]
         compOPS = fullOPSLib[team]
@@ -374,26 +403,43 @@ def runAlgorithm(team, season):
         ### ACCOLADES ###
         if round(newPS) >= 90 and not "First Class" in accolades:
             accolades.append("First Class")
-        if round(newPS) >= 90 and ("Signature Event" in compiledList[comp][0]['event']['name']) and not "World Class" in accolades:
-            accolades.append("World Class")
+        if type(compiledList[comp]) != dict:
+            if round(newPS) >= 90 and ("Signature Event" in compiledList[comp][0]['event']['name']) and not "World Class" in accolades:
+                accolades.append("World Class")
+        else:
+            if round(newPS) >= 90 and ("Signature Event" in compiledList[comp]['name']) and not "World Class" in accolades:
+                accolades.append("World Class")         
         if newPSList.index([team, newPS]) == 0 and not "Top Fragger" in accolades:
             accolades.append("Top Fragger")
 
         #print(compiledList[comp][0])
-        compWeight = 1.0 + 1 * ("Signature Event" in compiledList[comp][0]['event']['name'])
+        if type(compiledList[comp]) != dict:
+            compWeight = 1.0 + 1 * ("Signature Event" in compiledList[comp][0]['event']['name'])
+        else:
+            compWeight = 1.0 + 1 * ("Signature Event" in compiledList[comp]['name'])
         psList.append([compPS, compWeight, date])
         opsList.append([compOPS, compWeight, getDays(date)])
         dpsList.append([compDPS, compWeight, getDays(date)])
 
-        thisComp = {}
-        thisComp['name'] = compiledList[comp][0]['event']['name']
-        print(thisComp['name'])
-        thisComp['date'] = date
-        thisComp['sku'] = compiledList[comp][0]['event']['code']
-        thisComp['score'] = round(newPS)
-
+        if type(compiledList[comp]) != dict:
+            thisComp = {}
+            thisComp['name'] = compiledList[comp][0]['event']['name']
+            print(thisComp['name'])
+            thisComp['date'] = date
+            thisComp['sku'] = compiledList[comp][0]['event']['code']
+            thisComp['score'] = round(newPS)
+            dbData['name'] = compiledList[comp][0]['event']['name']
+            dbDataList.append(dbData)
+        else:
+            thisComp = {}
+            thisComp['name'] = compiledList[comp]['name']
+            print(thisComp['name'])
+            thisComp['date'] = date
+            thisComp['sku'] = compiledList[comp]['sku']
+            thisComp['score'] = round(newPS)
         dashboard.append(thisComp)
-    
+
+    asyncApi.updateDB(dbDataList) #updates DB with new data
     ### GENERAL POWERSCORE ###
     summation = 0
     index = 1

@@ -20,3 +20,4 @@ venv.bak/
 osEmul.py
 previews
 api/static/db
+api/dbschema.json
