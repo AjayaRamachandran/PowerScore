@@ -122,6 +122,7 @@ def handle_teams():
     if down == "Y":
         return render_template('down.html')
     else:
+        print(request.args)
         query = request.args.get("query").upper()
         teamName = query
         season = request.args.get("season", default="190")
@@ -211,6 +212,7 @@ def handle_competitions():
         return render_template('down.html')
     else:
         global excelFile, name, division
+        print(request.args)
         query = request.args.get("query")
         division = request.args.get("division") or 1
 
