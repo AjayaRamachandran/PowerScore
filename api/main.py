@@ -278,7 +278,7 @@ def runPowerScore(compName, compID, div, typeOfPowerscore, compInfo, onlyForComp
     teamList.sort(key=lambda x: x[1], reverse=True) # sorts the list based on powerScore from largest to smallest
     teamLibrary = {}
     for team in teamList:
-        print(team)
+        #print(team)
         if team[0][0] != "#":
             #output.write(f"{team[0]} \t {str(team[1])} \n") # writes output to a .txt file
             teamLibrary[team[0]] = team[1]
