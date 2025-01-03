@@ -339,11 +339,11 @@ a {
     z-index: 6;
 }
 .top-bar-container {
-    font-size: 70px;
+    font-size: 60px;
     text-align: right;
     font-family: 'Teko', sans-serif;
     color: #ffffff;
-    background: linear-gradient(to right, #0e6172, #0e6172);
+    background-color: #0e6172;
     display: flex;
     padding-top: 10px;
     padding-right: 20px;

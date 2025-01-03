@@ -88,12 +88,12 @@ def ranks():
         user_agent = request.headers.get('User-Agent').lower()
         if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
             homeButton = "Home"
-            return render_template("ranks.html", debug = debug, home = home, homeButton = homeButton, mobile = [url_for('static', filename='/css/mainstyle-mobile.css'),
+            return render_template("ranks.html", debug = debug, home = home, homeButton = homeButton, epochTime = time.time(), mobile = [url_for('static', filename='/css/mainstyle-mobile.css'),
                                                                                                  url_for('static', filename='/css/bottom-mobile.css'),
                                                                                                  url_for('static', filename='/css/ranks-mobile.css')])
         else:
             homeButton = "Back to Home"
-            return render_template("ranks.html", debug = debug, home = home, homeButton = homeButton, mobile = [url_for('static', filename='/css/mainstyle.css'),
+            return render_template("ranks.html", debug = debug, home = home, homeButton = homeButton, epochTime = time.time(), mobile = [url_for('static', filename='/css/mainstyle.css'),
                                                                                                  url_for('static', filename='/css/bottom.css'),
                                                                                                  url_for('static', filename='/css/ranks.css')])
 
@@ -105,13 +105,13 @@ def preferences():
         user_agent = request.headers.get('User-Agent').lower()
         if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
             homeButton = "Home"
-            return render_template("preferences.html", debug = debug, home = home, homeButton = homeButton, mobile = [url_for('static', filename='/css/mainstyle-mobile.css'),
+            return render_template("preferences.html", debug = debug, home = home, homeButton = homeButton, epochTime = time.time(), mobile = [url_for('static', filename='/css/mainstyle-mobile.css'),
                                                                                                  url_for('static', filename='/css/bottom-mobile.css'),
                                                                                                  url_for('static', filename='/css/ranks-mobile.css'),
                                                                                                  url_for('static', filename='/css/preference-mobile.css')])
         else:
             homeButton = "Back to Home"
-            return render_template("preferences.html", debug = debug, home = home, homeButton = homeButton, mobile = [url_for('static', filename='/css/mainstyle.css'),
+            return render_template("preferences.html", debug = debug, home = home, homeButton = homeButton, epochTime = time.time(), mobile = [url_for('static', filename='/css/mainstyle.css'),
                                                                                                  url_for('static', filename='/css/bottom.css'),
                                                                                                  url_for('static', filename='/css/ranks.css'),
                                                                                                  url_for('static', filename='/css/preference.css')])
@@ -147,7 +147,7 @@ def handle_teams():
                                     issue1 = "This team does not exist",
                                     issue2 = "This team exists but has not competed yet this season",
                                     issue3 = "RobotEvents API requests have timed out",
-                                    home = home, homeButton = homeButton, name = query,
+                                    home = home, homeButton = homeButton, name = query, epochTime = time.time(),
                                     mobile = [url_for('static', filename='/css/mainstyle-mobile.css'),
                                               url_for('static', filename='/css/bottom-mobile.css'),
                                               url_for('static', filename='/css/comps-mobile.css')])
@@ -161,7 +161,7 @@ def handle_teams():
                                     issue1 = "This team does not exist",
                                     issue2 = "This team exists but has not competed yet this season",
                                     issue3 = "RobotEvents API requests have timed out",
-                                    home = home, homeButton = homeButton, name = query,
+                                    home = home, homeButton = homeButton, name = query, epochTime = time.time(),
                                     mobile = [url_for('static', filename='/css/mainstyle.css'),
                                               url_for('static', filename='/css/bottom.css'),
                                               url_for('static', filename='/css/comps.css')])
@@ -184,7 +184,7 @@ def handle_teams():
                     graphByteString = result[10],
                     xpLeft = result[11],
                     barByteString = result[12], arrowColor = result[14], arrowSvg = result[15],
-                    kudosCount = kudosCount, debug = debug, imageURL = IMAGE_URL,
+                    kudosCount = kudosCount, debug = debug, imageURL = IMAGE_URL, epochTime = time.time(),
                     home = home, homeButton = homeButton) + dashboard.generateFrom(result[13])
             else:
                 homeButton = "Back to Home"
@@ -202,7 +202,7 @@ def handle_teams():
                     graphByteString = result[10],
                     xpLeft = result[11],
                     barByteString = result[12], arrowColor = result[14], arrowSvg = result[15],
-                    kudosCount = kudosCount, debug = debug, imageURL = IMAGE_URL,
+                    kudosCount = kudosCount, debug = debug, imageURL = IMAGE_URL, epochTime = time.time(),
                     home = home, homeButton = homeButton) + dashboard.generateFrom(result[13])
 
 @app.route("/competitions", methods=["GET"])
@@ -240,7 +240,7 @@ def handle_competitions():
                                     issue1 = "This competition does not exist",
                                     issue2 = "This competition has not happened yet",
                                     issue3 = "RobotEvents API requests have timed out",
-                                    home = home, homeButton = homeButton,
+                                    home = home, homeButton = homeButton, epochTime = time.time(),
                                     mobile = [url_for('static', filename='/css/mainstyle-mobile.css'),
                                               url_for('static', filename='/css/bottom-mobile.css')])
             else:
@@ -253,21 +253,21 @@ def handle_competitions():
                                     issue1 = "This competition does not exist",
                                     issue2 = "This competition has not happened yet",
                                     issue3 = "RobotEvents API requests have timed out",
-                                    home = home, homeButton = homeButton,
+                                    home = home, homeButton = homeButton, epochTime = time.time(),
                                     mobile = [url_for('static', filename='/css/mainstyle.css'),
                                               url_for('static', filename='/css/bottom.css')])
         else:
             user_agent = request.headers.get('User-Agent').lower()
             if 'iphone' in user_agent or 'android' in user_agent or mobile == "Y":
                 homeButton = "Home"
-                htmlFile = render_template("comp.html", query = query, debug = debug, home = home, homeButton = homeButton, name = result[0], mobile = [url_for('static', filename='/css/mainstyle-mobile.css'),
+                htmlFile = render_template("comp.html", query = query, debug = debug, home = home, epochTime = time.time(), homeButton = homeButton, name = result[0], mobile = [url_for('static', filename='/css/mainstyle-mobile.css'),
                                                                                                         url_for('static', filename='/css/bottom-mobile.css'),
-                                                                                                        url_for('static', filename='/css/comps-mobile.css')]) + pageGen.generateFrom(result, query, division, "")
+                                                                                                        url_for('static', filename='/css/comps-mobile.css')]) + pageGen.generateFrom(result, query, division, "", time=time.time())
             else:
                 homeButton = "Back to Home"
-                htmlFile = render_template("comp.html", query = query, debug = debug, home = home, homeButton = homeButton, name = result[0], mobile = [url_for('static', filename='/css/mainstyle.css'),
+                htmlFile = render_template("comp.html", query = query, debug = debug, home = home, epochTime = time.time(), homeButton = homeButton, name = result[0], mobile = [url_for('static', filename='/css/mainstyle.css'),
                                                                                                         url_for('static', filename='/css/bottom.css'),
-                                                                                                        url_for('static', filename='/css/comps.css')]) + pageGen.generateFrom(result, query, division, "")
+                                                                                                        url_for('static', filename='/css/comps.css')]) + pageGen.generateFrom(result, query, division, "", time=time.time())
             return htmlFile
 
 

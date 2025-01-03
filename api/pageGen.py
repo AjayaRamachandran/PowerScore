@@ -37,7 +37,7 @@ ending = '''
 </body>
 </html>'''
 
-def generateFrom(info, sku, division = "1", excelFile = None):
+def generateFrom(info, sku, division = "1", excelFile = None, time = 0):
     #comp = open("templates/comp.html", "w")
     name = info[0]
     powerscores = info[1]
@@ -70,10 +70,10 @@ def generateFrom(info, sku, division = "1", excelFile = None):
             dropdown = dropdown + f'''<option value="{divID + 1}">{divName}</option>
             '''
 
-    dropdown = dropdown + '''
+    dropdown = dropdown + f'''
                 </select>
             </form>
-            <script src="/static/js/dropdown-div.js"></script>
+            <script src="/static/js/dropdown-div.js?v=1.{time}"></script>
         </div>
         <div class="gap-2">
             <div class="gap-2"></div>

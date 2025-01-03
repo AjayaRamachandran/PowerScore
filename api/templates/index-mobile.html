@@ -15,27 +15,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap" rel="stylesheet" id="freeze">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" id="freeze">
     <!--Inner CSS Styles-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='/css/mainstyle-mobile.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='/css/bottom-mobile.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='/css/items-mobile.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='/css/dashboard-mobile.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='/css/comps-mobile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/mainstyle-mobile.css')}}?reload={{epochTime}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/bottom-mobile.css')}}?reload={{epochTime}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/items-mobile.css')}}?reload={{epochTime}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/dashboard-mobile.css')}}?reload={{epochTime}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/comps-mobile.css')}}?reload={{epochTime}}">
     <!--Other-->
     <link rel="icon" type="image/x-icon" href="https://www.dropbox.com/scl/fi/jpz4880g3faicceum2wcr/icon.ico?rlkey=bf2qjf7qz59vo18441m17ownm&st=hmkxz1r8&raw=1">
 </head>
-<script>
-    function reloadCSS() {
-    var links = document.getElementsByTagName("link");
-    for (var i = 0; i < links.length; i++) {
-        var link = links[i];
-        if (link.rel === "stylesheet" && link.id != "freeze") {
-            link.href = link.href.split("?")[0] + "?reload=" + new Date().getTime();
-        }
-    }
-}
-reloadCSS();
-</script>
-<script src="/static/js/preferences.js"></script>
+<script src="/static/js/preferences.js?v=1.{{epochTime}}"></script>
 <body visual="bg">
     <input hidden value="{{debug}}" id="debug">
     <input hidden value="N" id="panel">
@@ -81,7 +69,7 @@ reloadCSS();
 
         <div class="team-list" id="team-list"></div>
 
-        <script src="/static/js/starred-teams.js"></script>
+        <script src="/static/js/starred-teams.js?v=1.{{epochTime}}"></script>
         <div class="season-selector-parent">
             <div class="container">
                 <form id="myForm" action="/teams" method="GET">
@@ -94,8 +82,8 @@ reloadCSS();
                         <option value="154" >VRC 21-22: Tipping Point</option>
                     </select>
                 </form>
-                <script src="/static/js/dropdown-season.js"></script>
-                <script src="/static/js/default-season.js"></script>
+                <script src="/static/js/dropdown-season.js?v=1.{{epochTime}}"></script>
+                <script src="/static/js/default-season.js?v=1.{{epochTime}}"></script>
             </div>
         </div>
         <div class="top-bar-parent-container">
@@ -108,7 +96,7 @@ reloadCSS();
         </div>
         <div class="functions-container">
             <div class="kudos-button" id="kudos-button" team="{{name}}" kudos="{{kudosCount}}"><button class="kudos-text">Kudos <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="IconChangeColor" height="16" width="16"><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" id="mainIconPathAttribute"></path></svg> <b>{{ kudosCount }}</b></button></div>
-            <script src="/static/js/kudos-ajax.js"></script>
+            <script src="/static/js/kudos-ajax.js?v=1.{{epochTime}}"></script>
             <div class="v-gap"><div class="v-gap"></div></div>
             <div class="v-gap"><div class="v-gap"></div></div>
             <button class='star' onclick="starTeam()">

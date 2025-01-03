@@ -16,24 +16,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap" rel="stylesheet" id="freeze">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" id="freeze">
     <!--Inner CSS Styles-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='/css/mainstyle.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='/css/bottom.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/mainstyle.css')}}?reload={{epochTime}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/bottom.css')}}?reload={{epochTime}}">
     <!--Other-->
     <link rel="icon" type="image/x-icon" href="https://www.dropbox.com/scl/fi/jpz4880g3faicceum2wcr/icon.ico?rlkey=bf2qjf7qz59vo18441m17ownm&st=hmkxz1r8&raw=1">
 </head>
-<script>
-    function reloadCSS() {
-    var links = document.getElementsByTagName("link");
-    for (var i = 0; i < links.length; i++) {
-        var link = links[i];
-        if (link.rel === "stylesheet" && link.id != "freeze") {
-            link.href = link.href.split("?")[0] + "?reload=" + new Date().getTime();
-        }
-    }
-}
-reloadCSS();
-</script>
-<script src="/static/js/preferences.js"></script>
+<script src="/static/js/preferences.js?v=1.{{epochTime}}"></script>
 <body visual="bg">
     <input hidden value="{{debug}}" id="debug">
     <input hidden value="N" id="panel">
@@ -75,7 +63,7 @@ reloadCSS();
 
         <div class="team-list" id="team-list"></div>
         
-        <script src="/static/js/starred-teams.js"></script>
+        <script src="/static/js/starred-teams.js?v=1.{{epochTime}}"></script>
         <div class="title3" visual="sub">Choose your fighter.</div>
         <div class="gap-2">
             <div class="gap-2"></div>
