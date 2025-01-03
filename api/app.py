@@ -36,7 +36,7 @@ db = firestore.client()
 teamsDocRef = db.collection('kudos').document('ft1sudZqNNZhXjN9i7zO')
 
 def getKudos(teamID):
-    """Fetches the kudos (timestamps) array for a specific team ID."""
+    """Fetches the kudos data for a specific team ID."""
     doc = teamsDocRef.get()
     if doc.exists:
         data = doc.to_dict()
