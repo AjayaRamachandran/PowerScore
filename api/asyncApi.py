@@ -158,6 +158,8 @@ def purgeDB():
     """
     Purges the Firestore DB of the oldest XX competition entries.
     """
+    print("Purging DB...")
+
     @firestore.transactional
     def transactionUpdate(transaction):
         doc = teamsDocRef.get(transaction=transaction)
@@ -165,15 +167,11 @@ def purgeDB():
         docData = doc.to_dict()
         docRef = doc.reference
 
-        fields_with_time = {
-            field: value for field, value in docData.items()
-            if isinstance(value, dict) and "time" in value
-        }
-        sorted_fields = sorted(fields_with_time.items(), key=lambda x: x[1]["time"])
+        sortedFields = sorted(docData.items(), key=lambda x: json.loads(x)["time"])
 
-        fieldsToDelete = [field for field, value in sorted_fields[:20]]
+        fieldsToDelete = [field for field, value in sortedFields[:20]]
         if fieldsToDelete:
-            updates = {field: None for field in fieldsToDelete}
+            updates = {field : None for field in fieldsToDelete}
             transaction.update(teamsDocRef, updates)
 
             print(f"Deleted fields {fieldsToDelete} in document {doc.id}")
