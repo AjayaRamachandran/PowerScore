@@ -439,7 +439,13 @@ def runAlgorithm(team, season):
             thisComp['score'] = round(newPS)
         dashboard.append(thisComp)
 
-    asyncApi.updateDB(dbDataList) #updates DB with new data
+    try:
+        asyncApi.updateDB(dbDataList) #updates DB with new data
+    except Exception as e:
+        asyncApi.purgeDB() #purges DB if the DB is full
+        print(e)
+        print("Something went wrong trying to update the DB. A purge might be necessary.")
+
     ### GENERAL POWERSCORE ###
     summation = 0
     index = 1

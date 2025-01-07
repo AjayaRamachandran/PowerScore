@@ -9,6 +9,7 @@ from firebase_admin import credentials, firestore
 from datetime import datetime, timedelta
 from ast import literal_eval
 from copy import deepcopy
+import time
 
 ###### CONTROL ######
 config = "api/config.txt"
@@ -153,6 +154,32 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 teamsDocRef = db.collection('dbcache').document('OT5bu8pJ4yvZ05a2xJD3')
 
+def purgeDB():
+    """
+    Purges the Firestore DB of the oldest XX competition entries.
+    """
+    @firestore.transactional
+    def transactionUpdate(transaction):
+        doc = teamsDocRef.get(transaction=transaction)
+        
+        docData = doc.to_dict()
+        docRef = doc.reference
+
+        fields_with_time = {
+            field: value for field, value in docData.items()
+            if isinstance(value, dict) and "time" in value
+        }
+        sorted_fields = sorted(fields_with_time.items(), key=lambda x: x[1]["time"])
+
+        fieldsToDelete = [field for field, value in sorted_fields[:20]]
+        if fieldsToDelete:
+            updates = {field: None for field in fieldsToDelete}
+            transaction.update(teamsDocRef, updates)
+
+            print(f"Deleted fields {fieldsToDelete} in document {doc.id}")
+
+    transactionUpdate(db.transaction())
+
 def updateDB(competitionData):
     """
     Updates the Firestore DB to have all `locked` competition data.
@@ -184,7 +211,7 @@ def updateDB(competitionData):
                 if doc.exists:
                     #data = doc.to_dict()
                     
-                    transaction.update(teamsDocRef, {skuformatted : json.dumps({"sku" : sku, "name" : name, "data" : [competitionData[compNum]["data"][0]]})})
+                    transaction.update(teamsDocRef, {skuformatted : json.dumps({"time" : round(time.time()), "sku" : sku, "name" : name, "data" : [competitionData[compNum]["data"][0]]})})
                 else:
                     print("DocError")
         
