@@ -158,7 +158,7 @@ def purgeDB():
     """
     Purges the Firestore DB of the oldest XX competition entries.
     """
-    print("Purging DB...")
+    print("Attempting to Purge DB.")
 
     @firestore.transactional
     def transactionUpdate(transaction):
@@ -167,11 +167,11 @@ def purgeDB():
         docData = doc.to_dict()
         docRef = doc.reference
 
-        sortedFields = sorted(docData.items(), key=lambda x: json.loads(x)["time"])
+        sortedFields = sorted(docData.items(), key=lambda x: json.loads(x[1])["time"])
 
         fieldsToDelete = [field for field, value in sortedFields[:20]]
         if fieldsToDelete:
-            updates = {field : None for field in fieldsToDelete}
+            updates = {field : firestore.DELETE_FIELD for field in fieldsToDelete}
             transaction.update(teamsDocRef, updates)
 
             print(f"Deleted fields {fieldsToDelete} in document {doc.id}")
@@ -182,6 +182,7 @@ def updateDB(competitionData):
     """
     Updates the Firestore DB to have all `locked` competition data.
     """
+    #raise KeyError
     global updateEnds
     ends = updateEnds
 
@@ -247,6 +248,11 @@ def checkDB(competitionSKU, team):
                         status = checkTeamExistsInDivData(team, div)
                         if status:
                             print("200: Data was found in the DB.")
+                            update = {competitionSKU : json.dumps({"time" : time.time(), "sku": json.loads(data.get(competitionSKU.replace("-", "")))["sku"], "name" : json.loads(data.get(competitionSKU.replace("-", "")))["name"], "data" : [div]})}
+                            try:
+                                transaction.update(teamsDocRef, update)
+                            except:
+                                None
                             return {"sku": json.loads(data.get(competitionSKU.replace("-", "")))["sku"], "name" : json.loads(data.get(competitionSKU.replace("-", "")))["name"], "data" : [div]}
                     print("404 > DIV-ERR: Data was NOT FOUND in the DB.")
                     return "DivErr"

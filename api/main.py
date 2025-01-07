@@ -443,7 +443,10 @@ def runAlgorithm(team, season):
         asyncApi.updateDB(dbDataList) #updates DB with new data
     except Exception as e:
         print(e)
-        asyncApi.purgeDB() #purges DB if the DB is full
+        try:
+            asyncApi.purgeDB() #purges DB if the DB is full
+        except Exception as e:
+            print(e)
 
     ### GENERAL POWERSCORE ###
     summation = 0
