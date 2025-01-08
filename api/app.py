@@ -185,7 +185,7 @@ def handle_teams():
                     graphByteString = result[10],
                     xpLeft = result[11],
                     barByteString = result[12], arrowColor = result[14], arrowSvg = result[15],
-                    kudosCount = kudosCount, debug = debug, imageURL = requests.get(f"{'http://localhost:5000' if debug == 'Y' else 'https://powerscore.vercel.app'}/image_preview?team={result[0]}&ps={result[1]}&ops={result[4]}&dps={result[5]}"), epochTime = time.time(),
+                    kudosCount = kudosCount, debug = debug, imageURL = f"https://powerscore.vercel.app/image_preview?team={result[0]}&ps={result[1]}&ops={result[4]}&dps={result[5]}", epochTime = time.time(),
                     home = home, homeButton = homeButton) + dashboard.generateFrom(result[13])
             else:
                 homeButton = "Back to Home"
@@ -203,7 +203,7 @@ def handle_teams():
                     graphByteString = result[10],
                     xpLeft = result[11],
                     barByteString = result[12], arrowColor = result[14], arrowSvg = result[15],
-                    kudosCount = kudosCount, debug = debug, imageURL = requests.get(f"{'http://localhost:5000' if debug == 'Y' else 'https://powerscore.vercel.app'}/image_preview?team={result[0]}&ps={result[1]}&ops={result[4]}&dps={result[5]}"), epochTime = time.time(),
+                    kudosCount = kudosCount, debug = debug, imageURL = f"https://powerscore.vercel.app/image_preview?team={result[0]}&ps={result[1]}&ops={result[4]}&dps={result[5]}", epochTime = time.time(),
                     home = home, homeButton = homeButton) + dashboard.generateFrom(result[13])
 
 @app.route("/competitions", methods=["GET"])
