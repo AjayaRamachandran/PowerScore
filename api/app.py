@@ -306,7 +306,7 @@ def image_preview():
         return None
     else:
         team = request.args.get("team")
-        ps = int(request.args.get("ps").replace("-", "."))
+        ps = float(request.args.get("ps").replace("-", "."))
         ops = int(request.args.get("ops"))
         dps = int(request.args.get("dps"))
         return Response(main.generateRichLinkPreview(team=team, ps=ps, ops=ops, dps=dps), mimetype='image/jpeg')
