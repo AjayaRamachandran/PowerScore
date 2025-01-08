@@ -127,7 +127,7 @@ def handle_teams():
         teamName = query
         season = request.args.get("season", default="190")
         try:
-            result = main.runAlgorithm(query, season)
+            result, detailedPS = main.runAlgorithm(query, season)
             IMAGE_URL = json.load(open(previews))["links"][str(round(result[1]))]
         except Exception as e:
             result = None
@@ -185,7 +185,7 @@ def handle_teams():
                     graphByteString = result[10],
                     xpLeft = result[11],
                     barByteString = result[12], arrowColor = result[14], arrowSvg = result[15],
-                    kudosCount = kudosCount, debug = debug, imageURL = f"https://powerscore.vercel.app/image-preview?team={result[0]}&ps={result[1]}&ops={result[4]}&dps={result[5]}", epochTime = time.time(),
+                    kudosCount = kudosCount, debug = debug, imageURL = f"https://powerscore.vercel.app/image-preview?team={result[0]}&ps={str(detailedPS).replace(".","-")}&ops={result[4]}&dps={result[5]}", epochTime = time.time(),
                     home = home, homeButton = homeButton) + dashboard.generateFrom(result[13])
             else:
                 homeButton = "Back to Home"
@@ -306,7 +306,7 @@ def image_preview():
         return None
     else:
         team = request.args.get("team")
-        ps = int(request.args.get("ps"))
+        ps = int(request.args.get("ps").replace("-", "."))
         ops = int(request.args.get("ops"))
         dps = int(request.args.get("dps"))
         return Response(main.generateRichLinkPreview(team=team, ps=ps, ops=ops, dps=dps), mimetype='image/jpeg')

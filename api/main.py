@@ -137,7 +137,7 @@ def generateRichLinkPreview(team, ps, ops, dps):
     titleRect = [60, 90, titleText.get_rect()[2], titleText.get_rect()[3]]
     screen.blit(titleText, titleRect)
 
-    psText = font1.render(str(ps), True, (255,255,255))
+    psText = font1.render(str(round(ps)), True, (255,255,255))
     psRect = [50, 140, psText.get_rect()[2], psText.get_rect()[3]]
     screen.blit(psText, psRect)
 
@@ -544,6 +544,7 @@ def runAlgorithm(team, season):
     image.save(imageBytes, "png")
     imageBytes.seek(0)
     rank = giveRanking(careerPS)
+    detailedPS = round(careerPS, 1)
     careerPS = round(careerPS)
 
     ### OFFENSIVE POWERSCORE ###
@@ -619,6 +620,6 @@ def runAlgorithm(team, season):
     # Create an <img> tag with the base64-encoded image
     bar_tag = data_uri
     
-    return [team, careerPS, oldCareerPS, rank, careerOPS, careerDPS, title, accolade1, accolade2, badge_tag, graph_tag, xpToNext, bar_tag, dashboard, arrowColor, arrowSvg]
+    return [team, careerPS, oldCareerPS, rank, careerOPS, careerDPS, title, accolade1, accolade2, badge_tag, graph_tag, xpToNext, bar_tag, dashboard, arrowColor, arrowSvg], detailedPS
 
     #print(comps["data"][comp]["id"])
