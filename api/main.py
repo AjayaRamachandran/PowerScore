@@ -109,6 +109,49 @@ def createPlot(data, teamname, startDate):
     plotBytes.seek(0)
     return plotBytes
 
+def generateRichLinkPreview(team, ps, ops, dps):
+    pygame.init()
+    windowSize = [1200, 630]
+    rightHalfBG = pygame.Surface((500, 630))
+    rightHalfBG.fill((15, 74, 87))
+    screen = pygame.display.set_mode(windowSize)
+    screen.fill((14, 97, 114))
+    screen.blit(rightHalfBG, (700, 0))
+
+    rank = giveRanking(ps)
+    rankImage = pygame.image.load(f"newbadges/{rank.replace(' ','')}.png")
+
+    font = pygame.font.Font("Inter_28pt-ExtraBold.ttf", 100)
+    font1 = pygame.font.Font("Teko-Bold.ttf", 400)
+    font2 = pygame.font.Font("Teko-Bold.ttf", 150)
+    font3 = pygame.font.Font("Teko-Bold.ttf", 80)
+
+    #screen.fill((14, 97, 114))
+    rankImage = pygame.transform.scale(rankImage, (400, 400))
+    rankRect = [750, 50, rankImage.get_rect()[2], rankImage.get_rect()[3]]
+    screen.blit(rankImage, rankRect)
+    titleText = font3.render(rank, True, (129, 210, 227))
+    titleRect = [950 - titleText.get_rect()[2]/2, 440, titleText.get_rect()[2], titleText.get_rect()[3]]
+    screen.blit(titleText, titleRect)
+    titleText = font.render(team, True, (129, 210, 227))
+    titleRect = [60, 90, titleText.get_rect()[2], titleText.get_rect()[3]]
+    screen.blit(titleText, titleRect)
+
+    psText = font1.render(str(ps), True, (255,255,255))
+    psRect = [50, 140, psText.get_rect()[2], psText.get_rect()[3]]
+    screen.blit(psText, psRect)
+
+    psText = font2.render(str(ops), True, (255,255,255))
+    psRect = [490, 230, psText.get_rect()[2], psText.get_rect()[3]]
+    screen.blit(psText, psRect)
+    psText = font2.render(str(dps), True, (255,255,255))
+    psRect = [490, 370, psText.get_rect()[2], psText.get_rect()[3]]
+    screen.blit(psText, psRect)
+
+    plotBytes = BytesIO()
+    pygame.image.save(screen, plotBytes, "jpg")
+    plotBytes.seek(0)
+    return plotBytes
 
 ###### RANKING ######
 

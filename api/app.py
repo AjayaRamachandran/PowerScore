@@ -5,7 +5,7 @@ mobile = open(config).read().replace("\n", "")[open(config).read().replace("\n",
 down = open(config).read().replace("\n", "")[open(config).read().replace("\n", "").index("down") - 5]
 #-------------------#
 
-from flask import Flask, request, render_template, send_file, url_for, jsonify, redirect
+from flask import Flask, request, render_template, send_file, Response, url_for, jsonify, redirect
 import firebase_admin
 from firebase_admin import credentials, firestore
 
@@ -185,7 +185,7 @@ def handle_teams():
                     graphByteString = result[10],
                     xpLeft = result[11],
                     barByteString = result[12], arrowColor = result[14], arrowSvg = result[15],
-                    kudosCount = kudosCount, debug = debug, imageURL = IMAGE_URL, epochTime = time.time(),
+                    kudosCount = kudosCount, debug = debug, imageURL = requests.get(f"{'http://localhost:5000' if debug == 'Y' else 'https://powerscore.vercel.app'}/image_preview?team={result[0]}&ps={result[1]}&ops={result[4]}&dps={result[5]}"), epochTime = time.time(),
                     home = home, homeButton = homeButton) + dashboard.generateFrom(result[13])
             else:
                 homeButton = "Back to Home"
@@ -203,7 +203,7 @@ def handle_teams():
                     graphByteString = result[10],
                     xpLeft = result[11],
                     barByteString = result[12], arrowColor = result[14], arrowSvg = result[15],
-                    kudosCount = kudosCount, debug = debug, imageURL = IMAGE_URL, epochTime = time.time(),
+                    kudosCount = kudosCount, debug = debug, imageURL = requests.get(f"{'http://localhost:5000' if debug == 'Y' else 'https://powerscore.vercel.app'}/image_preview?team={result[0]}&ps={result[1]}&ops={result[4]}&dps={result[5]}"), epochTime = time.time(),
                     home = home, homeButton = homeButton) + dashboard.generateFrom(result[13])
 
 @app.route("/competitions", methods=["GET"])
@@ -299,6 +299,18 @@ def download():
         return render_template('down.html')
     else:
         return send_file(excelFile, as_attachment=True, download_name= name + "-division" + division + '.xlsx', mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+@app.route("/image-preview", methods=["GET"])
+def image_preview():
+    if down == "Y":
+        return None
+    else:
+        team = request.args.get("team")
+        ps = int(request.args.get("ps"))
+        ops = int(request.args.get("ops"))
+        dps = int(request.args.get("dps"))
+        return Response(main.generateRichLinkPreview(team=team, ps=ps, ops=ops, dps=dps), mimetype='image/jpeg')
+
 
 if debug == "Y":
     if __name__ == "__main__":
