@@ -300,14 +300,6 @@ def download():
     else:
         return send_file(excelFile, as_attachment=True, download_name= name + "-division" + division + '.xlsx', mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
-@app.route("/shortcut", methods=["GET"])
-def shortcut():
-    if down == "Y":
-        return render_template('down.html')
-    else:
-        return send_file("vrctracker.shortcut", as_attachment=True)
-
-
 @app.route("/image-preview", methods=["GET"])
 def image_preview():
     if down == "Y":
@@ -318,7 +310,6 @@ def image_preview():
         ops = int(request.args.get("ops"))
         dps = int(request.args.get("dps"))
         return Response(main.generateRichLinkPreview(team=team, ps=ps, ops=ops, dps=dps), mimetype='image/jpeg')
-
 
 if debug == "Y":
     if __name__ == "__main__":
