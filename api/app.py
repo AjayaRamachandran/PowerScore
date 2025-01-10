@@ -300,6 +300,14 @@ def download():
     else:
         return send_file(excelFile, as_attachment=True, download_name= name + "-division" + division + '.xlsx', mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
+@app.route("/shortcut", methods=["GET"])
+def shortcut():
+    if down == "Y":
+        return render_template('down.html')
+    else:
+        return send_file("vrctracker.shortcut", as_attachment=True)
+
+
 @app.route("/image-preview", methods=["GET"])
 def image_preview():
     if down == "Y":
