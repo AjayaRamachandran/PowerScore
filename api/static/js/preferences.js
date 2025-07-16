@@ -7,8 +7,8 @@ function getDefaultSeason(prefName) {
 
     if (prefName === "preference1") {
         preference = localStorage.getItem(prefName) || "VRC 23-24: Over Under";
-        var values = ["V5RC 24-25: High Stakes", "VRC 23-24: Over Under", "VRC 22-23: Spin Up", "VRC 21-22: Tipping Point"];
-        var data = ["190", "181", "173", "154"];
+        var values = ["V5RC 25-26: Push Back", "V5RC 24-25: High Stakes", "VRC 23-24: Over Under", "VRC 22-23: Spin Up", "VRC 21-22: Tipping Point"];
+        var data = ["197", "190", "181", "173", "154"];
     } else if (prefName === "preference2") {
         preference = localStorage.getItem(prefName) || "Natural";
         values = ["Dark", "Natural"];
@@ -78,8 +78,8 @@ function handleAppearance() {
 
 function sendSpecifiedSeason() {
     document.addEventListener('DOMContentLoaded', function() {
-        var values = ["V5RC 24-25: High Stakes", "VRC 23-24: Over Under", "VRC 22-23: Spin Up", "VRC 21-22: Tipping Point"];
-        var data = ["190", "181", "173", "154"];
+        var values = ["V5RC 25-26: Push Back", "V5RC 24-25: High Stakes", "VRC 23-24: Over Under", "VRC 22-23: Spin Up", "VRC 21-22: Tipping Point"];
+        var data = ["197", "190", "181", "173", "154"];
         
         var element = document.getElementById("season");
         element.setAttribute("value", (data[values.indexOf(localStorage.getItem("preference1"))] || "190"));
