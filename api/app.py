@@ -125,7 +125,7 @@ def handle_teams():
         print(request.args)
         query = request.args.get("query").upper()
         teamName = query
-        season = request.args.get("season", default="190")
+        season = request.args.get("season", default="197") # default link preview season
         try:
             result, detailedPS = main.runAlgorithm(query, season)
             IMAGE_URL = json.load(open(previews))["links"][str(round(result[1]))]

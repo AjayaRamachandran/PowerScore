@@ -337,7 +337,8 @@ def runComp(sku, div): # master function for computing a competition powerscore
         154 : 0.97,
         173 : 0.94,
         181 : 1,
-        190 : 3.35
+        190 : 3.35,
+        197 : 1,
     }
     for i in range(len(compInfos)):
         fullPSLib, fullPSList = runPowerScore(None, None, div=None, typeOfPowerscore="general", compInfo=compInfos[i], onlyForComp=True, scalingFactor=scales[season])
